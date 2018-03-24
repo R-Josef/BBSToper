@@ -1,0 +1,43 @@
+#服务器宣传贴的顶帖列表链接
+mcbbsurl: 'http://www.mcbbs.net/forum.php?mod=misc&action=viewthreadmod&tid=694746&mobile=no'
+
+#多久能更换一次绑定
+changeidcooldown: 30
+
+#一天能领取几次顶帖奖励
+rwoneday: 1
+
+#奖励的命令, %PLAYER%代表使用命令的玩家ID
+rewards:
+- 'exp give %PLAYER% 1000'
+- 'eco give %PLAYER% 20'
+
+#语言消息配置
+messages:
+  prefix: '&e[&dBBSToper&e] '
+  repeat: '&c为防止输错ID, 请重复输入一次!'
+  bdsuccess: '&a绑定成功!'
+  rwsuccess: '&a奖励发放完毕!'
+  notsame: '&4抱歉, 两次输入不一致，请重新输入!'
+  oncooldown: '&4抱歉您的账号正在绑定冷却中!'
+  noaccount: '&4您还未绑定账号, 使用 &c/poster binding <MCBBS论坛ID> &4进行绑定!'
+  reward: '&2您在 &f%TIME% &2进行的顶帖已得到回报'
+  noreward: '&4您暂未有新的顶帖记录!'
+  reload: '&a配置已重载!'
+  nopermission: '&4对不起，您没有权限这么做!'
+  invalid: '&4命令错误!'
+  enable: '插件已启用!'
+  usage: '&4用法 &c/poster binding <MCBBS论坛ID>'
+  posterid: '&2论坛ID&f'
+  postertime: '&2顶帖日期&f'
+  noposter: '&4没有找到顶帖数据!'
+  posternum: '&2顶帖数量&f'
+  overtime: '&4很抱歉您每天只能领取 &e%RWONEDAY% &4次奖励!'
+  waitamin: '&4连续顶帖间隔必须大于一分钟!'
+  samebinding: '&4已有相同的绑定,如果这是您的ID,请联系管理!'
+  ownsamebinding: '&4您已经绑定过相同ID!'
+  help:
+  - '&3BBSToper指令帮助'
+  - '&3绑定论坛账号: &b/poster binding <MCBBS论坛ID>'
+  - '&3获取奖励: &b/poster reward'
+  - '&3重载插件: &b/poster reload'
