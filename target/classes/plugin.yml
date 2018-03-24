@@ -1,0 +1,10 @@
+name: BBSToper
+main: cn.slfeng.bbstoper.BBSToper
+version: 1.0
+commands:
+    poster:
+        description: BBSToper的主要指令.
+permissions:
+    poster.admin:
+        description: 管理员权限.
+        default: op
