@@ -29,6 +29,7 @@ public final class BBSToper extends JavaPlugin {
 	public static String mcbbsurl = new String();
 	public static long changeidcooldown;
 	public static int rwoneday;
+	public static int pagesize;
 	public static String prefix = new String();
 	public static String repeat = new String();
 	public static String bdsuccess = new String();
@@ -51,6 +52,8 @@ public final class BBSToper extends JavaPlugin {
 	public static String waitamin = new String();
 	public static String samebinding = new String();
 	public static String ownsamebinding = new String();
+	public static String overpage = new String();
+	public static String pageinfo = new String();
 	public static List<String> cmds = new ArrayList<String>();
 	public static List<String> help = new ArrayList<String>();
 	public static List<String> ID = new ArrayList<String>();
@@ -89,6 +92,7 @@ public final class BBSToper extends JavaPlugin {
 		mcbbsurl = this.getConfig().getString("mcbbsurl");
 		changeidcooldown = this.getConfig().getLong("changeidcooldown");
 		rwoneday = this.getConfig().getInt("rwoneday");
+		pagesize = this.getConfig().getInt("pagesize");
 		cmds = this.getConfig().getStringList("rewards");
 		prefix = this.getConfig().getString("messages.prefix").replaceAll("&", "§");// 前缀
 		help = this.getConfig().getStringList("messages.help");// 帮助
@@ -116,6 +120,8 @@ public final class BBSToper extends JavaPlugin {
 		waitamin = prefix + this.getConfig().getString("messages.waitamin").replaceAll("&", "§");
 		samebinding = prefix + this.getConfig().getString("messages.samebinding").replaceAll("&", "§");
 		ownsamebinding = prefix + this.getConfig().getString("messages.ownsamebinding").replaceAll("&", "§");
+		overpage = prefix + this.getConfig().getString("messages.overpage").replaceAll("&", "§");
+		pageinfo = prefix + this.getConfig().getString("messages.pageinfo").replaceAll("&", "§");
 	}
 
 	@Override
@@ -124,15 +130,11 @@ public final class BBSToper extends JavaPlugin {
 			if (args.length == 1) {
 				if (args[0].equalsIgnoreCase("binding")) {// 绑定账号
 					sender.sendMessage(usage);// 提示用法
-				} else if (args[0].equalsIgnoreCase("list")) {// 列出顶帖者
-					if (sender.hasPermission("bbstoper.admin")) {
-						if (topList().length != 0) {
-							sender.sendMessage(topList());
-						} else {
-							sender.sendMessage(noposter);
-						}
+				} else if (args[0].equalsIgnoreCase("list")) {
+					if (topList().size() != 0) {
+						outputToplist(sender, 0);
 					} else {
-						sender.sendMessage(nopermission);
+						sender.sendMessage(noposter);
 					}
 				} else if (args[0].equalsIgnoreCase("reward")) {// 回报
 					try {
@@ -255,6 +257,31 @@ public final class BBSToper extends JavaPlugin {
 						e.printStackTrace();
 						sender.sendMessage("Error!");
 					}
+				} else if (args[0].equalsIgnoreCase("list")) {// 列出顶帖者
+					if (sender.hasPermission("bbstoper.admin")) {
+						if (topList().size() != 0) {
+							boolean b = true;
+							for (int i = 0; i < args[1].length(); i++) {// 判断参数是否为数字
+								if (!Character.isDigit(args[1].charAt(i))) {
+									b = false;
+								}
+							}
+							if (b) {
+								int page = Integer.parseInt(args[1]) - 1;// 零基的java
+								if (page + 1 <= paging().size()) {
+									outputToplist(sender, page);// 输出给玩家
+								} else {
+									sender.sendMessage(overpage);// 超出页数
+								}
+							} else {
+								sender.sendMessage(invalid);// 不是数字
+							}
+						} else {
+							sender.sendMessage(noposter);
+						}
+					} else {
+						sender.sendMessage(nopermission);
+					}
 				} else {
 					sender.sendMessage(invalid);
 				}
@@ -269,6 +296,7 @@ public final class BBSToper extends JavaPlugin {
 			}
 		}
 		return false;
+
 	}
 
 	public boolean issame(String id) throws UnsupportedEncodingException {// 判断是否有重复
@@ -281,7 +309,7 @@ public final class BBSToper extends JavaPlugin {
 			}
 		}
 		for (int i = 0; i < list.size(); i++) {
-			if(list.get(i).equalsIgnoreCase(id)) {// 如果此次循环到的ID包含传给方法的参数id
+			if (list.get(i).equalsIgnoreCase(id)) {// 如果此次循环到的ID包含传给方法的参数id
 				b = true;
 			}
 		}
@@ -310,18 +338,53 @@ public final class BBSToper extends JavaPlugin {
 			return s;
 	}
 
-	public static String[] topList() {// 列出顶帖列表
+	public static void outputToplist(CommandSender p, Integer page) {
+		String[] FinalList = paging().get(page).toArray(new String[paging().get(page).size()]);
+		p.sendMessage(posternum + ":" + Time.size());
+		p.sendMessage(FinalList);
+		p.sendMessage(pageinfo.replaceAll("%PAGE%", String.valueOf(page + 1)).replaceAll("%TOTALPAGE%",
+				String.valueOf(paging().size())));
+	}
+
+	public static List<List<String>> paging() {// 分页
+		List<String> list = topList();
+		int totalCount = list.size(); // 总条数
+		int pageCount; // 总页数
+		int m = totalCount % pagesize; // 余数
+		if (m > 0) {
+			pageCount = totalCount / pagesize + 1;
+		} else {
+			pageCount = totalCount / pagesize;
+		}
+		List<List<String>> totalList = new ArrayList<List<String>>();
+		for (int i = 1; i <= pageCount; i++) {
+			if (m == 0) {
+				List<String> subList = list.subList((i - 1) * pagesize, pagesize * (i));
+				totalList.add(subList);
+			} else {
+				if (i == pageCount) {
+					List<String> subList = list.subList((i - 1) * pagesize, totalCount);
+					totalList.add(subList);
+				} else {
+					List<String> subList = list.subList((i - 1) * pagesize, pagesize * i);
+					totalList.add(subList);
+				}
+			}
+		}
+		return totalList;
+	}
+
+	public static List<String> topList() {// 列出顶帖列表
 		try {
 			Getter();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		List<String> list = new ArrayList<String>();
-		list.add(posternum + ":" + Time.size());// 添加数量提示
 		for (int i = 0; i < ID.size() && i < Time.size(); i++) {
 			list.add(posterid + ":" + ID.get(i) + " " + postertime + ":" + Time.get(i));
 		}
-		return list.toArray(new String[list.size()]);
+		return list;
 	}
 
 	public void reloadPoster() throws UnsupportedEncodingException {// 重载
