@@ -1,6 +1,6 @@
 name: BBSToper
 main: cn.slfeng.bbstoper.BBSToper
-version: 1.0
+version: 1.1
 commands:
     poster:
         description: BBSToper的主要指令.
