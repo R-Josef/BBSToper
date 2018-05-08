@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>cn.slfeng</groupId>
 	<artifactId>BBSToper</artifactId>
-	<version>1.0</version>
+	<version>1.1</version>
 	<repositories>
 		<repository>
 			<id>spigot-repo</id>
