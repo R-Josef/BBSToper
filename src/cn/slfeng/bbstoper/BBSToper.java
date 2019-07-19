@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,34 +27,34 @@ import java.util.logging.Level;
 
 public final class BBSToper extends JavaPlugin {
 
-	public static String mcbbsurl = new String();
+	public static int tid = 0;
 	public static long changeidcooldown;
 	public static int rwoneday;
 	public static int pagesize;
-	public static String prefix = new String();
-	public static String repeat = new String();
-	public static String bdsuccess = new String();
-	public static String rwsuccess = new String();
-	public static String notsame = new String();
-	public static String oncooldown = new String();
-	public static String noaccount = new String();
-	public static String reward = new String();
-	public static String noreward = new String();
-	public static String reload = new String();
-	public static String nopermission = new String();
-	public static String invalid = new String();
-	public static String enable = new String();
-	public static String usage = new String();
-	public static String posterid = new String();
-	public static String postertime = new String();
-	public static String noposter = new String();
-	public static String posternum = new String();
-	public static String overtime = new String();
-	public static String waitamin = new String();
-	public static String samebinding = new String();
-	public static String ownsamebinding = new String();
-	public static String overpage = new String();
-	public static String pageinfo = new String();
+	public static String prefix = "";
+	public static String repeat = "";
+	public static String bdsuccess = "";
+	public static String rwsuccess = "";
+	public static String notsame = "";
+	public static String oncooldown = "";
+	public static String noaccount = "";
+	public static String reward = "";
+	public static String noreward = "";
+	public static String reload = "";
+	public static String nopermission = "";
+	public static String invalid = "";
+	public static String enable = "";
+	public static String usage = "";
+	public static String posterid = "";
+	public static String postertime = "";
+	public static String noposter = "";
+	public static String posternum = "";
+	public static String overtime = "";
+	public static String waitamin = "";
+	public static String samebinding = "";
+	public static String ownsamebinding = "";
+	public static String overpage = "";
+	public static String pageinfo = "";
 	public static List<String> cmds = new ArrayList<String>();
 	public static List<String> help = new ArrayList<String>();
 	public static List<String> ID = new ArrayList<String>();
@@ -89,7 +90,7 @@ public final class BBSToper extends JavaPlugin {
 	public void Load() throws UnsupportedEncodingException {// 加载配置和数据
 		this.getConfig();
 		this.getPoster();
-		mcbbsurl = this.getConfig().getString("mcbbsurl");
+		tid = this.getConfig().getInt("tid");
 		changeidcooldown = this.getConfig().getLong("changeidcooldown");
 		rwoneday = this.getConfig().getInt("rwoneday");
 		pagesize = this.getConfig().getInt("pagesize");
@@ -141,10 +142,10 @@ public final class BBSToper extends JavaPlugin {
 						if (this.getPoster().getString(sender.getName() + ".id") == null) {// 如果没有绑定账号
 							sender.sendMessage(noaccount);
 						} else {// 如果绑定了账号
-							boolean b = new Boolean(false);
-							boolean isovertime = new Boolean(false);
+							boolean b = false;
+							boolean isovertime = false;
 							List<String> list = new ArrayList<String>();
-							boolean iswaitamin = new Boolean(false);
+							boolean iswaitamin = false;
 							Getter();// 开始抓取网页
 							for (int i = 0; i < ID.size() && i < Time.size(); i++) {// 遍历网页抓取到的信息
 								if (ID.get(i).equalsIgnoreCase(this.getPoster().getString(sender.getName() + ".id"))) {// 如果此次的ID包含玩家绑定的名字
@@ -316,8 +317,13 @@ public final class BBSToper extends JavaPlugin {
 		return b;
 	}
 
+	public synchronized List<ResultContainer> getRecords(){
+		String url = "http://www.mcbbs.net/forum.php?mod=misc&action=viewthreadmod&tid="+tid +"&infloat=yes&handlekey=viewthreadmod&inajax=1&ajaxtarget=fwin_content_viewthreadmod";
+		return new ResultBuilder(this).buildFromString(HttpUtil.sendGet(url));
+	}
+
 	public static synchronized void Getter() throws IOException {// 抓取网页,此方法加锁
-		String url = mcbbsurl;
+		String url = "http://www.mcbbs.net/forum.php?mod=misc&action=viewthreadmod&tid="+tid +"&infloat=yes&handlekey=viewthreadmod&inajax=1&ajaxtarget=fwin_content_viewthreadmod";
 		Document doc = Jsoup.connect(url).get();
 		Elements links = doc.select(".f_c a[target=\"_blank\"]"); // "a[href]" //带有href属性的a元素
 		Elements imports = doc.select(".f_c span[title]");
@@ -392,7 +398,7 @@ public final class BBSToper extends JavaPlugin {
 			posterFile = new File(getDataFolder(), "poster.yml");
 		}
 		poster = YamlConfiguration.loadConfiguration(posterFile);
-		Reader posterStream = new InputStreamReader(this.getResource("poster.yml"), "UTF8");// 查看jar里默认的
+		Reader posterStream = new InputStreamReader(this.getResource("poster.yml"), StandardCharsets.UTF_8);// 查看jar里默认的
 		if (posterStream != null) {
 			YamlConfiguration post = YamlConfiguration.loadConfiguration(posterStream);
 			poster.setDefaults(post);

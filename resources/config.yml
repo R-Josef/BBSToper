@@ -1,5 +1,5 @@
-#服务器宣传贴的顶帖列表链接
-mcbbsurl: 'http://www.mcbbs.net/forum.php?mod=misc&action=viewthreadmod&tid=694746&mobile=no'
+#服务器宣传贴ID
+tid: 837933
 
 #多久能更换一次绑定
 changeidcooldown: 30
