@@ -1,0 +1,49 @@
+name: BBSToper
+main: moe.feo.bbstoper.BBSToper
+version: 2.0
+author: Fengshuai(R_Josef)
+website: https://www.mcbbs.net/thread-789082-1-1.html
+commands:
+    bbstoper:
+        description: 'BBSToper的主要指令.'
+        aliases: [bt, poster]
+        usage: |
+            /bbstoper - 显示帮助页面
+            /bbstoper binding <MCBBS论坛ID> - 绑定论坛账号，注意这里是ID不是uid
+            /bbstoper reward - 领取奖励
+            /bbstoper list <页数> - 列出6天以内所有顶帖者
+            /bbstoper reload - 重载插件
+permissions:
+    bbstoper.admin:
+        description: '管理员权限.'
+        default: 'op'
+        children:
+            bbstoper.list: true
+            bbstoper.reload: true
+            bbstoper.check: true
+            bbstoper.delect: true
+    bbstoper.user:
+        description: '用户权限.'
+        default: true
+        children:
+            bbstoper.binding: true
+            bbstoper.reward: true
+    bbstoper.binding:
+        description: '绑定论坛账号.'
+        default: true
+    bbstoper.reward:
+        description: '获取顶贴奖励.'
+        default: true
+    bbstoper.list:
+        description: '列出顶贴列表.'
+        default: 'op'
+    bbstoper.check:
+        description: '检查玩家ID和论坛ID.'
+        default: 'op'
+    bbstoper.delect:
+        description: '删除一个玩家的数据.'
+        default: 'op'
+    bbstoper.reload: 
+        description: '重载插件.'
+        default: 'op'
+    
