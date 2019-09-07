@@ -2,6 +2,7 @@
 这是一个检测mcbbs服务器宣传贴顶帖后，玩家输入指令领取奖励的bukkit插件<br>
 此插件的mcbbs页面：https://www.mcbbs.net/thread-789082-1-1.html<br>
 可用发行版: https://github.com/R-Josef/BBSToper/releases<br>
+由于2.0之前的版本tag打错了所以不提供之前版本的Releases<br>
 
 ## 许可
 本软件的许可请查看LICENCE文件.<br>
