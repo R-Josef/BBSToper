@@ -16,7 +16,7 @@ public enum Message {
 	OWNERID("ownerid"), OWNERNOTFOUND("ownernotfound"), NOPERMISSION("nopermission"), INVAILD("invalid"),
 	FAILEDGETWEB("failedgetweb"), DELECTSUCCESS("delectsuccess"), HELP_TITLE("help.title"),
 	HELP_BINDING("help.binding"), HELP_REWARD("help.reward"), HELP_LIST("help.list"), HELP_CHECK("help.check"),
-	HELP_RELOAD("help.reload");
+	HELP_DELECT("help.delect"), HELP_RELOAD("help.reload");
 
 	public String path;
 

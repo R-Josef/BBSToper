@@ -76,10 +76,28 @@ public class CLI implements TabExecutor {
 			public void run() {
 				if (args.length == 0) {// 没有带参数
 					sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TITLE.getString());
-					sender.sendMessage(Message.PREFIX.getString() + Message.HELP_BINDING.getString());
-					sender.sendMessage(Message.PREFIX.getString() + Message.HELP_REWARD.getString());
-					sender.sendMessage(Message.PREFIX.getString() + Message.HELP_LIST.getString());
-					sender.sendMessage(Message.PREFIX.getString() + Message.HELP_RELOAD.getString());
+					if (sender.hasPermission("bbstoper.reward")) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_REWARD.getString());
+					}
+					if (sender.hasPermission("bbstoper.binding")) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_BINDING.getString());
+					}
+					if (sender.hasPermission("bbstoper.list")) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_LIST.getString());
+					}
+					if (sender.hasPermission("bbstoper.check")) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_CHECK.getString());
+					}
+					if (sender.hasPermission("bbstoper.delect")) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_DELECT.getString());
+					}
+					if (sender.hasPermission("bbstoper.reload")) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_RELOAD.getString());
+					}
+					
+					
+					
+					
 					return;
 				}
 				Crawler crawler;
