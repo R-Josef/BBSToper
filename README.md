@@ -32,7 +32,7 @@ clone此git库后可以使用maven进行构建
 **bbstoper.admin的子权限**<br>
 `bbstoper.list`<br>
 `bbstoper.check`<br>
-`bbstoper.delect`<br>
+`bbstoper.delete`<br>
 `bbstoper.reload`<br>
 
 
@@ -54,8 +54,8 @@ clone此git库后可以使用maven进行构建
 `/bbstoper check player <玩家ID>` 查看一个玩家绑定的论坛id<br>
 权限: `bbstoper.check`<br>
 
-`/bbstoper delect player <玩家ID>` 删除一个玩家的数据<br>
-权限: `bbstoper.delect`<br>
+`/bbstoper delete player <玩家ID>` 删除一个玩家的数据<br>
+权限: `bbstoper.delete`<br>
 
 `/bbstoper reload` 重载插件<br>
 权限: `bbstoper.reload`<br>
