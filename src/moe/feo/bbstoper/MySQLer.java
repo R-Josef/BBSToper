@@ -62,7 +62,7 @@ public class MySQLer implements SQLer {
 
 	public void createTablePosters() {
 		String sql = String.format(
-				"CREATE TABLE IF NOT EXISTS `%s` ( `uuid` char(36) NOT NULL, `name` varchar(255) NOT NULL, `bbsname` varchar(255) NOT NULL, `binddate` bigint(0) NOT NULL, `rewardbefore` char(10) NOT NULL, `rewardtimes` int(0) NULL, PRIMARY KEY (`uuid`) ) CHARACTER SET = utf8;",
+				"CREATE TABLE IF NOT EXISTS `%s` ( `uuid` char(36) NOT NULL, `name` varchar(255) NOT NULL, `bbsname` varchar(255) NOT NULL, `binddate` bigint(0) NOT NULL, `rewardbefore` char(10) NOT NULL, `rewardtimes` int(0) NOT NULL, PRIMARY KEY (`uuid`) ) CHARACTER SET utf8 COLLATE utf8_unicode_ci;",
 				getTableName("posters"));
 		try {
 			Statement stmt = conn.createStatement();
@@ -74,7 +74,7 @@ public class MySQLer implements SQLer {
 
 	public void createTableTopStates() {
 		String sql = String.format(
-				"CREATE TABLE IF NOT EXISTS `%s` ( `id` int(0) NOT NULL AUTO_INCREMENT, `bbsname` varchar(255) NULL, `time` varchar(16) NULL, PRIMARY KEY (`id`) ) CHARACTER SET = utf8;",
+				"CREATE TABLE IF NOT EXISTS `%s` ( `id` int(0) NOT NULL AUTO_INCREMENT, `bbsname` varchar(255) NOT NULL, `time` varchar(16) NOT NULL, PRIMARY KEY (`id`) ) CHARACTER SET utf8 COLLATE utf8_unicode_ci;",
 				getTableName("topstates"));
 		try {
 			Statement stmt = conn.createStatement();

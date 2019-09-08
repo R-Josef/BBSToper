@@ -61,7 +61,7 @@ public class SQLiter implements SQLer {
 
 	public void createTablePosters() {
 		String sql = String.format(
-				"CREATE TABLE IF NOT EXISTS `%s` ( `uuid` char(36) NOT NULL, `name` varchar(255) NOT NULL, `bbsname` varchar(255) NOT NULL, `binddate` bigint(0) NOT NULL, `rewardbefore` char(10) NOT NULL, `rewardtimes` int(0) NULL, PRIMARY KEY (`uuid`) );",
+				"CREATE TABLE IF NOT EXISTS `%s` ( `uuid` char(36) NOT NULL, `name` varchar(255) NOT NULL, `bbsname` varchar(255) NOT NULL COLLATE NOCASE, `binddate` bigint(0) NOT NULL, `rewardbefore` char(10) NOT NULL, `rewardtimes` int(0) NOT NULL, PRIMARY KEY (`uuid`) );",
 				getTableName("posters"));
 		try {
 			Statement stmt = conn.createStatement();
@@ -73,7 +73,7 @@ public class SQLiter implements SQLer {
 
 	public void createTableTopStates() {
 		String sql = String.format(
-				"CREATE TABLE IF NOT EXISTS `%s` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `bbsname` varchar(255) NULL, `time` varchar(16) NULL);",
+				"CREATE TABLE IF NOT EXISTS `%s` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `bbsname` varchar(255) NOT NULL COLLATE NOCASE, `time` varchar(16) NOT NULL);",
 				getTableName("topstates"));
 		try {
 			Statement stmt = conn.createStatement();

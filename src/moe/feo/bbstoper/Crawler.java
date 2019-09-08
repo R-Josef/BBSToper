@@ -32,21 +32,20 @@ public class Crawler {
 			e.printStackTrace();
 			BBSToper.getInstance().getLogger().warning(Message.FAILEDGETWEB.getString());
 		}
-		Elements listclass = doc.getElementsByClass("list");
-		Element list = listclass.get(0);
-		Element listbody = list.getElementsByTag("tbody").get(0);
-		for (Element rows : listbody.getElementsByTag("tr")) {// 表的一行
-			Elements cells = rows.getElementsByTag("td");
-			Element idcell = cells.get(0);// id那一个单元格
+		Elements listclass = doc.getElementsByClass("list");// 获取一个class名为list的元素的合集
+		Element list = listclass.get(0);// mcbbs顶贴列表页面只会有一个list，直接使用即可
+		Element listbody = list.getElementsByTag("tbody").get(0);// tbody表示表的身体而不是表头
+		for (Element rows : listbody.getElementsByTag("tr")) {// tr是表的一行
+			Elements cells = rows.getElementsByTag("td");// td表示一行的单元格，cells为单元格的合集
+			Element idcell = cells.get(0);// 第一个单元格中包含有id
 			String id = idcell.getElementsByTag("a").get(0).text();
-
-			Element timecell = cells.get(1);// time那个单元格
+			Element timecell = cells.get(1);// 第二个单元格就是time了
 			String time = "";
-			Element timespan = timecell.select("span").first();
+			Element timespan = timecell.getElementsByTag("span").first();//time有两种，一种在span标签里面
 			if (timespan != null) {
-				time = timespan.attr("title");
+				time = timespan.attr("title");// attr用于获取元素的属性值，这个值就是我们要的time
 			} else {
-				time = timecell.text();
+				time = timecell.text();// 6天过后的时间将直接被包含在单元格中
 			}
 			ID.add(id);
 			Time.add(time);

@@ -4,11 +4,15 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>moe.feo</groupId>
 	<artifactId>BBSToper</artifactId>
-	<version>2.0</version>
+	<version>2.0.2</version>
 	<repositories>
 		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
+			<id>CodeMC</id>
+			<url>https://repo.codemc.org/repository/maven-public</url>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -41,6 +45,12 @@
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>3.28.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.bstats</groupId>
+			<artifactId>bstats-bukkit</artifactId>
+			<version>1.5</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -55,10 +65,17 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
+							<relocations>
+								<relocation>
+									<pattern>org.bstats</pattern>
+									<shadedPattern>moe.feo</shadedPattern>
+								</relocation>
+							</relocations>
 							<minimizeJar>true</minimizeJar>
 							<artifactSet>
 								<includes>
 									<include>org.jsoup</include>
+									<include>org.bstats</include>
 								</includes>
 							</artifactSet>
 							<createDependencyReducedPom>false</createDependencyReducedPom>

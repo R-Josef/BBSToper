@@ -1,5 +1,6 @@
 package moe.feo.bbstoper;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BBSToper extends JavaPlugin {
@@ -27,6 +28,7 @@ public class BBSToper extends JavaPlugin {
 		Poster.setSQLer(sql);
 		this.getCommand("bbstoper").setExecutor(CLI.getInstance());
 		this.getCommand("bbstoper").setTabCompleter(CLI.getInstance());
+		new Metrics(this);
 		this.getLogger().info(Message.ENABLE.getString());
 	}
 
