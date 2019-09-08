@@ -47,8 +47,8 @@ public class CLI implements TabExecutor {
 			if (sender.hasPermission("bbstoper.check")) {
 				list.add("check");
 			}
-			if (sender.hasPermission("bbstoper.delect")) {
-				list.add("delect");
+			if (sender.hasPermission("bbstoper.delete")) {
+				list.add("delete");
 			}
 			if (sender.hasPermission("bbstoper.reload")) {
 				list.add("reload");
@@ -88,8 +88,8 @@ public class CLI implements TabExecutor {
 					if (sender.hasPermission("bbstoper.check")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_CHECK.getString());
 					}
-					if (sender.hasPermission("bbstoper.delect")) {
-						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_DELECT.getString());
+					if (sender.hasPermission("bbstoper.delete")) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_DELETE.getString());
 					}
 					if (sender.hasPermission("bbstoper.reload")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_RELOAD.getString());
@@ -340,8 +340,8 @@ public class CLI implements TabExecutor {
 					}
 					}
 				}
-				case "delect": {
-					if (!(sender.hasPermission("bbstoper.delect"))) {
+				case "delete": {
+					if (!(sender.hasPermission("bbstoper.delete"))) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPERMISSION.getString());
 						return;
 					}
@@ -357,8 +357,8 @@ public class CLI implements TabExecutor {
 						sender.sendMessage(Message.PREFIX.getString() + Message.OWNERNOTFOUND.getString());
 						return;
 					}
-					sql.delectPoster(uuid.toString());
-					sender.sendMessage(Message.PREFIX.getString() + Message.DELECTSUCCESS.getString());
+					sql.deletePoster(uuid.toString());
+					sender.sendMessage(Message.PREFIX.getString() + Message.DELETESUCCESS.getString());
 					return;
 				}
 				default: {

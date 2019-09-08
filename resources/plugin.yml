@@ -1,6 +1,6 @@
 name: BBSToper
 main: moe.feo.bbstoper.BBSToper
-version: 2.0
+version: 2.0.1
 author: Fengshuai(R_Josef)
 website: https://www.mcbbs.net/thread-789082-1-1.html
 commands:
@@ -21,7 +21,7 @@ permissions:
             bbstoper.list: true
             bbstoper.reload: true
             bbstoper.check: true
-            bbstoper.delect: true
+            bbstoper.delete: true
     bbstoper.user:
         description: '用户权限.'
         default: true
@@ -40,7 +40,7 @@ permissions:
     bbstoper.check:
         description: '检查玩家ID和论坛ID.'
         default: 'op'
-    bbstoper.delect:
+    bbstoper.delete:
         description: '删除一个玩家的数据.'
         default: 'op'
     bbstoper.reload: 

@@ -14,9 +14,9 @@ public enum Message {
 	REWARDGIVED("rewardgived"), REPEAT("repeat"), NOTSAME("notsame"), ONCOOLDOWN("oncooldown"), SAMEBIND("samebind"),
 	OWNSAMEBIND("ownsamebind"), BINDINGSUCCESS("bindingsuccess"), IDOWNER("idowner"), IDNOTFOUND("idnotfound"),
 	OWNERID("ownerid"), OWNERNOTFOUND("ownernotfound"), NOPERMISSION("nopermission"), INVAILD("invalid"),
-	FAILEDGETWEB("failedgetweb"), DELECTSUCCESS("delectsuccess"), HELP_TITLE("help.title"),
+	FAILEDGETWEB("failedgetweb"), DELETESUCCESS("deletesuccess"), HELP_TITLE("help.title"),
 	HELP_BINDING("help.binding"), HELP_REWARD("help.reward"), HELP_LIST("help.list"), HELP_CHECK("help.check"),
-	HELP_DELECT("help.delect"), HELP_RELOAD("help.reload");
+	HELP_DELETE("help.delete"), HELP_RELOAD("help.reload");
 
 	public String path;
 

@@ -122,7 +122,7 @@ public interface SQLer {
 		return uuid;
 	}
 	
-	public default void delectPoster(String uuid) {
+	public default void deletePoster(String uuid) {
 		String sql = String.format("DELETE FROM `%s` WHERE `uuid`=?;", getTableName("posters"));
 		try {
 			PreparedStatement pstmt = getConnection().prepareStatement(sql);
