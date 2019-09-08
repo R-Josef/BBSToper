@@ -35,6 +35,8 @@ clone此git库后可以使用maven进行构建
 `bbstoper.delete`<br>
 `bbstoper.reload`<br>
 
+**/bbstoper /poster /bt 都是可用命令别名**
+
 
 `/bbstoper` 显示帮助页面<br>
 权限: 无需权限<br>
