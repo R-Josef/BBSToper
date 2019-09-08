@@ -10,6 +10,7 @@
 ## 用到的类库: 
 1.Bukkit<br>
 2.Jsoup<br>
+3.bStats<br>
 
 ## 构建
 此项目采用maven构建, 提供了pom文件
