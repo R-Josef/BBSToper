@@ -36,7 +36,7 @@ public class MySQLer implements SQLer {
 		Boolean ssl = Option.DATABASE_MYSQL_SSL.getBoolean();
 		String url = "jdbc:mysql://" + Option.DATABASE_MYSQL_IP.getString() + ":"
 				+ Option.DATABASE_MYSQL_PORT.getString() + "/" + Option.DATABASE_MYSQL_DATABASE.getString() + "?useSSL="
-				+ ssl.toString() + "&autoReconnect=true";
+				+ ssl.toString() + "&serverTimezone=UTC" + "&autoReconnect=true";
 		return url;
 	}
 
