@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -11,12 +14,12 @@ public enum Message {
 	PREFIX("prefix"), ENABLE("enable"), RELOAD("reload"), FAILEDCONNECTSQL("failedconnectsql"), POSTERNUM("posternum"),
 	POSTERID("posterid"), POSTERTIME("postertime"), PAGEINFO("pageinfo"), NOPOSTER("noposter"), OVERPAGE("overpage"),
 	NOTBOUND("notbound"), NOPOST("nopost"), OVERTIME("overtime"), WAITAMIN("waitamin"), REWARD("reward"),
-	REWARDGIVED("rewardgived"), REPEAT("repeat"), NOTSAME("notsame"), ONCOOLDOWN("oncooldown"), SAMEBIND("samebind"),
-	OWNSAMEBIND("ownsamebind"), BINDINGSUCCESS("bindingsuccess"), IDOWNER("idowner"), IDNOTFOUND("idnotfound"),
-	OWNERID("ownerid"), OWNERNOTFOUND("ownernotfound"), NOPERMISSION("nopermission"), INVAILD("invalid"),
-	FAILEDGETWEB("failedgetweb"), DELETESUCCESS("deletesuccess"), HELP_TITLE("help.title"),
-	HELP_BINDING("help.binding"), HELP_REWARD("help.reward"), HELP_LIST("help.list"), HELP_CHECK("help.check"),
-	HELP_DELETE("help.delete"), HELP_RELOAD("help.reload");
+	REWARDGIVED("rewardgived"), BROADCAST("broadcast"), REPEAT("repeat"), NOTSAME("notsame"), ONCOOLDOWN("oncooldown"),
+	SAMEBIND("samebind"), OWNSAMEBIND("ownsamebind"), BINDINGSUCCESS("bindingsuccess"), IDOWNER("idowner"),
+	IDNOTFOUND("idnotfound"), OWNERID("ownerid"), OWNERNOTFOUND("ownernotfound"), NOPERMISSION("nopermission"),
+	INVAILD("invalid"), FAILEDGETWEB("failedgetweb"), DELETESUCCESS("deletesuccess"), INFO("info"),
+	HELP_TITLE("help.title"), HELP_BINDING("help.binding"), HELP_REWARD("help.reward"), HELP_LIST("help.list"),
+	HELP_CHECK("help.check"), HELP_DELETE("help.delete"), HELP_RELOAD("help.reload");
 
 	public String path;
 
@@ -55,6 +58,15 @@ public enum Message {
 
 	public String getString() {
 		return messageConfig.getString(path).replaceAll("&", "§");
+	}
+
+	public List<String> getStringList() {
+		List<String> list = messageConfig.getStringList(path);
+		List<String> replacedlist = new ArrayList<String>();
+		for (String msg : list) {
+			replacedlist.add(msg.replaceAll("&", "§"));
+		}
+		return replacedlist;
 	}
 
 }

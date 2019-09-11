@@ -29,6 +29,7 @@ overtime: '&4很抱歉您每天只能领取 &e%REWARDTIMES% &4次奖励!'
 waitamin: '&4连续顶帖间隔必须大于一分钟!'
 reward: '&b您在 &f%TIME% &b进行的顶帖已得到回报'
 rewardgived: '&a奖励发放完毕!'
+broadcast: '&b玩家 &e%PLAYER% &b刚刚领取了顶贴奖励, 大家也快来顶贴吧! '
 
 #绑定
 repeat: '&c为防止输错ID, 请重复输入一次!'
@@ -51,6 +52,11 @@ deletesuccess: '&c成功删除了该玩家的记录.'
 nopermission: '&4对不起，您没有权限这么做!'
 invalid: '&4命令错误!'
 failedgetweb: '&4获取网页时错误!'
+
+#提醒, 您可以在此添加更多消息
+info:
+- '&b本服MCBBS宣传帖链接: &9%PAGE%'
+- '&b对宣传帖使用提升卡将获得丰厚奖励.'
 
 #帮助
 help:

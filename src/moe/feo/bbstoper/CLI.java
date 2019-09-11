@@ -94,10 +94,7 @@ public class CLI implements TabExecutor {
 					if (sender.hasPermission("bbstoper.reload")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_RELOAD.getString());
 					}
-					
-					
-					
-					
+
 					return;
 				}
 				Crawler crawler;
@@ -116,10 +113,10 @@ public class CLI implements TabExecutor {
 							long cd = System.currentTimeMillis() - poster.getBinddate();// 已经过了的cd
 							long settedcd = Option.MCBBS_CHANGEIDCOOLDOWN.getInt() * (long) 86400000;// 设置的cd
 							if (cd < settedcd) {// 如果还在cd那么直接return;
-								Long leftcd = settedcd - cd;//剩下的cd
-								Long leftcdtodays = leftcd/86400000;
-								sender.sendMessage(Message.PREFIX.getString()
-										+ Message.ONCOOLDOWN.getString().replaceAll("%COOLDOWN%", leftcdtodays.toString()));
+								Long leftcd = settedcd - cd;// 剩下的cd
+								Long leftcdtodays = leftcd / 86400000;
+								sender.sendMessage(Message.PREFIX.getString() + Message.ONCOOLDOWN.getString()
+										.replaceAll("%COOLDOWN%", leftcdtodays.toString()));
 								return;
 							}
 						} else {
@@ -161,7 +158,7 @@ public class CLI implements TabExecutor {
 					}
 				}
 				case "reward": {
-					if (!(sender.hasPermission("bbstoper.reward"))) {
+					if (!sender.hasPermission("bbstoper.reward")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPERMISSION.getString());
 						return;
 					}
@@ -184,19 +181,24 @@ public class CLI implements TabExecutor {
 					for (int i = 0; i < crawler.ID.size(); i++) {// 对ID进行遍历
 						if (crawler.ID.get(i).equalsIgnoreCase(bbsname)) {// 如果ID等于poster的论坛名字
 							List<String> topstates = poster.getTopStates();
-							if (cache.contains(crawler.Time.get(i))) {// 判断玩家的顶贴粒度是否小于一分钟了
-								if (!topstates.contains(crawler.Time.get(i))) {// 如果缓存里面包含，数据库里面不包含说明这个玩家是刚刚才来领取奖励
-									iswaitamin = true;// 我们这里只会提醒玩家一次
+							for (String cachedtime : cache) {// 判断玩家的顶贴粒度是否小于一分钟了
+								if (cachedtime.equals(crawler.Time.get(i))) {// 缓存里面有这次时间
+									for (String topstate : topstates) {// 然后再去遍历数据库里面存的时间
+										if (topstate.equals(crawler.Time.get(i))) {// 如果数据库里面的时间也等于这次的时间
+											// 那就说明玩家肯定有两次同样时间的顶贴，说明玩家顶贴间隔小于一分钟
+											iswaitamin = true;//我们这里只会提醒玩家一次
+										}
+									}
 								}
 							}
-							if (!topstates.contains(crawler.Time.get(i))) {
+							if (!topstates.contains(crawler.Time.get(i))) {// 如果数据库里没有这次顶贴的记录
 								havepost = true;
 								String datenow = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-								if (!datenow.equals(poster.getRewardbefore())) {
+								if (!datenow.equals(poster.getRewardbefore())) {// 如果上一次顶贴不是今天，置零
 									poster.setRewardbefore(datenow);
 									poster.setRewardtime(0);
 								}
-								if (poster.getRewardtime() < Option.REWARD_TIMES.getInt()) {
+								if (poster.getRewardtime() < Option.REWARD_TIMES.getInt()) {// 奖励次数小于设定值
 									Bukkit.getScheduler().runTask(BBSToper.getInstance(), new Runnable() {
 										@Override
 										public void run() {
@@ -207,9 +209,10 @@ public class CLI implements TabExecutor {
 											}
 										}
 									});
-									sender.sendMessage(Message.PREFIX.getString() + Message.REWARD.getString().replaceAll("%TIME%", crawler.Time.get(i)));
+									sender.sendMessage(Message.PREFIX.getString()
+											+ Message.REWARD.getString().replaceAll("%TIME%", crawler.Time.get(i)));
 									sql.addTopState(poster.getBbsname(), crawler.Time.get(i));
-									poster.setRewardtime(1);
+									poster.setRewardtime(poster.getRewardtime() + 1);// rewardtime次数加一
 									issucceed = true;
 								} else {
 									isovertime = true;
@@ -217,7 +220,7 @@ public class CLI implements TabExecutor {
 							}
 						}
 					}
-					sql.updatePoster(poster);
+					sql.updatePoster(poster);// 更新poster
 					if (issucceed) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.REWARDGIVED.getString());
 					}
@@ -232,6 +235,8 @@ public class CLI implements TabExecutor {
 					if (!havepost) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPOST.getString());
 					}
+					Bukkit.broadcast(Message.BROADCAST.getString().replaceAll("%PLAYER%", player.getName()),
+							"bbstoper.reward");// 给有奖励权限的玩家广播
 					break;
 				}
 

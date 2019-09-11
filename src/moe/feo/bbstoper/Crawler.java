@@ -6,7 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,16 +19,14 @@ import org.jsoup.select.Elements;
 public class Crawler {
 	public List<String> ID = new ArrayList<String>();
 	public List<String> Time = new ArrayList<String>();
-	
+
 	public Crawler() {
 		resolveWebData();
 	}
-	
+
 	public void resolveWebData() {
-		String url = Option.MCBBS_URL.getString();
-		if (!url.contains("http")) {
-			url = "https://www.mcbbs.net/forum.php?mod=misc&action=viewthreadmod&tid=" + url + "&mobile=no";
-		}
+		String url = "https://www.mcbbs.net/forum.php?mod=misc&action=viewthreadmod&tid=" + Option.MCBBS_URL.getString()
+				+ "&mobile=no";
 		Document doc = null;
 		try {
 			doc = Jsoup.connect(url).get();
@@ -37,11 +39,15 @@ public class Crawler {
 		Element listbody = list.getElementsByTag("tbody").get(0);// tbody表示表的身体而不是表头
 		for (Element rows : listbody.getElementsByTag("tr")) {// tr是表的一行
 			Elements cells = rows.getElementsByTag("td");// td表示一行的单元格，cells为单元格的合集
+			String action = cells.get(2).text();
+			if (!action.equals("提升(提升卡)")) {// 这里过滤掉不是提升卡的操作
+				continue;
+			}
 			Element idcell = cells.get(0);// 第一个单元格中包含有id
 			String id = idcell.getElementsByTag("a").get(0).text();
 			Element timecell = cells.get(1);// 第二个单元格就是time了
 			String time = "";
-			Element timespan = timecell.getElementsByTag("span").first();//time有两种，一种在span标签里面
+			Element timespan = timecell.getElementsByTag("span").first();// time有两种，一种在span标签里面
 			if (timespan != null) {
 				time = timespan.attr("title");// attr用于获取元素的属性值，这个值就是我们要的time
 			} else {
@@ -51,7 +57,7 @@ public class Crawler {
 			Time.add(time);
 		}
 	}
-	
+
 	public void kickExpiredData() {// 剔除过期的数据
 		// 注意mcbbs的日期格式，月份和天数都是非零开始，小时分钟是从零开始
 		SimpleDateFormat sdfm = new SimpleDateFormat("yyyy-M-d HH:mm");
@@ -69,10 +75,60 @@ public class Crawler {
 			if (date.before(expirydate)) {// 过期了
 				Time.remove(i);
 				ID.remove(i);
-				i--;//这里要吧序数往前退一个
+				i--;// 这里要吧序数往前退一个
 			}
 		}
-		
+
 	}
-	
+
+	public void activeReward() {// 主动给玩家发奖励
+		SQLer sql = BBSToper.getInstance().getSQLer();
+		for (int i = 0; i < ID.size(); i++) {
+			String bbsname = ID.get(i);
+			String time = Time.get(i);
+			if (!sql.checkTopstate(bbsname, time)) {// 如果这个记录不存在于数据库中
+				String uuid = sql.bbsNameCheck(bbsname);
+				Poster poster = sql.getPoster(uuid);
+				if (uuid != null) {// 这个玩家已经绑定,这时候就可以开始对玩家进行检测了
+					OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+					if (player.isOnline()) {// 如果玩家在线
+						Player olplayer = Bukkit.getPlayer(UUID.fromString(uuid));
+						if (!olplayer.hasPermission("bbstoper.reward")) {
+							continue;// 没有奖励权限的跳过
+						}
+					} else {// 不在线就跳过
+						continue;
+					}
+					String datenow = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+					if (!datenow.equals(poster.getRewardbefore())) {// 上次领奖的日期不是今天，直接将奖励次数清零
+						poster.setRewardbefore(datenow);// 奖励日期设置为今天
+						poster.setRewardtime(0);
+					}
+					if (poster.getRewardtime() >= Option.REWARD_TIMES.getInt()) {
+						continue;// 如果领奖次数已经大于设定值了，那么跳出循环
+					}
+					// 这时候就可以给玩家发奖励了，这里让主线程执行
+					Bukkit.getScheduler().runTask(BBSToper.getInstance(), new Runnable() {
+						@Override
+						public void run() {
+							for (int x = 0; x < Option.REWARD_COMMANDS.getStringList().size(); x++) {
+								String cmd = Option.REWARD_COMMANDS.getStringList().get(x)
+										.replaceAll("%PLAYER%", player.getName());
+								Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+							}
+						}
+					});
+					// 给玩家发个消息表示祝贺
+					player.getPlayer().sendMessage(
+							Message.PREFIX.getString() + Message.REWARD.getString().replaceAll("%TIME%", time));
+					sql.addTopState(bbsname, time);
+					poster.setRewardtime(poster.getRewardtime() + 1);
+					sql.updatePoster(poster);// 把poster储存起来
+					Bukkit.broadcast(Message.BROADCAST.getString().replaceAll("%PLAYER%", player.getName()),
+							"bbstoper.reward");// 给有奖励权限的玩家广播
+				}
+			}
+		}
+	}
+
 }

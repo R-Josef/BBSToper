@@ -31,16 +31,20 @@ database:
     
 mcbbs:
     #服务器宣传贴的帖子id
-    #或顶贴列表的链接, 例如: https://www.mcbbs.net/forum.php?mod=misc&action=viewthreadmod&tid=694746&mobile=no
-    #推荐直接使用宣传帖的帖子id
     url: '694746'
     #顶帖列表每页的大小
     pagesize: 10
     #玩家多久能更换一次绑定的id, 单位天
     changeidcooldown: 30
+    #如果一个玩家没有顶贴是否在加入时发送提示消息
+    joinmessage: true
 
 #奖励设置
 reward:
+    #自动奖励间隔，将在指定的间隔下循环访问宣传帖
+    #如有玩家顶贴就将自动给该玩家奖励，但必须该玩家在线
+    #单位秒，设置为0则关闭，此选项需要大量网络IO建议设置为30左右
+    auto: 30
     #顶贴后领取奖励的有效期, 单位天
     period: 10
     #一天能领取几次顶帖奖励

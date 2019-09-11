@@ -121,7 +121,27 @@ public interface SQLer {
 		}
 		return uuid;
 	}
-	
+
+	public default boolean checkTopstate(String bbsname, String time) {// 查询是否存在这条记录，如果存在返回true，不存在返回false
+		String sql = String.format("SELECT * FROM `%s` WHERE `bbsname`=? AND `time`=? LIMIT 1;",
+				getTableName("topstates"));
+		try {
+			PreparedStatement pstmt = getConnection().prepareStatement(sql);
+			pstmt.setString(1, bbsname);
+			pstmt.setString(2, time);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.isClosed())
+				return false;
+			if (rs.next()) {
+				boolean empty = rs.getString("bbsname").isEmpty();
+				return !empty;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
 	public default void deletePoster(String uuid) {
 		String sql = String.format("DELETE FROM `%s` WHERE `uuid`=?;", getTableName("posters"));
 		try {
