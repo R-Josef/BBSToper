@@ -186,7 +186,7 @@ public class CLI implements TabExecutor {
 									for (String topstate : topstates) {// 然后再去遍历数据库里面存的时间
 										if (topstate.equals(crawler.Time.get(i))) {// 如果数据库里面的时间也等于这次的时间
 											// 那就说明玩家肯定有两次同样时间的顶贴，说明玩家顶贴间隔小于一分钟
-											iswaitamin = true;//我们这里只会提醒玩家一次
+											iswaitamin = true;// 我们这里只会提醒玩家一次
 										}
 									}
 								}
@@ -223,6 +223,8 @@ public class CLI implements TabExecutor {
 					sql.updatePoster(poster);// 更新poster
 					if (issucceed) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.REWARDGIVED.getString());
+						Bukkit.broadcast(Message.BROADCAST.getString().replaceAll("%PLAYER%", player.getName()),
+								"bbstoper.reward");// 给有奖励权限的玩家广播
 					}
 					if (isovertime) {
 						Integer rewardtimes = Option.REWARD_TIMES.getInt();
@@ -235,8 +237,7 @@ public class CLI implements TabExecutor {
 					if (!havepost) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPOST.getString());
 					}
-					Bukkit.broadcast(Message.BROADCAST.getString().replaceAll("%PLAYER%", player.getName()),
-							"bbstoper.reward");// 给有奖励权限的玩家广播
+
 					break;
 				}
 

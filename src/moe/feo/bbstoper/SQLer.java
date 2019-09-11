@@ -130,11 +130,11 @@ public interface SQLer {
 			pstmt.setString(1, bbsname);
 			pstmt.setString(2, time);
 			ResultSet rs = pstmt.executeQuery();
-			if (rs.isClosed())
+			if (rs.isClosed()) {// sqlite会关闭这个结果
 				return false;
-			if (rs.next()) {
-				boolean empty = rs.getString("bbsname").isEmpty();
-				return !empty;
+			}
+			if (!rs.next()) {// mysql会返回一个空结果集，里面什么都没有
+				return false;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
