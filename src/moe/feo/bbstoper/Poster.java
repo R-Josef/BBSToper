@@ -12,6 +12,7 @@ public class Poster {
 	private long binddate = 0;
 	private String rewardbefore = "";
 	private int rewardtime = 0;
+	private int count = 0;
 
 	public static void setSQLer(SQLer sql) {
 		Poster.sql = sql;
@@ -63,6 +64,14 @@ public class Poster {
 
 	public void setRewardtime(int rewardtime) {
 		this.rewardtime = rewardtime;
+	}
+	
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 	public List<String> getTopStates() {

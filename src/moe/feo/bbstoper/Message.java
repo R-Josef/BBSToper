@@ -11,14 +11,20 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public enum Message {
-	PREFIX("prefix"), ENABLE("enable"), RELOAD("reload"), FAILEDCONNECTSQL("failedconnectsql"), POSTERNUM("posternum"),
-	POSTERID("posterid"), POSTERTIME("postertime"), PAGEINFO("pageinfo"), NOPOSTER("noposter"), OVERPAGE("overpage"),
+	PREFIX("prefix"), ENABLE("enable"), RELOAD("reload"), FAILEDCONNECTSQL("failedconnectsql"), POSTERID("posterid"),
+	POSTERNUM("posternum"), OVERPAGE("overpage"), NOPLAYER("noplayer"), POSTERTIME("postertime"), PAGEINFO("pageinfo"),
+	NOPOSTER("noposter"), POSTERPLAYER("posterplayer"), POSTERTOTAL("postertotal"), PAGEINFOTOP("pageinfotop"),
 	NOTBOUND("notbound"), NOPOST("nopost"), OVERTIME("overtime"), WAITAMIN("waitamin"), REWARD("reward"),
-	REWARDGIVED("rewardgived"), BROADCAST("broadcast"), REPEAT("repeat"), NOTSAME("notsame"), ONCOOLDOWN("oncooldown"),
-	SAMEBIND("samebind"), OWNSAMEBIND("ownsamebind"), BINDINGSUCCESS("bindingsuccess"), IDOWNER("idowner"),
-	IDNOTFOUND("idnotfound"), OWNERID("ownerid"), OWNERNOTFOUND("ownernotfound"), NOPERMISSION("nopermission"),
-	INVAILD("invalid"), FAILEDGETWEB("failedgetweb"), DELETESUCCESS("deletesuccess"), INFO("info"),
-	HELP_TITLE("help.title"), HELP_BINDING("help.binding"), HELP_REWARD("help.reward"), HELP_LIST("help.list"),
+	REWARDGIVED("rewardgived"), BROADCAST("broadcast"), ENTER("enter"), REPEAT("repeat"), NOTSAME("notsame"),
+	ONCOOLDOWN("oncooldown"), SAMEBIND("samebind"), OWNSAMEBIND("ownsamebind"), BINDINGSUCCESS("bindingsuccess"),
+	IDOWNER("idowner"), IDNOTFOUND("idnotfound"), OWNERID("ownerid"), OWNERNOTFOUND("ownernotfound"),
+	NOPERMISSION("nopermission"), INVAILD("invalid"), FAILEDGETWEB("failedgetweb"), GUI_FRAME("gui.frame"),
+	GUI_SKULL("gui.skull"), GUI_NOTBOUND("gui.notbound"), GUI_CLICKBOUND("gui.clickbound"),
+	GUI_CLICKREBOUND("gui.clickrebound"), GUI_BBSID("gui.bbsid"), GUI_POSTTIMES("gui.posttimes"),
+	GUI_REWARDS("gui.rewards"), GUI_CLICKGET("gui.clickget"), GUI_TOPS("gui.tops"), GUI_PAGESTATE("gui.pagestate"),
+	GUI_PAGEID("gui.pageid"), GUI_LASTPOST("gui.lastpost"), GUI_CLICKOPEN("gui.clickopen"),
+	CLICKPOSTICON("clickposticon"), DELETESUCCESS("deletesuccess"), INFO("info"), HELP_TITLE("help.title"),
+	HELP_BINDING("help.binding"), HELP_REWARD("help.reward"), HELP_LIST("help.list"), HELP_TOP("help.top"),
 	HELP_CHECK("help.check"), HELP_DELETE("help.delete"), HELP_RELOAD("help.reload");
 
 	public String path;

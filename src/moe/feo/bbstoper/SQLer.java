@@ -69,8 +69,12 @@ public interface SQLer {
 			pstmt = getConnection().prepareStatement(sql);
 			pstmt.setString(1, uuid);
 			ResultSet rs = pstmt.executeQuery();
-			if (rs.isClosed())
+			try {
+				if (rs.isClosed())
 				return poster;
+			} catch (AbstractMethodError e) {
+			}
+			
 			if (rs.next()) {
 				poster = new Poster();
 				poster.setUuid(rs.getString("uuid"));
@@ -93,8 +97,12 @@ public interface SQLer {
 			PreparedStatement pstmt = getConnection().prepareStatement(sql);
 			pstmt.setString(1, poster.getBbsname());
 			ResultSet rs = pstmt.executeQuery();
-			if (rs.isClosed())
+			try {
+				if (rs.isClosed())
 				return list;
+			} catch (AbstractMethodError e) {
+			}
+			
 			while (rs.next()) {
 				list.add(rs.getString("time"));
 			}
@@ -111,8 +119,12 @@ public interface SQLer {
 			PreparedStatement pstmt = getConnection().prepareStatement(sql);
 			pstmt.setString(1, bbsname);
 			ResultSet rs = pstmt.executeQuery();
-			if (rs.isClosed())
-				return uuid;// 如果查询是空的sqlite就会把结果关闭
+			try {
+				if (rs.isClosed())// 如果查询是空的sqlite就会把结果关闭
+				return uuid;
+			} catch (AbstractMethodError e) {// 低版本没有这个特性
+			}
+			
 			if (rs.next()) {// 但是mysql却会返回一个空结果集
 				uuid = rs.getString("uuid");
 			}
@@ -130,9 +142,13 @@ public interface SQLer {
 			pstmt.setString(1, bbsname);
 			pstmt.setString(2, time);
 			ResultSet rs = pstmt.executeQuery();
-			if (rs.isClosed()) {// sqlite会关闭这个结果
-				return false;
+			try {
+				if (rs.isClosed()) {// sqlite会关闭这个结果
+					return false;
+				}
+			} catch (AbstractMethodError e) {// 但是低版本使用这个方法会报错
 			}
+
 			if (!rs.next()) {// mysql会返回一个空结果集，里面什么都没有
 				return false;
 			}
@@ -140,6 +156,52 @@ public interface SQLer {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public default List<Poster> getTopPosters() {// 按排名返回poster，并给poster写上count属性，不会返回没有顶过贴的玩家
+		String sql = String.format("SELECT bbsname,COUNT(*) FROM `%s` GROUP BY bbsname ORDER BY COUNT(*) DESC;",
+				getTableName("topstates"));
+		List<Poster> list = new ArrayList<Poster>();
+		try {
+			PreparedStatement pstmt = getConnection().prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String uuid = bbsNameCheck(rs.getString("bbsname"));
+				Poster poster = getPoster(uuid);
+				if (poster == null) continue;
+				poster.setCount(rs.getInt("COUNT(*)"));
+				list.add(poster);
+			}
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public default List<Poster> getNoCountPosters() {// 由于上面的方法只会返回有顶贴的玩家
+		String sql = String.format("SELECT * FROM `%s` WHERE `rewardbefore`='';", getTableName("posters"));
+		PreparedStatement pstmt;
+		List<Poster> posterlist = new ArrayList<Poster>();
+		try {
+			pstmt = getConnection().prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Poster poster = new Poster();
+				poster.setUuid(rs.getString("uuid"));
+				poster.setName(rs.getString("name"));
+				poster.setBbsname(rs.getString("bbsname"));
+				poster.setBinddate(rs.getLong("binddate"));
+				poster.setRewardbefore(rs.getString("rewardbefore"));
+				poster.setRewardtime(rs.getInt("rewardtimes"));
+				poster.setCount(0);
+				posterlist.add(poster);
+			}
+			return posterlist;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public default void deletePoster(String uuid) {

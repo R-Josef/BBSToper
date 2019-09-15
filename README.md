@@ -32,6 +32,7 @@ clone此git库后可以使用maven进行构建
 
 **bbstoper.admin的子权限**<br>
 `bbstoper.list`<br>
+`bbstoper.top`<br>
 `bbstoper.check`<br>
 `bbstoper.delete`<br>
 `bbstoper.reload`<br>
@@ -39,7 +40,7 @@ clone此git库后可以使用maven进行构建
 **/bbstoper /poster /bt 都是可用命令别名**
 
 
-`/bbstoper` 显示帮助页面<br>
+`/bbstoper` 显示箱子GUI同时给出帮助信息<br>
 权限: 无需权限<br>
 
 `/bbstoper binding <MCBBS论坛ID>` 绑定论坛账号，注意这里是ID不是uid<br>
@@ -50,6 +51,9 @@ clone此git库后可以使用maven进行构建
 
 `/bbstoper list <页数>` 列出所有顶帖者<br>
 权限: `bbstoper.list`<br>
+
+`/bbstoper top <页数>` 按照顶贴次数列排名出所有已绑定玩家<br>
+权限: `bbstoper.top`<br>
 
 `/bbstoper check bbsid <论坛ID>` 查看一个论坛id的绑定者<br>
 权限: `bbstoper.check`<br>

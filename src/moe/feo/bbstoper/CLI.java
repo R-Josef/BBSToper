@@ -14,6 +14,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class CLI implements TabExecutor {
@@ -43,6 +45,9 @@ public class CLI implements TabExecutor {
 			}
 			if (sender.hasPermission("bbstoper.list")) {
 				list.add("list");
+			}
+			if (sender.hasPermission("bbstoper.top")) {
+				list.add("top");
 			}
 			if (sender.hasPermission("bbstoper.check")) {
 				list.add("check");
@@ -85,6 +90,9 @@ public class CLI implements TabExecutor {
 					if (sender.hasPermission("bbstoper.list")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_LIST.getString());
 					}
+					if (sender.hasPermission("bbstoper.top")) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TOP.getString());
+					}
 					if (sender.hasPermission("bbstoper.check")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_CHECK.getString());
 					}
@@ -94,14 +102,21 @@ public class CLI implements TabExecutor {
 					if (sender.hasPermission("bbstoper.reload")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_RELOAD.getString());
 					}
-
+					if (sender instanceof Player) {
+						Player player = (Player) sender;
+						new GUI(player);
+					}
 					return;
 				}
-				Crawler crawler;
+				Crawler crawler;// 爬虫
 				switch (args[0].toLowerCase()) {
 				case "binding": {
 					if (!(sender.hasPermission("bbstoper.binding"))) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPERMISSION.getString());
+						RegisteredListener rglistener = IDListener.map.get(sender.getName());
+						if (rglistener != null) {// 检查这个玩家是否有绑定监听器
+							AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
+						}
 						return;
 					}
 					if (args.length == 2) {
@@ -117,6 +132,10 @@ public class CLI implements TabExecutor {
 								Long leftcdtodays = leftcd / 86400000;
 								sender.sendMessage(Message.PREFIX.getString() + Message.ONCOOLDOWN.getString()
 										.replaceAll("%COOLDOWN%", leftcdtodays.toString()));
+								RegisteredListener rglistener = IDListener.map.get(sender.getName());
+								if (rglistener != null) {// 检查这个玩家是否有绑定监听器
+									AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
+								}
 								return;
 							}
 						} else {
@@ -137,23 +156,44 @@ public class CLI implements TabExecutor {
 								}
 								cache.put(uuid, null);
 								sender.sendMessage(Message.PREFIX.getString() + Message.BINDINGSUCCESS.getString());
+								RegisteredListener rglistener = IDListener.map.get(sender.getName());
+								if (rglistener != null) {// 检查这个玩家是否有绑定监听器
+									AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
+								}
 							} else if (cache.get(uuid) == null) {
 								cache.put(uuid, args[1]);
 								sender.sendMessage(Message.PREFIX.getString() + Message.REPEAT.getString());
 							} else {
 								sender.sendMessage(Message.PREFIX.getString() + Message.NOTSAME.getString());
 								cache.put(uuid, null);
+								RegisteredListener rglistener = IDListener.map.get(sender.getName());
+								if (rglistener != null) {// 检查这个玩家是否有绑定监听器
+									AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
+								}
 							}
 							return;
 						} else if (ownersuuid.equals(uuid)) {// 自己绑定了这个论坛id
 							sender.sendMessage(Message.PREFIX.getString() + Message.OWNSAMEBIND.getString());
+							RegisteredListener rglistener = IDListener.map.get(sender.getName());
+							if (rglistener != null) {// 检查这个玩家是否有绑定监听器
+								AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
+							}
 							return;
 						} else {
 							sender.sendMessage(Message.PREFIX.getString() + Message.SAMEBIND.getString());
+							RegisteredListener rglistener = IDListener.map.get(sender.getName());
+							if (rglistener != null) {// 检查这个玩家是否有绑定监听器
+								AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
+							}
 							return;
 						}
 					} else {
+						sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_BINDING.getString());
+						RegisteredListener rglistener = IDListener.map.get(sender.getName());
+						if (rglistener != null) {// 检查这个玩家是否有绑定监听器
+							AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
+						}
 						return;
 					}
 				}
@@ -287,6 +327,55 @@ public class CLI implements TabExecutor {
 					}
 					break;
 				}
+				case "top": {
+					if (!sender.hasPermission("bbstoper.top")) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.NOPERMISSION.getString());
+						return;
+					}
+					int page = 1;
+					if (args.length == 2) {
+						for (int i = 0; i < args[1].length(); i++) {// 判断参数是否为数字
+							if (!Character.isDigit(args[1].charAt(i))) {
+								sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
+								sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TOP.getString());
+								return;
+							}
+						}
+						page = Integer.parseInt(args[1]);
+					} else if (args.length > 2) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
+						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TOP.getString());
+						return;
+					}
+					List<Poster> posterlist = sql.getTopPosters();
+					posterlist.addAll(sql.getNoCountPosters());
+					int totalpage = (int) Math.ceil((double) posterlist.size() / Option.MCBBS_PAGESIZE.getInt());
+					if (page > totalpage) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.OVERPAGE.getString());
+						return;
+					}
+					List<String> msglist = new ArrayList<String>();
+					msglist.add(Message.PREFIX.getString() + Message.POSTERTOTAL.getString() + ":" + posterlist.size());
+					for (int i = (page - 1) * Option.MCBBS_PAGESIZE.getInt(); i < page
+							* Option.MCBBS_PAGESIZE.getInt(); i++) {
+						if (i >= posterlist.size())
+							break;// 当i不再小于顶贴人数，该停了
+						Poster poster = posterlist.get(i);
+						msglist.add(Message.POSTERPLAYER.getString() + ":" + poster.getName() + " "
+								+ Message.POSTERID.getString() + ":" + poster.getBbsname() + " "
+								+ Message.POSTERNUM.getString() + ":" + poster.getCount());
+					}
+					if (msglist.size() == 1)
+						msglist.add(Message.NOPLAYER.getString());
+					String pageinfo = Message.PAGEINFOTOP.getString();
+					pageinfo = pageinfo.replaceAll("%PAGE%", Integer.toString(page));
+					pageinfo = pageinfo.replaceAll("%TOTALPAGE%", Integer.toString(totalpage));
+					msglist.add(Message.PREFIX.getString() + pageinfo);
+					for (int i = 0; i < msglist.size(); i++) {
+						sender.sendMessage(msglist.get(i));
+					}
+					break;
+				}
 				case "reload": {
 					if (!(sender.hasPermission("bbstoper.reload"))) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPERMISSION.getString());
@@ -353,7 +442,7 @@ public class CLI implements TabExecutor {
 					}
 					if (args.length != 2) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
-						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_CHECK.getString());
+						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_DELETE.getString());
 						return;
 					}
 					@SuppressWarnings("deprecation")

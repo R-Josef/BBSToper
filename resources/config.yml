@@ -32,12 +32,16 @@ database:
 mcbbs:
     #服务器宣传贴的帖子id
     url: '694746'
-    #顶帖列表每页的大小
+    #顶帖列表/玩家排名每页的大小
     pagesize: 10
     #玩家多久能更换一次绑定的id, 单位天
     changeidcooldown: 30
     #如果一个玩家没有顶贴是否在加入时发送提示消息
     joinmessage: true
+    
+gui:
+    #玩家排名的显示数量
+    topplayers: 5
 
 #奖励设置
 reward:

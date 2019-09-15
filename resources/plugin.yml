@@ -1,6 +1,6 @@
 name: BBSToper
 main: moe.feo.bbstoper.BBSToper
-version: 2.1.2
+version: 3.0
 author: Fengshuai(R_Josef)
 website: https://www.mcbbs.net/thread-789082-1-1.html
 commands:
@@ -19,6 +19,7 @@ permissions:
         default: 'op'
         children:
             bbstoper.list: true
+            bbstoper.top: true
             bbstoper.reload: true
             bbstoper.check: true
             bbstoper.delete: true
@@ -36,6 +37,9 @@ permissions:
         default: true
     bbstoper.list:
         description: '列出顶贴列表.'
+        default: 'op'
+    bbstoper.top:
+        description: '将所有玩家按照顶贴次数排序.'
         default: 'op'
     bbstoper.check:
         description: '检查玩家ID和论坛ID.'

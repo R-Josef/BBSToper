@@ -14,24 +14,31 @@ reload: '&a配置已重载!'
 #数据库
 failedconnectsql: '连接数据库时出错！'
 
-#顶贴列表
+#列表通用
 posternum: '&2顶帖数量&f'
+overpage: '&4您输入的页码超出了总页数!'
 posterid: '&2论坛ID&f'
+#顶贴列表
 postertime: '&2顶帖日期&f'
 pageinfo: '&2当前/总页数:&f%PAGE%/%TOTALPAGE%&2, 翻页:&7/poster list <页码>'
 noposter: '&4没有找到顶帖数据!'
-overpage: '&4您输入的页码超出了总页数!'
+#顶贴者列表
+posterplayer: '&2玩家ID&f'
+postertotal: '&2顶贴者数量&f'
+pageinfotop: '&2当前/总页数:&f%PAGE%/%TOTALPAGE%&2, 翻页:&7/poster top <页码>'
+noplayer: '&4没有找到玩家!'
 
 #奖励
 notbound: '&4您还未绑定账号!'
 nopost: '&4您暂未有新的顶帖记录!'
 overtime: '&4很抱歉您每天只能领取 &e%REWARDTIMES% &4次奖励!'
 waitamin: '&4连续顶帖间隔必须大于一分钟!'
-reward: '&b您在 &f%TIME% &b进行的顶帖已得到回报'
+reward: '&b您在 &f%TIME% &b进行的顶帖已得到回报.'
 rewardgived: '&a奖励发放完毕!'
 broadcast: '&b玩家 &e%PLAYER% &b刚刚领取了顶贴奖励, 大家也快来顶贴吧! '
 
 #绑定
+enter: '&c请在聊天框输入您的论坛ID.'
 repeat: '&c为防止输错ID, 请重复输入一次!'
 notsame: '&4抱歉, 两次输入不一致，请重新输入!'
 oncooldown: '&4抱歉您的账号正在绑定冷却中: &f%COOLDOWN% 天.'
@@ -53,9 +60,34 @@ nopermission: '&4对不起，您没有权限这么做!'
 invalid: '&4命令错误!'
 failedgetweb: '&4获取网页时错误!'
 
+#箱子GUI界面
+gui:
+    frame: '&8我是边框'
+    skull: '&e%PLAYER%&b的绑定数据'
+    notbound: '&4未绑定MCBBS账号'
+    clickbound: '&c点击绑定'
+    clickrebound: '&c点击重新绑定'
+    bbsid: '&2绑定账号: &e%BBSID%'
+    posttimes: '&2顶贴次数: &e%TIMES%'
+    rewards: '&b奖励信息'
+    clickget: '&a点击领取奖励'
+    tops: '&b顶贴排行'
+    pagestate: '§b宣传帖状态'
+    pageid: '&2帖子ID: &f%PAGEID%'
+    lastpost: '&2上一次顶贴: &f%TIME%'
+    clickopen: '&a点击获取链接'
+
+#这里是玩家点击GUI中mcbbs宣传帖状态图标后发送的消息
+clickposticon:
+- '&8&l======================================'
+- '&b点击打开本服MCBBS宣传帖链接:'
+- '&9%PAGE%'
+- '&8&l======================================'
+
 #提醒, 您可以在此添加更多消息
 info:
-- '&b本服MCBBS宣传帖链接: &9%PAGE%'
+- '&b本服MCBBS宣传帖链接:'
+- '&9%PAGE%'
 - '&b对宣传帖使用提升卡将获得丰厚奖励.'
 
 #帮助
@@ -64,6 +96,7 @@ help:
     binding: '&3绑定论坛账号: &b/bt binding <MCBBS论坛ID>'
     reward: '&3获取奖励: &b/bt reward'
     list: "&3查看顶帖列表: &b/bt list [页码]"
+    top: "&3查看所有顶贴玩家排名: &b/bt top [页码]"
     check: '&3检查: &b/bt check < bbsid | player > <值>'
     delete: '&3删除某玩家的数据: &b/bt delete <玩家游戏ID>'
     reload: '&3重载插件: &b/bt reload'

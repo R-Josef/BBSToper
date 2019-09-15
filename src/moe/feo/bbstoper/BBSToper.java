@@ -32,6 +32,7 @@ public class BBSToper extends JavaPlugin {
 		this.getCommand("bbstoper").setExecutor(CLI.getInstance());
 		this.getCommand("bbstoper").setTabCompleter(CLI.getInstance());
 		new Reminder(this);
+		new GUIManager(this);
 		int period = Option.REWARD_AUTO.getInt() * 20;
 		if (period > 0) {
 			new BukkitRunnable() {// 自动奖励，异步执行

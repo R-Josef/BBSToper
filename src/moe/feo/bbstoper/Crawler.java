@@ -31,8 +31,9 @@ public class Crawler {
 		try {
 			doc = Jsoup.connect(url).get();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace(); // 这里经常会因为网络连接不顺畅而报错
 			BBSToper.getInstance().getLogger().warning(Message.FAILEDGETWEB.getString());
+			return;// 没抓到网页就不要继续了，会空指针
 		}
 		Elements listclass = doc.getElementsByClass("list");// 获取一个class名为list的元素的合集
 		Element list = listclass.get(0);// mcbbs顶贴列表页面只会有一个list，直接使用即可

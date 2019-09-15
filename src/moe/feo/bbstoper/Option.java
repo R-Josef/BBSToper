@@ -10,8 +10,8 @@ public enum Option {
 	DATABASE_MYSQL_SSL("database.mysql.ssl"), DATABASE_SQLITE_FOLDER("database.sqlite.folder"),
 	DATABASE_SQLITE_DATABASE("database.sqlite.database"), MCBBS_URL("mcbbs.url"), MCBBS_PAGESIZE("mcbbs.pagesize"),
 	MCBBS_CHANGEIDCOOLDOWN("mcbbs.changeidcooldown"), MCBBS_JOINMESSAGE("mcbbs.joinmessage"),
-	REWARD_AUTO("reward.auto"), REWARD_PERIOD("reward.period"), REWARD_TIMES("reward.times"),
-	REWARD_COMMANDS("reward.commands");
+	GUI_TOPPLAYERS("gui.topplayers"), REWARD_AUTO("reward.auto"), REWARD_PERIOD("reward.period"),
+	REWARD_TIMES("reward.times"), REWARD_COMMANDS("reward.commands");
 
 	private static FileConfiguration config;
 	private String path;
