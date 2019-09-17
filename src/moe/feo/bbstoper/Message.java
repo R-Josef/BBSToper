@@ -33,8 +33,9 @@ public enum Message {
 
 	private static FileConfiguration messageConfig;
 	private static File messageFile;
-    private String cacheString; // 缓存内容
-    private List<String> cacheStringList; // 缓存内容
+	private String cacheString; // 缓存内容
+	private List<String> cacheStringList; // 缓存内容
+
 	Message(String path) {
 		this.path = path;
 	}
@@ -44,17 +45,17 @@ public enum Message {
 			messageFile = new File(BBSToper.getInstance().getDataFolder(), "lang.yml");
 		}
 		messageConfig = YamlConfiguration.loadConfiguration(messageFile);// 加载配置
-		try(Reader reader = new InputStreamReader(BBSToper.getInstance().getResource("lang.yml"), StandardCharsets.UTF_8)) {
+		try (Reader reader = new InputStreamReader(BBSToper.getInstance().getResource("lang.yml"), StandardCharsets.UTF_8)) {
 			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(reader);
 			messageConfig.setDefaults(defConfig);// 设置默认
-		}catch (IOException ioe){
-			BBSToper.getInstance().getLogger().log(Level.SEVERE,"读取语言文件错误",ioe);
+		} catch (IOException ioe) {
+			BBSToper.getInstance().getLogger().log(Level.SEVERE, "读取语言文件错误", ioe);
 		}
 		// 删除缓存
-        for(Message m : values()){
-            m.cacheString = null;
-            m.cacheStringList = null;
-        }
+		for (Message m : values()) {
+			m.cacheString = null;
+			m.cacheStringList = null;
+		}
 	}
 
 	public static void saveDefaultConfig() {
@@ -67,18 +68,18 @@ public enum Message {
 	}
 
 	public String getString() {
-	    if(cacheString!=null)return cacheString;
+		if (cacheString != null) return cacheString;
 		return cacheString = ChatColor.translateAlternateColorCodes('%',
-                messageConfig.getString(path));
+				messageConfig.getString(path));
 	}
 
 	public List<String> getStringList() {
-	    if(cacheStringList!=null)return cacheStringList;
+		if (cacheStringList != null) return cacheStringList;
 		return cacheStringList = Collections.unmodifiableList(// 禁止修改
-                messageConfig.getStringList(path).stream().map(
-                        msg -> ChatColor.translateAlternateColorCodes('%', msg)
-                ).collect(Collectors.toList())
-        );
+				messageConfig.getStringList(path).stream().map(
+						msg -> ChatColor.translateAlternateColorCodes('%', msg)
+				).collect(Collectors.toList())
+		);
 	}
 
 }

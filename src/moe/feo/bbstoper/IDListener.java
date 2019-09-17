@@ -110,7 +110,7 @@ public class IDListener extends RegisteredListener implements Listener, EventExe
 		CLI.getInstance().onCommand(player, null, null, args);
 		if (state) {// isfirst为true说明这是第二次进入这个方法
 			unregister();
-			map.remove(uid);
+			// map.remove(uid);
 		} else {// isfirst为false说明是第一次进入
 			state = true;
 		}
