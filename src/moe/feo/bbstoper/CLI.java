@@ -113,10 +113,7 @@ public class CLI implements TabExecutor {
 				case "binding": {
 					if (!(sender.hasPermission("bbstoper.binding"))) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPERMISSION.getString());
-						RegisteredListener rglistener = IDListener.map.get(sender.getName());
-						if (rglistener != null) {// 检查这个玩家是否有绑定监听器
-							AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
-						}
+						IDListener.unregister(sender);
 						return;
 					}
 					if (args.length == 2) {
@@ -128,14 +125,11 @@ public class CLI implements TabExecutor {
 							long cd = System.currentTimeMillis() - poster.getBinddate();// 已经过了的cd
 							long settedcd = Option.MCBBS_CHANGEIDCOOLDOWN.getInt() * (long) 86400000;// 设置的cd
 							if (cd < settedcd) {// 如果还在cd那么直接return;
-								Long leftcd = settedcd - cd;// 剩下的cd
-								Long leftcdtodays = leftcd / 86400000;
+								long leftcd = settedcd - cd;// 剩下的cd
+								long leftcdtodays = leftcd / 86400000;
 								sender.sendMessage(Message.PREFIX.getString() + Message.ONCOOLDOWN.getString()
-										.replaceAll("%COOLDOWN%", leftcdtodays.toString()));
-								RegisteredListener rglistener = IDListener.map.get(sender.getName());
-								if (rglistener != null) {// 检查这个玩家是否有绑定监听器
-									AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
-								}
+										.replaceAll("%COOLDOWN%", String.valueOf(leftcdtodays)));
+								IDListener.unregister(sender);
 								return;
 							}
 						} else {
@@ -156,44 +150,29 @@ public class CLI implements TabExecutor {
 								}
 								cache.put(uuid, null);
 								sender.sendMessage(Message.PREFIX.getString() + Message.BINDINGSUCCESS.getString());
-								RegisteredListener rglistener = IDListener.map.get(sender.getName());
-								if (rglistener != null) {// 检查这个玩家是否有绑定监听器
-									AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
-								}
+								IDListener.unregister(sender);
 							} else if (cache.get(uuid) == null) {
 								cache.put(uuid, args[1]);
 								sender.sendMessage(Message.PREFIX.getString() + Message.REPEAT.getString());
 							} else {
 								sender.sendMessage(Message.PREFIX.getString() + Message.NOTSAME.getString());
 								cache.put(uuid, null);
-								RegisteredListener rglistener = IDListener.map.get(sender.getName());
-								if (rglistener != null) {// 检查这个玩家是否有绑定监听器
-									AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
-								}
+								IDListener.unregister(sender);
 							}
 							return;
 						} else if (ownersuuid.equals(uuid)) {// 自己绑定了这个论坛id
 							sender.sendMessage(Message.PREFIX.getString() + Message.OWNSAMEBIND.getString());
-							RegisteredListener rglistener = IDListener.map.get(sender.getName());
-							if (rglistener != null) {// 检查这个玩家是否有绑定监听器
-								AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
-							}
+							IDListener.unregister(sender);
 							return;
 						} else {
 							sender.sendMessage(Message.PREFIX.getString() + Message.SAMEBIND.getString());
-							RegisteredListener rglistener = IDListener.map.get(sender.getName());
-							if (rglistener != null) {// 检查这个玩家是否有绑定监听器
-								AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
-							}
+							IDListener.unregister(sender);
 							return;
 						}
 					} else {
 						sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_BINDING.getString());
-						RegisteredListener rglistener = IDListener.map.get(sender.getName());
-						if (rglistener != null) {// 检查这个玩家是否有绑定监听器
-							AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);
-						}
+						IDListener.unregister(sender);
 						return;
 					}
 				}
@@ -213,7 +192,7 @@ public class CLI implements TabExecutor {
 					crawler = new Crawler();
 					crawler.kickExpiredData();// 剔除过期数据
 					String bbsname = poster.getBbsname();
-					List<String> cache = new ArrayList<String>();// 这个缓存是用来判断玩家的顶贴粒度是否小于一分钟
+					List<String> cache = new ArrayList<>();// 这个缓存是用来判断玩家的顶贴粒度是否小于一分钟
 					boolean issucceed = false;
 					boolean isovertime = false;
 					boolean iswaitamin = false;
@@ -267,10 +246,11 @@ public class CLI implements TabExecutor {
 								"bbstoper.reward");// 给有奖励权限的玩家广播
 					}
 					if (isovertime) {
-						Integer rewardtimes = Option.REWARD_TIMES.getInt();
+						int rewardtimes = Option.REWARD_TIMES.getInt();
 						sender.sendMessage(Message.PREFIX.getString()
-								+ Message.OVERTIME.getString().replaceAll("%REWARDTIMES%", rewardtimes.toString()));
+								+ Message.OVERTIME.getString().replaceAll("%REWARDTIMES%", Integer.toString(rewardtimes)));
 					}
+					// Condition 'iswaitamin' is always 'false'.... [IDEA]
 					if (iswaitamin) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.WAITAMIN.getString());
 					}

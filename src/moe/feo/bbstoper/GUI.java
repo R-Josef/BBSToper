@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -19,18 +20,13 @@ public class GUI {
 	private Inventory inv;
 
 	public GUI(Player player) {
-		new BukkitRunnable() {
-			@Override
-			public void run() {
+//		new BukkitRunnable() {
+//			@Override
+//			public void run() {
 				createGui(player);
-				Bukkit.getScheduler().runTask(BBSToper.getInstance(), new Runnable() {
-					@Override
-					public void run() {
-						player.openInventory(inv);
-					}
-				});
-			}
-		}.runTaskAsynchronously(BBSToper.getInstance());
+				Bukkit.getScheduler().runTask(BBSToper.getInstance(), () -> player.openInventory(inv));
+//			}
+//		}.runTaskAsynchronously(BBSToper.getInstance());
 	}
 
 	@SuppressWarnings("deprecation")
