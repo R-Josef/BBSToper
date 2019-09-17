@@ -4,10 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.RegisteredListener;
-
 import java.util.UUID;
 
 public class GUIManager implements Listener {
@@ -18,7 +15,8 @@ public class GUIManager implements Listener {
 
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
-		if (!(event.getWhoClicked() instanceof Player)) return;// 如果不是玩家操作的，返回
+		if (!(event.getWhoClicked() instanceof Player))
+			return;// 如果不是玩家操作的，返回
 		Player player = (Player) event.getWhoClicked();
 		if (player.getOpenInventory().getTitle().equalsIgnoreCase(Message.PREFIX.getString())) {// 确认操作的此插件GUI
 			event.setCancelled(true);
@@ -31,13 +29,12 @@ public class GUIManager implements Listener {
 					if (rglistener == null) {
 						new IDListener(player.getUniqueId()).register();// 为此玩家创建一个监听器
 						player.sendMessage(Message.ENTER.getString());
-						//AsyncPlayerChatEvent.getHandlerList().unregister(rglistener);// 注销此监听器
 					}
 				}
 			}
 			if (event.getRawSlot() == 13) {
 				player.closeInventory();
-				String[] args = {"reward"};
+				String[] args = { "reward" };
 				CLI.getInstance().onCommand(player, null, null, args);
 			}
 			if (event.getRawSlot() == 22) {// 获取链接

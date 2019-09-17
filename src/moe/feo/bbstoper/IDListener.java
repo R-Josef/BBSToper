@@ -17,8 +17,6 @@
 package moe.feo.bbstoper;
 
 import java.util.*;
-import java.util.logging.Level;
-
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -31,10 +29,9 @@ import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class IDListener extends RegisteredListener implements Listener, EventExecutor {
-	public static final Object lock = new Object(); //线程锁
+	public static final Object lock = new Object(); // 线程锁
 	public static final Map<UUID, IDListener> map = new HashMap<>();
 
-	//private RegisteredListener rglistener;
 	private UUID uid;
 	private boolean state;
 
@@ -50,10 +47,9 @@ public class IDListener extends RegisteredListener implements Listener, EventExe
 		}
 	}
 
-	public IDListener(UUID uuid) {// 在构造函数中初始化RegisteredListener和PlayerName
+	public IDListener(UUID uuid) {// 在构造函数中初始化RegisteredListener和UUID
 		super(null, null, EventPriority.HIGH, BBSToper.getInstance(), false);
 		this.uid = uuid;
-		//this.rglistener = new RegisteredListener(this, idexecutor, EventPriority.HIGH, BBSToper.getInstance(), false);
 		this.state = false;
 	}
 
@@ -73,18 +69,20 @@ public class IDListener extends RegisteredListener implements Listener, EventExe
 		synchronized (lock) {
 			AsyncPlayerChatEvent.getHandlerList().unregister((RegisteredListener) this);
 			if (!map.remove(uid, this)) {
-				BBSToper.getInstance().getLogger().log(Level.WARNING, "Failed to uninstall monitor as expected 未能按照预期卸载监听", new Throwable("堆栈输出 StackTrace dump"));
+				BBSToper.getInstance().getLogger().warning(Message.FAILEDUNINSTALLMO.getString());;
 			}
 		}
 	}
 
 	public void register() {
 		for (RegisteredListener lis : AsyncPlayerChatEvent.getHandlerList().getRegisteredListeners()) {
-			if (lis == this) return; // 如果已经注册就取消注册
+			if (lis == this)
+				return; // 如果已经注册就取消注册
 		}
 		synchronized (lock) {
 			IDListener old = map.put(uid, this);
-			if (old != null && old != this) old.unregister();// 防止遗留
+			if (old != null && old != this)
+				old.unregister();// 防止遗留
 		}
 		new BukkitRunnable() {
 			@Override
@@ -100,7 +98,8 @@ public class IDListener extends RegisteredListener implements Listener, EventExe
 	}
 
 	public void onPlayerChat(AsyncPlayerChatEvent event) {// 处理事件
-		if (!event.getPlayer().getUniqueId().equals(uid)) return;
+		if (!event.getPlayer().getUniqueId().equals(uid))
+			return;
 		Player player = event.getPlayer();
 		String msg = event.getMessage();
 		event.setCancelled(true);
@@ -108,10 +107,9 @@ public class IDListener extends RegisteredListener implements Listener, EventExe
 		list.add(0, "binding");
 		String[] args = list.toArray(new String[0]);
 		CLI.getInstance().onCommand(player, null, null, args);
-		if (state) {// isfirst为true说明这是第二次进入这个方法
+		if (state) {// state为true说明这是第二次进入这个方法
 			unregister();
-			// map.remove(uid);
-		} else {// isfirst为false说明是第一次进入
+		} else {// state为false说明是第一次进入
 			state = true;
 		}
 	}

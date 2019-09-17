@@ -14,8 +14,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class CLI implements TabExecutor {
@@ -37,6 +35,7 @@ public class CLI implements TabExecutor {
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
 		if (args.length == 1) {
 			List<String> list = new ArrayList<String>();
+			list.add("help");
 			if (sender.hasPermission("bbstoper.reward")) {
 				list.add("reward");
 			}
@@ -80,6 +79,15 @@ public class CLI implements TabExecutor {
 			@Override
 			public void run() {
 				if (args.length == 0) {// 没有带参数
+					if (sender instanceof Player) {
+						Player player = (Player) sender;
+						new GUI(player);
+					}
+					return;
+				}
+				Crawler crawler;// 爬虫
+				switch (args[0].toLowerCase()) {
+				case "help": {
 					sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TITLE.getString());
 					if (sender.hasPermission("bbstoper.reward")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_REWARD.getString());
@@ -102,14 +110,8 @@ public class CLI implements TabExecutor {
 					if (sender.hasPermission("bbstoper.reload")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_RELOAD.getString());
 					}
-					if (sender instanceof Player) {
-						Player player = (Player) sender;
-						new GUI(player);
-					}
 					return;
 				}
-				Crawler crawler;// 爬虫
-				switch (args[0].toLowerCase()) {
 				case "binding": {
 					if (!(sender.hasPermission("bbstoper.binding"))) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPERMISSION.getString());
@@ -247,10 +249,9 @@ public class CLI implements TabExecutor {
 					}
 					if (isovertime) {
 						int rewardtimes = Option.REWARD_TIMES.getInt();
-						sender.sendMessage(Message.PREFIX.getString()
-								+ Message.OVERTIME.getString().replaceAll("%REWARDTIMES%", Integer.toString(rewardtimes)));
+						sender.sendMessage(Message.PREFIX.getString() + Message.OVERTIME.getString()
+								.replaceAll("%REWARDTIMES%", Integer.toString(rewardtimes)));
 					}
-					// Condition 'iswaitamin' is always 'false'.... [IDEA]
 					if (iswaitamin) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.WAITAMIN.getString());
 					}
@@ -438,6 +439,7 @@ public class CLI implements TabExecutor {
 				}
 				default: {
 					sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
+					sender.sendMessage(Message.PREFIX.getString() + Message.HELP_HELP.getString());
 					return;
 				}
 				}

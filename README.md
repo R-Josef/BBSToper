@@ -40,7 +40,10 @@ clone此git库后可以使用maven进行构建
 **/bbstoper /poster /bt 都是可用命令别名**
 
 
-`/bbstoper` 显示箱子GUI同时给出帮助信息<br>
+`/bbstoper` 显示箱子GUI<br>
+权限: 无需权限<br>
+
+`/bbstoper help` 显示帮助信息<br>
 权限: 无需权限<br>
 
 `/bbstoper binding <MCBBS论坛ID>` 绑定论坛账号，注意这里是ID不是uid<br>

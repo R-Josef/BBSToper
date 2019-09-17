@@ -2,7 +2,6 @@ package moe.feo.bbstoper;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,12 +19,12 @@ public enum Message {
 	REWARDGIVED("rewardgived"), BROADCAST("broadcast"), ENTER("enter"), REPEAT("repeat"), NOTSAME("notsame"),
 	ONCOOLDOWN("oncooldown"), SAMEBIND("samebind"), OWNSAMEBIND("ownsamebind"), BINDINGSUCCESS("bindingsuccess"),
 	IDOWNER("idowner"), IDNOTFOUND("idnotfound"), OWNERID("ownerid"), OWNERNOTFOUND("ownernotfound"),
-	NOPERMISSION("nopermission"), INVAILD("invalid"), FAILEDGETWEB("failedgetweb"), GUI_FRAME("gui.frame"),
+	NOPERMISSION("nopermission"), INVAILD("invalid"), FAILEDGETWEB("failedgetweb"), FAILEDUNINSTALLMO("faileduninstallmo"), GUI_FRAME("gui.frame"),
 	GUI_SKULL("gui.skull"), GUI_NOTBOUND("gui.notbound"), GUI_CLICKBOUND("gui.clickbound"),
 	GUI_CLICKREBOUND("gui.clickrebound"), GUI_BBSID("gui.bbsid"), GUI_POSTTIMES("gui.posttimes"),
 	GUI_REWARDS("gui.rewards"), GUI_CLICKGET("gui.clickget"), GUI_TOPS("gui.tops"), GUI_PAGESTATE("gui.pagestate"),
 	GUI_PAGEID("gui.pageid"), GUI_LASTPOST("gui.lastpost"), GUI_CLICKOPEN("gui.clickopen"),
-	CLICKPOSTICON("clickposticon"), DELETESUCCESS("deletesuccess"), INFO("info"), HELP_TITLE("help.title"),
+	CLICKPOSTICON("clickposticon"), DELETESUCCESS("deletesuccess"), INFO("info"), HELP_TITLE("help.title"), HELP_HELP("help.help"),
 	HELP_BINDING("help.binding"), HELP_REWARD("help.reward"), HELP_LIST("help.list"), HELP_TOP("help.top"),
 	HELP_CHECK("help.check"), HELP_DELETE("help.delete"), HELP_RELOAD("help.reload");
 
@@ -45,11 +44,12 @@ public enum Message {
 			messageFile = new File(BBSToper.getInstance().getDataFolder(), "lang.yml");
 		}
 		messageConfig = YamlConfiguration.loadConfiguration(messageFile);// 加载配置
-		try (Reader reader = new InputStreamReader(BBSToper.getInstance().getResource("lang.yml"), StandardCharsets.UTF_8)) {
+		try (Reader reader = new InputStreamReader(BBSToper.getInstance().getResource("lang.yml"),
+				StandardCharsets.UTF_8)) {
 			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(reader);
 			messageConfig.setDefaults(defConfig);// 设置默认
 		} catch (IOException ioe) {
-			BBSToper.getInstance().getLogger().log(Level.SEVERE, "读取语言文件错误", ioe);
+			BBSToper.getInstance().getLogger().log(Level.SEVERE, "读取语言文件时出错!", ioe);
 		}
 		// 删除缓存
 		for (Message m : values()) {
@@ -68,18 +68,17 @@ public enum Message {
 	}
 
 	public String getString() {
-		if (cacheString != null) return cacheString;
-		return cacheString = ChatColor.translateAlternateColorCodes('%',
-				messageConfig.getString(path));
+		if (cacheString != null)
+			return cacheString;
+		return cacheString = ChatColor.translateAlternateColorCodes('&', messageConfig.getString(path));
 	}
 
 	public List<String> getStringList() {
-		if (cacheStringList != null) return cacheStringList;
+		if (cacheStringList != null)
+			return cacheStringList;
 		return cacheStringList = Collections.unmodifiableList(// 禁止修改
-				messageConfig.getStringList(path).stream().map(
-						msg -> ChatColor.translateAlternateColorCodes('%', msg)
-				).collect(Collectors.toList())
-		);
+				messageConfig.getStringList(path).stream().map(msg -> ChatColor.translateAlternateColorCodes('&', msg))
+						.collect(Collectors.toList()));
 	}
 
 }

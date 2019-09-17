@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
 
 public class MySQLer implements SQLer {
 
@@ -55,8 +56,7 @@ public class MySQLer implements SQLer {
 			Class.forName(driver);
 			this.conn = DriverManager.getConnection(getUrl(), user, password);
 		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-			BBSToper.getInstance().getLogger().warning(Message.FAILEDCONNECTSQL.getString());
+			BBSToper.getInstance().getLogger().log(Level.WARNING, Message.FAILEDCONNECTSQL.getString(), e);
 		}
 	}
 

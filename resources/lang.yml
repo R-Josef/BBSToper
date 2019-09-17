@@ -58,7 +58,8 @@ deletesuccess: '&c成功删除了该玩家的记录.'
 #其他
 nopermission: '&4对不起，您没有权限这么做!'
 invalid: '&4命令错误!'
-failedgetweb: '&4获取网页时错误!'
+failedgetweb: '获取网页时错误, 可能是由于网络波动!'
+faileduninstallmo: '未能按照预期卸载监听!'
 
 #箱子GUI界面
 gui:
@@ -92,7 +93,8 @@ info:
 
 #帮助
 help:
-    title: '&3BBSToper指令帮助'
+    title: '&3&lBBSToper指令帮助'
+    help: '&3显示帮助信息: &b/bt help'
     binding: '&3绑定论坛账号: &b/bt binding <MCBBS论坛ID>'
     reward: '&3获取奖励: &b/bt reward'
     list: "&3查看顶帖列表: &b/bt list [页码]"
