@@ -61,7 +61,10 @@ public class GUI {
 		ItemStack sunflower = new ItemStack(Material.DOUBLE_PLANT);
 		ItemMeta sunflowermeta = sunflower.getItemMeta();
 		sunflowermeta.setDisplayName(Message.GUI_REWARDS.getString());
-		List<String> sunflowerlores = Option.REWARD_COMMANDS.getStringList();
+		List<String> sunflowerlores = new ArrayList<String>(Message.GUI_REWARDSINFO.getStringList());// 自定义奖励信息
+		if (sunflowerlores.isEmpty()) {// 如果没有自定义奖励信息
+			sunflowerlores = Option.REWARD_COMMANDS.getStringList();// 直接显示命令
+		}
 		sunflowerlores.add(Message.GUI_CLICKGET.getString());
 		sunflowermeta.setLore(sunflowerlores);
 		sunflower.setItemMeta(sunflowermeta);

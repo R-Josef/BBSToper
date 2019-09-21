@@ -82,6 +82,9 @@ public class CLI implements TabExecutor {
 					if (sender instanceof Player) {
 						Player player = (Player) sender;
 						new GUI(player);
+					} else {
+						String[] args = {"help"};
+						onCommand(sender, cmd, label, args);
 					}
 					return;
 				}
@@ -113,6 +116,11 @@ public class CLI implements TabExecutor {
 					return;
 				}
 				case "binding": {
+					if (!(sender instanceof Player)) {
+						sender.sendMessage(Message.PLAYERCMD.getString());
+						sender.sendMessage(Message.HELP_HELP.getString());
+						return;
+					}
 					if (!(sender.hasPermission("bbstoper.binding"))) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPERMISSION.getString());
 						IDListener.unregister(sender);
@@ -172,13 +180,18 @@ public class CLI implements TabExecutor {
 							return;
 						}
 					} else {
-						sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
+						sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_BINDING.getString());
 						IDListener.unregister(sender);
 						return;
 					}
 				}
 				case "reward": {
+					if (!(sender instanceof Player)) {
+						sender.sendMessage(Message.PLAYERCMD.getString());
+						sender.sendMessage(Message.HELP_HELP.getString());
+						return;
+					}
 					if (!sender.hasPermission("bbstoper.reward")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPERMISSION.getString());
 						return;
@@ -269,16 +282,22 @@ public class CLI implements TabExecutor {
 					}
 					int page = 1;
 					if (args.length == 2) {
-						for (int i = 0; i < args[1].length(); i++) {// 判断参数是否为数字
-							if (!Character.isDigit(args[1].charAt(i))) {
-								sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
-								sender.sendMessage(Message.PREFIX.getString() + Message.HELP_LIST.getString());
+						for (char c : args[1].toCharArray()) {// 判断参数是否为数字 
+							if (!Character.isDigit(c)) {
+								sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
+								sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TOP.getString());
 								return;
 							}
 						}
-						page = Integer.parseInt(args[1]);
+						try {
+							page = Integer.parseInt(args[1]);
+						} catch (NumberFormatException e) {
+							sender.sendMessage(Message.INVALIDNUM.getString());
+							return;
+						}
+						
 					} else if (args.length > 2) {
-						sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
+						sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_LIST.getString());
 						return;
 					}
@@ -315,16 +334,21 @@ public class CLI implements TabExecutor {
 					}
 					int page = 1;
 					if (args.length == 2) {
-						for (int i = 0; i < args[1].length(); i++) {// 判断参数是否为数字
-							if (!Character.isDigit(args[1].charAt(i))) {
-								sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
+						for (char c : args[1].toCharArray()) {// 判断参数是否为数字 
+							if (!Character.isDigit(c)) {
+								sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
 								sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TOP.getString());
 								return;
 							}
 						}
-						page = Integer.parseInt(args[1]);
+						try {
+							page = Integer.parseInt(args[1]);
+						} catch (NumberFormatException e) {
+							sender.sendMessage(Message.INVALIDNUM.getString());
+							return;
+						}
 					} else if (args.length > 2) {
-						sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
+						sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TOP.getString());
 						return;
 					}
@@ -384,7 +408,7 @@ public class CLI implements TabExecutor {
 						return;
 					}
 					if (args.length != 3) {
-						sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
+						sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_CHECK.getString());
 						return;
 					}
@@ -422,7 +446,7 @@ public class CLI implements TabExecutor {
 						return;
 					}
 					if (args.length != 2) {
-						sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
+						sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_DELETE.getString());
 						return;
 					}
@@ -438,7 +462,7 @@ public class CLI implements TabExecutor {
 					return;
 				}
 				default: {
-					sender.sendMessage(Message.PREFIX.getString() + Message.INVAILD.getString());
+					sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
 					sender.sendMessage(Message.PREFIX.getString() + Message.HELP_HELP.getString());
 					return;
 				}

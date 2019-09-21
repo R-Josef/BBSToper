@@ -58,6 +58,8 @@ deletesuccess: '&c成功删除了该玩家的记录.'
 #其他
 nopermission: '&4对不起，您没有权限这么做!'
 invalid: '&4命令错误!'
+invalidnum: '&4无效的数字!'
+playercmd: '&4该命令必须由玩家执行!'
 failedgetweb: '获取网页时错误, 可能是由于网络波动!'
 faileduninstallmo: '未能按照预期卸载监听!'
 
@@ -77,6 +79,9 @@ gui:
     pageid: '&2帖子ID: &f%PAGEID%'
     lastpost: '&2上一次顶贴: &f%TIME%'
     clickopen: '&a点击获取链接'
+    #这里是自定义GUI中的奖励信息, 留空则直接显示奖励命令 ([]表示留空)
+    #如果您想自定义，那么应该按照info和clickposticon那样的格式来写
+    rewardsinfo: []
 
 #这里是玩家点击GUI中mcbbs宣传帖状态图标后发送的消息
 clickposticon:

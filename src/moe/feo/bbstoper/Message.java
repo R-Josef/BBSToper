@@ -19,14 +19,16 @@ public enum Message {
 	REWARDGIVED("rewardgived"), BROADCAST("broadcast"), ENTER("enter"), REPEAT("repeat"), NOTSAME("notsame"),
 	ONCOOLDOWN("oncooldown"), SAMEBIND("samebind"), OWNSAMEBIND("ownsamebind"), BINDINGSUCCESS("bindingsuccess"),
 	IDOWNER("idowner"), IDNOTFOUND("idnotfound"), OWNERID("ownerid"), OWNERNOTFOUND("ownernotfound"),
-	NOPERMISSION("nopermission"), INVAILD("invalid"), FAILEDGETWEB("failedgetweb"), FAILEDUNINSTALLMO("faileduninstallmo"), GUI_FRAME("gui.frame"),
+	NOPERMISSION("nopermission"), INVALID("invalid"), INVALIDNUM("invalidnum"), PLAYERCMD("playercmd"),
+	FAILEDGETWEB("failedgetweb"), FAILEDUNINSTALLMO("faileduninstallmo"), GUI_FRAME("gui.frame"),
 	GUI_SKULL("gui.skull"), GUI_NOTBOUND("gui.notbound"), GUI_CLICKBOUND("gui.clickbound"),
 	GUI_CLICKREBOUND("gui.clickrebound"), GUI_BBSID("gui.bbsid"), GUI_POSTTIMES("gui.posttimes"),
 	GUI_REWARDS("gui.rewards"), GUI_CLICKGET("gui.clickget"), GUI_TOPS("gui.tops"), GUI_PAGESTATE("gui.pagestate"),
 	GUI_PAGEID("gui.pageid"), GUI_LASTPOST("gui.lastpost"), GUI_CLICKOPEN("gui.clickopen"),
-	CLICKPOSTICON("clickposticon"), DELETESUCCESS("deletesuccess"), INFO("info"), HELP_TITLE("help.title"), HELP_HELP("help.help"),
-	HELP_BINDING("help.binding"), HELP_REWARD("help.reward"), HELP_LIST("help.list"), HELP_TOP("help.top"),
-	HELP_CHECK("help.check"), HELP_DELETE("help.delete"), HELP_RELOAD("help.reload");
+	GUI_REWARDSINFO("gui.rewardsinfo"), CLICKPOSTICON("clickposticon"), DELETESUCCESS("deletesuccess"), INFO("info"),
+	HELP_TITLE("help.title"), HELP_HELP("help.help"), HELP_BINDING("help.binding"), HELP_REWARD("help.reward"),
+	HELP_LIST("help.list"), HELP_TOP("help.top"), HELP_CHECK("help.check"), HELP_DELETE("help.delete"),
+	HELP_RELOAD("help.reload");
 
 	public String path;
 

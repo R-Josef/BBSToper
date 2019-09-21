@@ -55,7 +55,7 @@ public class IDListener extends RegisteredListener implements Listener, EventExe
 
 	public static void unregister(UUID uniqueId) {
 		synchronized (lock) {
-			Optional.of(map.get(uniqueId)).ifPresent(IDListener::unregister);
+			Optional.ofNullable(map.get(uniqueId)).ifPresent(IDListener::unregister);
 		}
 	}
 
@@ -69,7 +69,7 @@ public class IDListener extends RegisteredListener implements Listener, EventExe
 		synchronized (lock) {
 			AsyncPlayerChatEvent.getHandlerList().unregister((RegisteredListener) this);
 			if (!map.remove(uid, this)) {
-				BBSToper.getInstance().getLogger().warning(Message.FAILEDUNINSTALLMO.getString());;
+				BBSToper.getInstance().getLogger().warning(Message.FAILEDUNINSTALLMO.getString());
 			}
 		}
 	}
