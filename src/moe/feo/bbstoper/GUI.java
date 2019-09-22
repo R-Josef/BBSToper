@@ -90,7 +90,11 @@ public class GUI {
 		List<String> compasslores = new ArrayList<String>();
 		compasslores.add(Message.GUI_PAGEID.getString().replaceAll("%PAGEID%", Option.MCBBS_URL.getString()));
 		Crawler crawler = new Crawler();
-		compasslores.add(Message.GUI_LASTPOST.getString().replaceAll("%TIME%", crawler.Time.get(0)));
+		if (crawler.visible) {// 如果帖子可视，就获取帖子最近一次顶贴
+			compasslores.add(Message.GUI_LASTPOST.getString().replaceAll("%TIME%", crawler.Time.get(0)));
+		} else {
+			compasslores.add(Message.GUI_PAGENOTVISIBLE.getString());
+		}
 		compasslores.add(Message.GUI_CLICKOPEN.getString());
 		compassmeta.setLore(compasslores);
 		compass.setItemMeta(compassmeta);

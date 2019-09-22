@@ -83,7 +83,7 @@ public class CLI implements TabExecutor {
 						Player player = (Player) sender;
 						new GUI(player);
 					} else {
-						String[] args = {"help"};
+						String[] args = { "help" };
 						onCommand(sender, cmd, label, args);
 					}
 					return;
@@ -205,6 +205,10 @@ public class CLI implements TabExecutor {
 						return;
 					}
 					crawler = new Crawler();
+					if (!crawler.visible) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.PAGENOTVISIBLE.getString());
+						return;
+					}
 					crawler.kickExpiredData();// 剔除过期数据
 					String bbsname = poster.getBbsname();
 					List<String> cache = new ArrayList<>();// 这个缓存是用来判断玩家的顶贴粒度是否小于一分钟
@@ -282,7 +286,7 @@ public class CLI implements TabExecutor {
 					}
 					int page = 1;
 					if (args.length == 2) {
-						for (char c : args[1].toCharArray()) {// 判断参数是否为数字 
+						for (char c : args[1].toCharArray()) {// 判断参数是否为数字
 							if (!Character.isDigit(c)) {
 								sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
 								sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TOP.getString());
@@ -295,13 +299,21 @@ public class CLI implements TabExecutor {
 							sender.sendMessage(Message.INVALIDNUM.getString());
 							return;
 						}
-						
+
 					} else if (args.length > 2) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_LIST.getString());
 						return;
 					}
 					crawler = new Crawler();
+					if (!crawler.visible) {
+						if (sender instanceof Player) {
+							sender.sendMessage(Message.PREFIX.getString() + Message.PAGENOTVISIBLE.getString());
+							return;
+						} else {
+							return;
+						}
+					}
 					int totalpage = (int) Math.ceil((double) crawler.ID.size() / Option.MCBBS_PAGESIZE.getInt());
 					if (page > totalpage) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.OVERPAGE.getString());
@@ -334,7 +346,7 @@ public class CLI implements TabExecutor {
 					}
 					int page = 1;
 					if (args.length == 2) {
-						for (char c : args[1].toCharArray()) {// 判断参数是否为数字 
+						for (char c : args[1].toCharArray()) {// 判断参数是否为数字
 							if (!Character.isDigit(c)) {
 								sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
 								sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TOP.getString());

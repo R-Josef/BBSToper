@@ -39,6 +39,7 @@ public class BBSToper extends JavaPlugin {
 				@Override
 				public void run() {
 					Crawler crawler = new Crawler();
+					if (!crawler.visible) return;
 					crawler.kickExpiredData();
 					crawler.activeReward();
 				}

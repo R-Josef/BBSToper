@@ -19,6 +19,7 @@ import org.jsoup.select.Elements;
 public class Crawler {
 	public List<String> ID = new ArrayList<String>();
 	public List<String> Time = new ArrayList<String>();
+	public boolean visible = true;
 
 	public Crawler() {
 		resolveWebData();
@@ -36,7 +37,17 @@ public class Crawler {
 			return;// 没抓到网页就不要继续了，会空指针
 		}
 		Elements listclass = doc.getElementsByClass("list");// 获取一个class名为list的元素的合集
-		Element list = listclass.get(0);// mcbbs顶贴列表页面只会有一个list，直接使用即可
+		Element list = null;
+		try {
+			list = listclass.get(0);// mcbbs顶贴列表页面只会有一个list，直接使用即可
+		} catch (IndexOutOfBoundsException e) {
+			this.visible = false;
+			String warn = Message.FAILEDRESOLVEWEB.getString();
+			if (!warn.isEmpty()) {
+				BBSToper.getInstance().getLogger().warning(Message.FAILEDRESOLVEWEB.getString());
+			}
+			return;
+		}
 		Element listbody = list.getElementsByTag("tbody").get(0);// tbody表示表的身体而不是表头
 		for (Element rows : listbody.getElementsByTag("tr")) {// tr是表的一行
 			Elements cells = rows.getElementsByTag("td");// td表示一行的单元格，cells为单元格的合集
