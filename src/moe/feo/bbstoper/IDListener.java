@@ -87,7 +87,7 @@ public class IDListener extends RegisteredListener implements Listener, EventExe
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				unregister();
+				unregister(uid);
 			}
 		}.runTaskLater(BBSToper.getInstance(), 2 * 60 * 20);// 如果这个监听器还存在，那么将在2分钟后被取消
 		AsyncPlayerChatEvent.getHandlerList().register(this);
