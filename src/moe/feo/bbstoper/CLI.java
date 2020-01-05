@@ -35,26 +35,27 @@ public class CLI implements TabExecutor {
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
 		if (args.length == 1) {
 			List<String> list = new ArrayList<String>();
-			list.add("help");
-			if (sender.hasPermission("bbstoper.reward")) {
+			String arg = args[0].toLowerCase();
+			if ("help".startsWith(arg)) list.add("help");
+			if ("reward".startsWith(arg) && sender.hasPermission("bbstoper.reward")) {
 				list.add("reward");
 			}
-			if (sender.hasPermission("bbstoper.binding")) {
+			if ("binding".startsWith(arg) && sender.hasPermission("bbstoper.binding")) {
 				list.add("binding");
 			}
-			if (sender.hasPermission("bbstoper.list")) {
+			if ("list".startsWith(arg) && sender.hasPermission("bbstoper.list")) {
 				list.add("list");
 			}
-			if (sender.hasPermission("bbstoper.top")) {
+			if ("top".startsWith(arg) && sender.hasPermission("bbstoper.top")) {
 				list.add("top");
 			}
-			if (sender.hasPermission("bbstoper.check")) {
+			if ("check".startsWith(arg) && sender.hasPermission("bbstoper.check")) {
 				list.add("check");
 			}
-			if (sender.hasPermission("bbstoper.delete")) {
+			if ("delete".startsWith(arg) && sender.hasPermission("bbstoper.delete")) {
 				list.add("delete");
 			}
-			if (sender.hasPermission("bbstoper.reload")) {
+			if ("reload".startsWith(arg) && sender.hasPermission("bbstoper.reload")) {
 				list.add("reload");
 			}
 			return list;
