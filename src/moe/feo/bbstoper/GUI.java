@@ -91,7 +91,11 @@ public class GUI {
 		compasslores.add(Message.GUI_PAGEID.getString().replaceAll("%PAGEID%", Option.MCBBS_URL.getString()));
 		Crawler crawler = new Crawler();
 		if (crawler.visible) {// 如果帖子可视，就获取帖子最近一次顶贴
-			compasslores.add(Message.GUI_LASTPOST.getString().replaceAll("%TIME%", crawler.Time.get(0)));
+			if (crawler.Time.size() > 0) { // 如果从没有人顶帖，就以“----”代替上次顶帖时间(原来不加判断直接get会报索引范围错误)
+				compasslores.add(Message.GUI_LASTPOST.getString().replaceAll("%TIME%", crawler.Time.get(0)));
+			} else {
+				compasslores.add(Message.GUI_LASTPOST.getString().replaceAll("%TIME%", "----"));
+			}
 		} else {
 			compasslores.add(Message.GUI_PAGENOTVISIBLE.getString());
 		}
