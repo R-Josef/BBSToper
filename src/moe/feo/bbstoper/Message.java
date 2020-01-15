@@ -46,12 +46,11 @@ public enum Message {
 			messageFile = new File(BBSToper.getInstance().getDataFolder(), "lang.yml");
 		}
 		messageConfig = YamlConfiguration.loadConfiguration(messageFile);// 加载配置
-		try (Reader reader = new InputStreamReader(BBSToper.getInstance().getResource("lang.yml"),
-				StandardCharsets.UTF_8)) {
+		try (Reader reader = new InputStreamReader(BBSToper.getInstance().getResource("lang.yml"), StandardCharsets.UTF_8)) {// 读取默认配置
 			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(reader);
 			messageConfig.setDefaults(defConfig);// 设置默认
 		} catch (IOException ioe) {
-			BBSToper.getInstance().getLogger().log(Level.SEVERE, "读取语言文件时出错!", ioe);
+			BBSToper.getInstance().getLogger().log(Level.SEVERE, "读取默认语言文件时出错!", ioe);
 		}
 		// 删除缓存
 		for (Message m : values()) {

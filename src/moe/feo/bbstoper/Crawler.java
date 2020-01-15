@@ -52,7 +52,7 @@ public class Crawler {
 		for (Element rows : listbody.getElementsByTag("tr")) {// tr是表的一行
 			Elements cells = rows.getElementsByTag("td");// td表示一行的单元格，cells为单元格的合集
 			String action = cells.get(2).text();
-			if (!action.equals("提升(提升卡)")) {// 这里过滤掉不是提升卡的操作
+			if (!(action.equals("提升(提升卡)")||action.equals("提升(服务器提升卡)"))) {// 这里过滤掉不是提升卡的操作
 				continue;
 			}
 			Element idcell = cells.get(0);// 第一个单元格中包含有id
@@ -103,8 +103,9 @@ public class Crawler {
 				Poster poster = sql.getPoster(uuid);
 				if (uuid != null) {// 这个玩家已经绑定,这时候就可以开始对玩家进行检测了
 					OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+					Player olplayer;
 					if (player.isOnline()) {// 如果玩家在线
-						Player olplayer = Bukkit.getPlayer(UUID.fromString(uuid));
+						olplayer = Bukkit.getPlayer(UUID.fromString(uuid));
 						if (!olplayer.hasPermission("bbstoper.reward")) {
 							continue;// 没有奖励权限的跳过
 						}
@@ -136,8 +137,11 @@ public class Crawler {
 					sql.addTopState(bbsname, time);
 					poster.setRewardtime(poster.getRewardtime() + 1);
 					sql.updatePoster(poster);// 把poster储存起来
-					Bukkit.broadcast(Message.BROADCAST.getString().replaceAll("%PLAYER%", player.getName()),
-							"bbstoper.reward");// 给有奖励权限的玩家广播
+					for (Player p :Bukkit.getOnlinePlayers()) {// 给有奖励权限且能看见此玩家(防止Vanish)的玩家广播
+						if (!p.canSee(olplayer)) continue;
+						if (!p.hasPermission("bbstoper.reward")) continue;
+						p.sendMessage(Message.BROADCAST.getString().replaceAll("%PLAYER%", player.getName()));
+					}
 				}
 			}
 		}

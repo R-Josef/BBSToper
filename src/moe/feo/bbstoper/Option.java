@@ -1,7 +1,15 @@
 package moe.feo.bbstoper;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.logging.Level;
+
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 public enum Option {
 	DATABASE_TYPE("database.type"), DATABASE_PREFIX("database.prefix"), DATABASE_MYSQL_IP("database.mysql.ip"),
@@ -13,6 +21,7 @@ public enum Option {
 	GUI_TOPPLAYERS("gui.topplayers"), REWARD_AUTO("reward.auto"), REWARD_PERIOD("reward.period"),
 	REWARD_TIMES("reward.times"), REWARD_COMMANDS("reward.commands");
 
+	private static File file;
 	private static FileConfiguration config;
 	private String path;
 
@@ -20,15 +29,19 @@ public enum Option {
 		this.path = path;
 	}
 
-	public static void load() {// 加载与重载
-		if (config == null) {// 为空表示初次加载
-			config = BBSToper.getInstance().getConfig();
-		} else {// 不为空则重载然后更新引用
-			BBSToper.getInstance().reloadConfig();
-			config = BBSToper.getInstance().getConfig();
+	public static void load() {
+		if (file == null) {
+			file = new File(BBSToper.getInstance().getDataFolder(), "config.yml");
+		}
+		config = YamlConfiguration.loadConfiguration(file);// 用这个方法加载配置可以解决编码问题
+		try (Reader reader = new InputStreamReader(BBSToper.getInstance().getResource("config.yml"), StandardCharsets.UTF_8)) {// 读取默认配置
+			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(reader);
+			config.setDefaults(defConfig);// 设置默认
+		} catch (IOException ioe) {
+			BBSToper.getInstance().getLogger().log(Level.SEVERE, "读取默认配置文件时出错!", ioe);
 		}
 	}
-
+	
 	public String getString() {
 		return config.getString(path);
 	}

@@ -261,8 +261,11 @@ public class CLI implements TabExecutor {
 					sql.updatePoster(poster);// 更新poster
 					if (issucceed) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.REWARDGIVED.getString());
-						Bukkit.broadcast(Message.BROADCAST.getString().replaceAll("%PLAYER%", player.getName()),
-								"bbstoper.reward");// 给有奖励权限的玩家广播
+						for (Player p :Bukkit.getOnlinePlayers()) {// 给有奖励权限且能看见此玩家(防止Vanish)的玩家广播
+							if (!p.canSee((Player)sender)) continue;
+							if (!p.hasPermission("bbstoper.reward")) continue;
+							p.sendMessage(Message.BROADCAST.getString().replaceAll("%PLAYER%", player.getName()));
+						}
 					}
 					if (isovertime) {
 						int rewardtimes = Option.REWARD_TIMES.getInt();
