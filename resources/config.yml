@@ -42,6 +42,10 @@ mcbbs:
 gui:
     #玩家排名的显示数量
     topplayers: 5
+    #显示GUI中的头颅皮肤
+    #获取头颅皮肤时有可能因为网络原因造成卡顿
+    #如果在打开GUI时遇到主线程卡顿, 请尝试关闭此项
+    displayheadskin: true
 
 #奖励设置
 reward:

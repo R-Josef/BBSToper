@@ -69,6 +69,7 @@ faileduninstallmo: '未能按照预期卸载监听!'
 
 #箱子GUI界面
 gui:
+    title: '%PREFIX%'
     frame: '&8我是边框'
     skull: '&e%PLAYER%&b的绑定数据'
     notbound: '&4未绑定MCBBS账号'

@@ -21,7 +21,7 @@ public enum Message {
 	IDOWNER("idowner"), IDNOTFOUND("idnotfound"), OWNERID("ownerid"), OWNERNOTFOUND("ownernotfound"),
 	NOPERMISSION("nopermission"), INVALID("invalid"), INVALIDNUM("invalidnum"), PLAYERCMD("playercmd"),
 	PAGENOTVISIBLE("pagenotvisible"), FAILEDGETWEB("failedgetweb"), FAILEDRESOLVEWEB("failedresolveweb"),
-	FAILEDUNINSTALLMO("faileduninstallmo"), GUI_FRAME("gui.frame"), GUI_SKULL("gui.skull"),
+	FAILEDUNINSTALLMO("faileduninstallmo"), GUI_TITLE("gui.title"), GUI_FRAME("gui.frame"), GUI_SKULL("gui.skull"),
 	GUI_NOTBOUND("gui.notbound"), GUI_CLICKBOUND("gui.clickbound"), GUI_CLICKREBOUND("gui.clickrebound"),
 	GUI_BBSID("gui.bbsid"), GUI_POSTTIMES("gui.posttimes"), GUI_REWARDS("gui.rewards"), GUI_CLICKGET("gui.clickget"),
 	GUI_TOPS("gui.tops"), GUI_PAGESTATE("gui.pagestate"), GUI_PAGEID("gui.pageid"), GUI_LASTPOST("gui.lastpost"),

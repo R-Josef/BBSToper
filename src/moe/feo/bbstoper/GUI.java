@@ -24,24 +24,27 @@ public class GUI {
 
 	@SuppressWarnings("deprecation")
 	public void createGui(Player player) {
-		this.setGui(Bukkit.createInventory(null, InventoryType.CHEST, Message.PREFIX.getString()));
-		// ItemStack frame = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-		ItemStack frame = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);// GUI的边框
-		ItemMeta framemeta = frame.getItemMeta();
-		framemeta.setDisplayName(Message.GUI_FRAME.getString());
-		frame.setItemMeta(framemeta);
+		String title = Message.GUI_TITLE.getString().replaceAll("%PREFIX%", Message.PREFIX.getString());
+		this.setGui(Bukkit.createInventory(null, InventoryType.CHEST, title));
+		//ItemStack frame = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+		//ItemStack frame = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);// GUI的边框
+		//ItemMeta framemeta = frame.getItemMeta();
+		//framemeta.setDisplayName(Message.GUI_FRAME.getString());
+		//frame.setItemMeta(framemeta);
 		for (int i = 0; i < inv.getSize(); i++) {
 			if (i > 9 && i < 17)
 				continue;
-			inv.setItem(i, frame);
+			inv.setItem(i, getRandomPane());
 		}
 		// ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
 		SkullMeta skullmeta = (SkullMeta) skull.getItemMeta();// 玩家头颅
-		try {
-			skullmeta.setOwningPlayer(player);
-		} catch (NoSuchMethodError e) {// 这里为了照顾低版本
-			skullmeta.setOwner(player.getName());
+		if (Option.GUI_DISPLAYHEADSKIN.getBoolean()) {// 如果开启了头颅显示，才会设置头颅的所有者
+			try {
+				skullmeta.setOwningPlayer(player);
+			} catch (NoSuchMethodError e) {// 这里为了照顾低版本
+				skullmeta.setOwner(player.getName());
+			}
 		}
 		skullmeta.setDisplayName(Message.GUI_SKULL.getString().replaceAll("%PLAYER%", player.getName()));
 		List<String> skulllores = new ArrayList<String>();
@@ -103,6 +106,15 @@ public class GUI {
 		compassmeta.setLore(compasslores);
 		compass.setItemMeta(compassmeta);
 		inv.setItem(22, compass);
+	}
+	
+	public ItemStack getRandomPane() {// 获取随机一种颜色的玻璃板
+		short data = (short)(Math.random()* 16);// 这会随机取出0-15的数据值
+		ItemStack frame = new ItemStack(Material.STAINED_GLASS_PANE, 1, data);
+		ItemMeta framemeta = frame.getItemMeta();
+		framemeta.setDisplayName(Message.GUI_FRAME.getString());
+		frame.setItemMeta(framemeta);
+		return frame;
 	}
 
 	public Inventory getGui() {

@@ -18,8 +18,8 @@ public enum Option {
 	DATABASE_MYSQL_SSL("database.mysql.ssl"), DATABASE_SQLITE_FOLDER("database.sqlite.folder"),
 	DATABASE_SQLITE_DATABASE("database.sqlite.database"), MCBBS_URL("mcbbs.url"), MCBBS_PAGESIZE("mcbbs.pagesize"),
 	MCBBS_CHANGEIDCOOLDOWN("mcbbs.changeidcooldown"), MCBBS_JOINMESSAGE("mcbbs.joinmessage"),
-	GUI_TOPPLAYERS("gui.topplayers"), REWARD_AUTO("reward.auto"), REWARD_PERIOD("reward.period"),
-	REWARD_TIMES("reward.times"), REWARD_COMMANDS("reward.commands");
+	GUI_TOPPLAYERS("gui.topplayers"), GUI_DISPLAYHEADSKIN("gui.displayheadskin"), REWARD_AUTO("reward.auto"),
+	REWARD_PERIOD("reward.period"), REWARD_TIMES("reward.times"), REWARD_COMMANDS("reward.commands");
 
 	private static File file;
 	private static FileConfiguration config;
@@ -34,14 +34,15 @@ public enum Option {
 			file = new File(BBSToper.getInstance().getDataFolder(), "config.yml");
 		}
 		config = YamlConfiguration.loadConfiguration(file);// 用这个方法加载配置可以解决编码问题
-		try (Reader reader = new InputStreamReader(BBSToper.getInstance().getResource("config.yml"), StandardCharsets.UTF_8)) {// 读取默认配置
+		try (Reader reader = new InputStreamReader(BBSToper.getInstance().getResource("config.yml"),
+				StandardCharsets.UTF_8)) {// 读取默认配置
 			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(reader);
 			config.setDefaults(defConfig);// 设置默认
 		} catch (IOException ioe) {
 			BBSToper.getInstance().getLogger().log(Level.SEVERE, "读取默认配置文件时出错!", ioe);
 		}
 	}
-	
+
 	public String getString() {
 		return config.getString(path);
 	}
