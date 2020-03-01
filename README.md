@@ -33,20 +33,20 @@
 
 **玩家默认拥有`bbstoper.user`权限**
 
-| **bbstoper.user的子权限** |
-| ------------------------- |
-| `bbstoper.binding`        |
-| `bbstoper.reward`         |
+| bbstoper.user的子权限 |
+| --------------------- |
+| `bbstoper.binding`    |
+| `bbstoper.reward`     |
 
 **op默认拥有`bbstoper.admin`权限**
 
-| **bbstoper.admin的子权限** |
-| -------------------------- |
-| `bbstoper.list`            |
-| `bbstoper.top`             |
-| `bbstoper.check`           |
-| `bbstoper.delete`          |
-| `bbstoper.reload`          |
+| bbstoper.admin的子权限 |
+| ---------------------- |
+| `bbstoper.list`        |
+| `bbstoper.top`         |
+| `bbstoper.check`       |
+| `bbstoper.delete`      |
+| `bbstoper.reload`      |
 
 **/bbstoper /poster /bt 都是可用命令别名**
 
