@@ -159,7 +159,7 @@ public class CLI implements TabExecutor {
 								} else {
 									sql.addPoster(poster);
 								}
-								cache.put(uuid, null);
+								cache.put(uuid, null);// 绑定成功, 清理这个键
 								sender.sendMessage(Message.PREFIX.getString() + Message.BINDINGSUCCESS.getString());
 								IDListener.unregister(sender);
 							} else if (cache.get(uuid) == null) {
