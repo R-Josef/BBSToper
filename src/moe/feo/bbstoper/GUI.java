@@ -16,6 +16,11 @@ import org.bukkit.inventory.meta.SkullMeta;
 public class GUI {
 
 	private Inventory inv;
+	
+	public static String getTitle() {// 获取插件的gui标题必须用此方法，因为用户可能会修改gui标题
+		String title = Message.GUI_TITLE.getString().replaceAll("%PREFIX%", Message.PREFIX.getString());
+		return title;
+	}
 
 	public GUI(Player player) {
 		createGui(player);
@@ -24,8 +29,7 @@ public class GUI {
 
 	@SuppressWarnings("deprecation")
 	public void createGui(Player player) {
-		String title = Message.GUI_TITLE.getString().replaceAll("%PREFIX%", Message.PREFIX.getString());
-		this.setGui(Bukkit.createInventory(null, InventoryType.CHEST, title));
+		this.setGui(Bukkit.createInventory(null, InventoryType.CHEST, getTitle()));
 		//ItemStack frame = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
 		//ItemStack frame = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);// GUI的边框
 		//ItemMeta framemeta = frame.getItemMeta();

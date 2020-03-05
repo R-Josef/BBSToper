@@ -18,7 +18,7 @@ public class GUIManager implements Listener {
 		if (!(event.getWhoClicked() instanceof Player))
 			return;// 如果不是玩家操作的，返回
 		Player player = (Player) event.getWhoClicked();
-		if (player.getOpenInventory().getTitle().equalsIgnoreCase(Message.PREFIX.getString())) {// 确认操作的此插件GUI
+		if (player.getOpenInventory().getTitle().equalsIgnoreCase(GUI.getTitle())) {// 确认操作的此插件GUI
 			event.setCancelled(true);
 			if (event.getRawSlot() == 12) {// 点击绑定
 				player.closeInventory();
