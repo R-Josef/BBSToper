@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>moe.feo</groupId>
 	<artifactId>BBSToper</artifactId>
-	<version>3.3.6</version>
+	<version>3.3.7</version>
 	<repositories>
 		<repository>
 			<id>spigot-repo</id>
@@ -68,7 +68,11 @@
 							<relocations>
 								<relocation>
 									<pattern>org.bstats</pattern>
-									<shadedPattern>moe.feo</shadedPattern>
+									<shadedPattern>moe.feo.bstats</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>org.jsoup</pattern>
+									<shadedPattern>moe.feo.jsoup</shadedPattern>
 								</relocation>
 							</relocations>
 							<minimizeJar>true</minimizeJar>
