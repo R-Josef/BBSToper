@@ -9,6 +9,7 @@ import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -26,21 +27,23 @@ public class GUI {
 		createGui(player);
 		Bukkit.getScheduler().runTask(BBSToper.getInstance(), () -> player.openInventory(inv));
 	}
+	
+	class BBSToperGUIHolder implements InventoryHolder {// 定义一个Holder用于识别此插件的GUI
+		@Override
+		public Inventory getInventory() {
+			return getGui();
+		}
+	}
 
 	@SuppressWarnings("deprecation")
 	public void createGui(Player player) {
-		this.setGui(Bukkit.createInventory(null, InventoryType.CHEST, getTitle()));
-		//ItemStack frame = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
-		//ItemStack frame = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15);// GUI的边框
-		//ItemMeta framemeta = frame.getItemMeta();
-		//framemeta.setDisplayName(Message.GUI_FRAME.getString());
-		//frame.setItemMeta(framemeta);
-		for (int i = 0; i < inv.getSize(); i++) {
+		InventoryHolder holder = new BBSToperGUIHolder();
+		this.setGui(Bukkit.createInventory(holder, InventoryType.CHEST, getTitle()));
+		for (int i = 0; i < inv.getSize(); i++) {// 设置边框
 			if (i > 9 && i < 17)
 				continue;
 			inv.setItem(i, getRandomPane());
 		}
-		// ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
 		ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
 		SkullMeta skullmeta = (SkullMeta) skull.getItemMeta();// 玩家头颅
 		if (Option.GUI_DISPLAYHEADSKIN.getBoolean()) {// 如果开启了头颅显示，才会设置头颅的所有者
