@@ -27,7 +27,9 @@ public class MySQLer implements SQLer {
 	@Override
 	public void closeConnection() {
 		try {
-			conn.close();
+			if (!conn.isClosed()) {// 如果连接没有关闭，则将关闭这个连接
+				conn.close();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

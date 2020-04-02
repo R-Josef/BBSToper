@@ -18,7 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class CLI implements TabExecutor {
 
-	private SQLer sql;
+	private static SQLer sql;
 	private Map<String, String> cache = new HashMap<>();// 这个map是为了暂存玩家的绑定信息的
 
 	private static CLI cli = new CLI();
@@ -79,6 +79,12 @@ public class CLI implements TabExecutor {
 
 			@Override
 			public void run() {
+				Util.addRunningTaskID(this.getTaskId());
+				task();
+				Util.removeRunningTaskID(this.getTaskId());
+			}
+			
+			public void task() {
 				if (args.length == 0) {// 没有带参数
 					if (sender instanceof Player) {
 						Player player = (Player) sender;
@@ -406,15 +412,9 @@ public class CLI implements TabExecutor {
 					Option.load();
 					Message.saveDefaultConfig();
 					Message.load();
-					sql.closeConnection();
-					if (Option.DATABASE_TYPE.getString().equalsIgnoreCase("mysql")) {
-						sql = MySQLer.getInstance();
-					} else if (Option.DATABASE_TYPE.getString().equalsIgnoreCase("sqlite")) {
-						sql = SQLiter.getInstance();
-					}
-					sql.load();
-					BBSToper.getInstance().setSQLer(sql);
-					Poster.setSQLer(sql);
+					Util.initializeSQLer();
+					Util.startTimingReconnect();
+					Util.startAutoReward();
 					sender.sendMessage(Message.PREFIX.getString() + Message.RELOAD.getString());
 					break;
 				}
@@ -488,8 +488,8 @@ public class CLI implements TabExecutor {
 		return true;
 	}
 
-	public void setSQLer(SQLer sql) {
-		this.sql = sql;
+	public static void setSQLer(SQLer sql) {
+		CLI.sql = sql;
 	}
 
 }

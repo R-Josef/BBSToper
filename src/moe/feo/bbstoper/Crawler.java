@@ -17,6 +17,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Crawler {
+	private static SQLer sql;
 	public List<String> ID = new ArrayList<String>();
 	public List<String> Time = new ArrayList<String>();
 	public boolean visible = true;
@@ -94,7 +95,6 @@ public class Crawler {
 	}
 
 	public void activeReward() {// 主动给玩家发奖励
-		SQLer sql = BBSToper.getInstance().getSQLer();
 		for (int i = 0; i < ID.size(); i++) {
 			String bbsname = ID.get(i);
 			String time = Time.get(i);
@@ -145,6 +145,10 @@ public class Crawler {
 				}
 			}
 		}
+	}
+
+	public static void setSQLer(SQLer sql) {
+		Crawler.sql = sql;
 	}
 
 }

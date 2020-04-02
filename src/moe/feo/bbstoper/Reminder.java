@@ -13,6 +13,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Reminder implements Listener {
+	
+	private static SQLer sql;
 
 	public Reminder(Plugin plugin) {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -26,9 +28,13 @@ public class Reminder implements Listener {
 		new BukkitRunnable() {// 这里由于牵涉到数据库IO, 主线程执行可能会卡顿，所以改成异步
 			@Override
 			public void run() {
+				Util.addRunningTaskID(this.getTaskId());
+				task();
+				Util.removeRunningTaskID(this.getTaskId());
+			}
+			public void task() {
 				boolean isbinded = true;
 				boolean isposted = true;
-				SQLer sql = BBSToper.getInstance().getSQLer();
 				UUID uuid = event.getPlayer().getUniqueId();
 				Poster poster = sql.getPoster(uuid.toString());
 				String datenow = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -50,5 +56,9 @@ public class Reminder implements Listener {
 				}
 			}
 		}.runTaskAsynchronously(BBSToper.getInstance());
+	}
+	
+	public static void setSQLer(SQLer sql) {
+		Reminder.sql = sql;
 	}
 }

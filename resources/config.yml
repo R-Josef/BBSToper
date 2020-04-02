@@ -14,6 +14,10 @@ database:
     #表名前缀, 在sqlite和mysql都有效
     #可用两个单引号表示留空, 例如prefix: ''
     prefix: 'bt_'
+    #定时自动断开并重新连接数据库
+    #数据库使用长连接有可能导致速度越来越慢(我不确定)
+    #可以尝试开启此选项, 单位秒, 设置为0则关闭
+    timingreconnect: 0
     #可选mysql或sqlite
     type: 'sqlite'
     #mysql设置
@@ -43,7 +47,7 @@ gui:
     #玩家排名的显示数量
     topplayers: 5
     #显示GUI中的头颅皮肤
-    #获取头颅皮肤时有可能因为网络原因造成卡顿
+    #获取头颅皮肤时有可能因为网络原因造成卡顿(我不确定)
     #如果在打开GUI时遇到主线程卡顿, 请尝试关闭此项
     displayheadskin: true
 

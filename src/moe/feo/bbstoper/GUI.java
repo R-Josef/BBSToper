@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 
 public class GUI {
 
+	private static SQLer sql;
 	private Inventory inv;
 	
 	public static String getTitle() {// 获取插件的gui标题必须用此方法，因为用户可能会修改gui标题
@@ -55,7 +56,6 @@ public class GUI {
 		}
 		skullmeta.setDisplayName(Message.GUI_SKULL.getString().replaceAll("%PLAYER%", player.getName()));
 		List<String> skulllores = new ArrayList<String>();
-		SQLer sql = BBSToper.getInstance().getSQLer();
 		Poster poster = sql.getPoster(player.getUniqueId().toString());
 		if (poster == null) {
 			skulllores.add(Message.GUI_NOTBOUND.getString());
@@ -130,5 +130,9 @@ public class GUI {
 
 	public void setGui(Inventory inv) {
 		this.inv = inv;
+	}
+	
+	public static void setSQLer(SQLer sql) {
+		GUI.sql = sql;
 	}
 }
