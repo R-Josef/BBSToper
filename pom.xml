@@ -53,6 +53,20 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<sourceDirectory>src/</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>resources</directory>
+			</resource>
+			<resource>
+				<directory>${project.basedir}</directory>
+				<includes>
+					<include>LICENSE</include>
+					<include>README.md</include>
+				</includes>
+				<targetPath>META-INF</targetPath>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -65,6 +79,14 @@
 							<goal>shade</goal>
 						</goals>
 						<configuration>
+							<filters>
+								<filter>
+									<artifact>*:*</artifact>
+									<excludes>
+										<exclude>META-INF/CHANGES</exclude>
+									</excludes>
+								</filter>
+							</filters>
 							<relocations>
 								<relocation>
 									<pattern>org.bstats</pattern>
