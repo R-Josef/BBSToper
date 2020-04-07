@@ -7,12 +7,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 public class Util {
-	
+
 	public static SQLer sql;
 	private static BukkitTask autorewardtask;
 	private static BukkitTask timingreconnecttask;
 	private static ArrayList<Integer> runningtaskidlist = new ArrayList<Integer>();
-	
+
 	public static void initializeSQLer() {// 初始化或重载数据库
 		if (sql != null) {
 			sql.closeConnection();// 此方法会在已经建立过连接的情况下关闭连接
@@ -29,12 +29,12 @@ public class Util {
 		Poster.setSQLer(sql);
 		Reminder.setSQLer(sql);
 	}
-	
+
 	public static void closeSQLer() {// 关闭数据库
 		sql.closeConnection();
 		sql = null;
 	}
-	
+
 	public static void startTimingReconnect() {// 自动重连数据库的方法
 		if (timingreconnecttask != null && !timingreconnecttask.isCancelled()) {// 将之前的任务取消(如果存在)
 			timingreconnecttask.cancel();
@@ -51,7 +51,7 @@ public class Util {
 			}.runTaskTimerAsynchronously(BBSToper.getInstance(), period, period);
 		}
 	}
-	
+
 	public static void startAutoReward() {// 自动奖励的方法
 		if (autorewardtask != null && !autorewardtask.isCancelled()) {// 将之前的任务取消(如果存在)
 			autorewardtask.cancel();
@@ -65,40 +65,41 @@ public class Util {
 					task();
 					removeRunningTaskID(this.getTaskId());
 				}
+
 				public void task() {
 					Crawler crawler = new Crawler();
-					if (!crawler.visible) return;
+					if (!crawler.visible)
+						return;
 					crawler.kickExpiredData();
 					crawler.activeReward();
 				}
 			}.runTaskTimerAsynchronously(BBSToper.getInstance(), 0, period);
 		}
 	}
-	
-	public static boolean isAllTaskFinished() {// 此方法永远不会返回false
+
+	public static void waitForAllTask() {// 此方法会阻塞直到所有此插件创建的线程结束
 		int count = 0;
-		while (!runningtaskidlist.isEmpty()) {// 当list非空，阻塞线程100毫秒后再判断一次
-			try {
+		try {
+			while (!runningtaskidlist.isEmpty()) {// 当list非空，阻塞线程100毫秒后再判断一次
 				if (count > 30000) {// 超过30秒没有关闭就算超时
 					throw new TimeoutException();
 				}
 				Thread.sleep(100);
 				count = count + 100;
-			} catch (InterruptedException | TimeoutException e) {
-				e.printStackTrace();
 			}
+		} catch (InterruptedException | TimeoutException e) {
+			e.printStackTrace();
 		}
-		return true;
 	}
-	
+
 	public static void addRunningTaskID(int i) {
 		if (!runningtaskidlist.contains(i))
 			runningtaskidlist.add(i);
 	}
-	
+
 	public static void removeRunningTaskID(int i) {
 		if (runningtaskidlist.contains(i))
-			runningtaskidlist.remove((Integer)i);
+			runningtaskidlist.remove((Integer) i);
 	}
 
 }

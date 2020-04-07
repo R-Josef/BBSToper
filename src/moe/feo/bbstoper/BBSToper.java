@@ -32,10 +32,16 @@ public class BBSToper extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		Bukkit.getScheduler().cancelTasks(bbstoper);
-		if (Util.isAllTaskFinished()) {// 此方法会阻塞直到返回true或超时
-			Util.closeSQLer();
-			bbstoper = null;
-		}
+		Thread thread = new Thread(new Runnable(){
+			@Override
+			public void run() {
+				Util.waitForAllTask();// 此方法会阻塞
+				Util.closeSQLer();
+				bbstoper = null;
+			}
+		});
+		thread.setDaemon(true);
+		thread.start();
 	}
 
 }
