@@ -12,6 +12,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import moe.feo.bbstoper.sql.SQLer;
+
 public class Reminder implements Listener {
 	
 	private static SQLer sql;

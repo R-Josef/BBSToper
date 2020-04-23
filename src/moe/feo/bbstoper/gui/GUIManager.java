@@ -1,4 +1,4 @@
-package moe.feo.bbstoper;
+package moe.feo.bbstoper.gui;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -6,6 +6,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.plugin.Plugin;
+
+import moe.feo.bbstoper.CLI;
+import moe.feo.bbstoper.IDListener;
+import moe.feo.bbstoper.Message;
+import moe.feo.bbstoper.Option;
+
 import java.util.UUID;
 
 public class GUIManager implements Listener {

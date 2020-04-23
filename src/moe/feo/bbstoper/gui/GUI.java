@@ -1,4 +1,4 @@
-package moe.feo.bbstoper;
+package moe.feo.bbstoper.gui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,13 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+
+import moe.feo.bbstoper.BBSToper;
+import moe.feo.bbstoper.Crawler;
+import moe.feo.bbstoper.Message;
+import moe.feo.bbstoper.Option;
+import moe.feo.bbstoper.Poster;
+import moe.feo.bbstoper.sql.SQLer;
 
 public class GUI {
 

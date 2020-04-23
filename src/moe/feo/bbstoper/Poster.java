@@ -2,6 +2,8 @@ package moe.feo.bbstoper;
 
 import java.util.List;
 
+import moe.feo.bbstoper.sql.SQLer;
+
 public class Poster {
 
 	public static SQLer sql;

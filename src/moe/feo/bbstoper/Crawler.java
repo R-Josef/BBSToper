@@ -16,6 +16,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import moe.feo.bbstoper.sql.SQLer;
+
 public class Crawler {
 	private static SQLer sql;
 	public List<String> ID = new ArrayList<String>();

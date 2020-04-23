@@ -16,6 +16,10 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import moe.feo.bbstoper.gui.GUI;
+import moe.feo.bbstoper.sql.SQLManager;
+import moe.feo.bbstoper.sql.SQLer;
+
 public class CLI implements TabExecutor {
 
 	private static SQLer sql;
@@ -412,8 +416,8 @@ public class CLI implements TabExecutor {
 					Option.load();
 					Message.saveDefaultConfig();
 					Message.load();
-					Util.initializeSQLer();
-					Util.startTimingReconnect();
+					SQLManager.initializeSQLer();
+					SQLManager.startTimingReconnect();
 					Util.startAutoReward();
 					sender.sendMessage(Message.PREFIX.getString() + Message.RELOAD.getString());
 					break;
