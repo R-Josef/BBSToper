@@ -8,7 +8,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.plugin.Plugin;
 
 import moe.feo.bbstoper.CLI;
-import moe.feo.bbstoper.IDListener;
 import moe.feo.bbstoper.Message;
 import moe.feo.bbstoper.Option;
 
@@ -29,15 +28,21 @@ public class GUIManager implements Listener {
 		if(holder instanceof GUI.BBSToperGUIHolder) {// 确认操作的是此插件的GUI
 			event.setCancelled(true);
 			if (event.getRawSlot() == 12) {// 点击绑定
-				player.closeInventory();
-				UUID uid = player.getUniqueId();
-				synchronized (IDListener.lock) { // 线程锁防止异步错位修改
-					IDListener rglistener = IDListener.map.get(uid);
-					// 如果这个玩家没有一个监听器
-					if (rglistener == null) {
-						new IDListener(player.getUniqueId()).register();// 为此玩家创建一个监听器
-						player.sendMessage(Message.ENTER.getString());
+				if (Option.GUI_USECHATGETID.getBoolean() == true) {
+					player.closeInventory();
+					UUID uid = player.getUniqueId();
+					synchronized (IDListener.lock) { // 线程锁防止异步错位修改
+						IDListener rglistener = IDListener.map.get(uid);
+						// 如果这个玩家没有一个监听器
+						if (rglistener == null) {
+							new IDListener(player.getUniqueId()).register();// 为此玩家创建一个监听器
+							player.sendMessage(Message.ENTER.getString());
+						}
 					}
+				}
+				if (Option.GUI_USECHATGETID.getBoolean() == false) {
+					player.closeInventory();
+					player.sendMessage(Message.HELP_BINDING.getString());
 				}
 			}
 			if (event.getRawSlot() == 13) {

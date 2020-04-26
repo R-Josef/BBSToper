@@ -14,7 +14,7 @@
  *		  void register();
  */
 
-package moe.feo.bbstoper;
+package moe.feo.bbstoper.gui;
 
 import java.util.*;
 import org.bukkit.command.CommandSender;
@@ -27,6 +27,11 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.EventExecutor;
 import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import moe.feo.bbstoper.BBSToper;
+import moe.feo.bbstoper.CLI;
+import moe.feo.bbstoper.Message;
+import moe.feo.bbstoper.Util;
 
 public class IDListener extends RegisteredListener implements Listener, EventExecutor {
 	public static final Object lock = new Object(); // 线程锁

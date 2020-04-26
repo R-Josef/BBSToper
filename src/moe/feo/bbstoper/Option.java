@@ -19,8 +19,8 @@ public enum Option {
 	DATABASE_SQLITE_FOLDER("database.sqlite.folder"), DATABASE_SQLITE_DATABASE("database.sqlite.database"),
 	MCBBS_URL("mcbbs.url"), MCBBS_PAGESIZE("mcbbs.pagesize"), MCBBS_CHANGEIDCOOLDOWN("mcbbs.changeidcooldown"),
 	MCBBS_JOINMESSAGE("mcbbs.joinmessage"), GUI_TOPPLAYERS("gui.topplayers"),
-	GUI_DISPLAYHEADSKIN("gui.displayheadskin"), REWARD_AUTO("reward.auto"), REWARD_PERIOD("reward.period"),
-	REWARD_TIMES("reward.times"), REWARD_COMMANDS("reward.commands");
+	GUI_DISPLAYHEADSKIN("gui.displayheadskin"), GUI_USECHATGETID("gui.usechatgetid"), REWARD_AUTO("reward.auto"),
+	REWARD_PERIOD("reward.period"), REWARD_TIMES("reward.times"), REWARD_COMMANDS("reward.commands");
 
 	private static File file;
 	private static FileConfiguration config;
