@@ -12,7 +12,13 @@ public class Util {
 	private static ArrayList<Integer> runningtaskidlist = new ArrayList<Integer>();
 
 	public static void startAutoReward() {// 自动奖励的方法
-		if (autorewardtask != null && !autorewardtask.isCancelled()) {// 将之前的任务取消(如果存在)
+		boolean taskcancelled;
+		try {
+			taskcancelled = autorewardtask.isCancelled();
+		} catch (NoSuchMethodError e) {// 1.7.10还没有这个方法
+			taskcancelled = false;// 默认就当这个任务没有取消
+		}
+		if (autorewardtask != null && !taskcancelled) {// 将之前的任务取消(如果存在)
 			autorewardtask.cancel();
 		}
 		int period = Option.REWARD_AUTO.getInt() * 20;
