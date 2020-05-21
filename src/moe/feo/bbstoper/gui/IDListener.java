@@ -31,6 +31,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import moe.feo.bbstoper.BBSToper;
 import moe.feo.bbstoper.CLI;
 import moe.feo.bbstoper.Message;
+import moe.feo.bbstoper.Option;
 import moe.feo.bbstoper.Util;
 
 public class IDListener extends RegisteredListener implements Listener, EventExecutor {
@@ -110,6 +111,13 @@ public class IDListener extends RegisteredListener implements Listener, EventExe
 		Player player = event.getPlayer();
 		String msg = event.getMessage();
 		event.setCancelled(true);
+		List<String> cancelkeywords = Option.GUI_CANCELKEYWORDS.getStringList();// 取消绑定关键词
+		if (cancelkeywords.contains(msg)) {// 如果关键词中包含这次输入的消息
+			unregister();// 取消监听事件
+			CLI.getInstance().getCache().put(player.getUniqueId().toString(), null);// 清理这个键
+			player.sendMessage(Message.CANCELED.getString());
+			return;
+		}
 		List<String> list = new ArrayList<>(Arrays.asList(msg.split("\\s+")));
 		list.add(0, "binding");
 		String[] args = list.toArray(new String[0]);

@@ -496,5 +496,9 @@ public class CLI implements TabExecutor {
 	public static void setSQLer(SQLer sql) {
 		CLI.sql = sql;
 	}
+	
+	public Map<String, String> getCache() {
+		return this.cache;
+	}
 
 }

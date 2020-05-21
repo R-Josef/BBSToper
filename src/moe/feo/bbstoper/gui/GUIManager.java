@@ -11,6 +11,7 @@ import moe.feo.bbstoper.CLI;
 import moe.feo.bbstoper.Message;
 import moe.feo.bbstoper.Option;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 public class GUIManager implements Listener {
@@ -36,7 +37,8 @@ public class GUIManager implements Listener {
 						// 如果这个玩家没有一个监听器
 						if (rglistener == null) {
 							new IDListener(player.getUniqueId()).register();// 为此玩家创建一个监听器
-							player.sendMessage(Message.ENTER.getString());
+							String keywords = Arrays.toString(Option.GUI_CANCELKEYWORDS.getStringList().toArray());
+							player.sendMessage(Message.ENTER.getString().replaceAll("%KEYWORD%", keywords));
 						}
 					}
 				}

@@ -38,7 +38,8 @@ rewardgived: '&a奖励发放完毕!'
 broadcast: '&b玩家 &e%PLAYER% &b刚刚领取了顶贴奖励, 大家也快来顶贴吧! '
 
 #绑定
-enter: '&c请在聊天框输入您的论坛ID.'
+enter: '&c请在聊天框输入您的论坛ID, 或输入下列关键词取消绑定: %KEYWORD%.'
+canceled: '&c绑定已取消.'
 repeat: '&c为防止输错ID, 请重复输入一次!'
 notsame: '&4抱歉, 两次输入不一致，请重新输入!'
 oncooldown: '&4抱歉您的账号正在绑定冷却中: &f%COOLDOWN% 天.'
