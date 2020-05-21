@@ -8,13 +8,13 @@ public class Poster {
 
 	public static SQLer sql;
 
-	private String uuid = "";
-	private String name = "";
-	private String bbsname = "";
-	private long binddate = 0;
-	private String rewardbefore = "";
-	private int rewardtime = 0;
-	private int count = 0;
+	private String uuid = "";// 顶贴者的uuid
+	private String name = "";// 顶贴者id
+	private String bbsname = "";// 顶贴者bbs用户名
+	private long binddate = 0;// 绑定bbs用户名的时间
+	private String rewardbefore = "";// 上一次获取奖励的时间
+	private int rewardtime = 0;// 上次一领取了多少奖励
+	private int count = 0;// 总计的顶贴次数 (不一定有数据)
 
 	public static void setSQLer(SQLer sql) {
 		Poster.sql = sql;

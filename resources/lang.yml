@@ -20,12 +20,12 @@ overpage: '&4您输入的页码超出了总页数!'
 posterid: '&2论坛ID&f'
 #顶贴列表
 postertime: '&2顶帖日期&f'
-pageinfo: '&2当前/总页数:&f%PAGE%/%TOTALPAGE%&2, 翻页:&7/poster list <页码>'
+pageinfo: '&2当前/总页数:&f%PAGE%/%TOTALPAGE%&2, 翻页:&7/bt list <页码>'
 noposter: '&4没有找到顶帖数据!'
 #顶贴者列表
 posterplayer: '&2玩家ID&f'
 postertotal: '&2顶贴者数量&f'
-pageinfotop: '&2当前/总页数:&f%PAGE%/%TOTALPAGE%&2, 翻页:&7/poster top <页码>'
+pageinfotop: '&2当前/总页数:&f%PAGE%/%TOTALPAGE%&2, 翻页:&7/bt top <页码>'
 noplayer: '&4没有找到玩家!'
 
 #奖励

@@ -28,6 +28,9 @@ public class BBSToper extends JavaPlugin {
 		new GUIManager(this);
 		SQLManager.startTimingReconnect();
 		Util.startAutoReward();
+		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+			new PAPIExpansion().register();
+		}
 		new Metrics(this);
 		this.getLogger().info(Message.ENABLE.getString());
 	}

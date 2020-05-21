@@ -7,6 +7,7 @@ import moe.feo.bbstoper.BBSToper;
 import moe.feo.bbstoper.CLI;
 import moe.feo.bbstoper.Crawler;
 import moe.feo.bbstoper.Option;
+import moe.feo.bbstoper.PAPIExpansion;
 import moe.feo.bbstoper.Poster;
 import moe.feo.bbstoper.Reminder;
 import moe.feo.bbstoper.Util;
@@ -33,6 +34,7 @@ public class SQLManager {
 			Crawler.setSQLer(sql);
 			Poster.setSQLer(sql);
 			Reminder.setSQLer(sql);
+			PAPIExpansion.setSQLer(sql);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
