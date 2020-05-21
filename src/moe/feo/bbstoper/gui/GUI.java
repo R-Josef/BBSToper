@@ -91,7 +91,7 @@ public class GUI {
 		starmeta.setDisplayName(Message.GUI_TOPS.getString());
 		List<String> starlores = new ArrayList<String>();
 		List<Poster> listposter = sql.getTopPosters();
-		for (int i = 0; i < sql.getTopPosters().size(); i++) {
+		for (int i = 0; i < listposter.size(); i++) {
 			if (i >= Option.GUI_TOPPLAYERS.getInt())
 				break;
 			starlores.add(Message.POSTERPLAYER.getString() + ":" + listposter.get(i).getName() + " "
