@@ -1,5 +1,6 @@
 package moe.feo.bbstoper.sql;
 
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -34,7 +35,9 @@ public class SQLManager {
 			Crawler.setSQLer(sql);
 			Poster.setSQLer(sql);
 			Reminder.setSQLer(sql);
-			PAPIExpansion.setSQLer(sql);
+			if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+				PAPIExpansion.setSQLer(sql);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
