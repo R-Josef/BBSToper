@@ -50,10 +50,18 @@ public class PAPIExpansion extends PlaceholderExpansion {
 		if (player != null) {// 有玩家
 			poster = sql.getPoster(player.getUniqueId().toString());
 			if (identifier.equals("bbsid")) {// BBS用户名
-				return poster.getBbsname();
+				if (poster == null) {
+					return Message.GUI_NOTBOUND.getString();
+				} else {
+					return poster.getBbsname();
+				}
 			}
 			if (identifier.equals("posttimes")) {// 顶贴次数
-				return String.valueOf(poster.getTopStates().size());
+				if (poster == null) {
+					return Message.GUI_NOTBOUND.getString();
+				} else {
+					return String.valueOf(poster.getTopStates().size());
+				}
 			}
 		}
 		if (identifier.equals("pageid")) {// 宣传贴id
