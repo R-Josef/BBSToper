@@ -7,7 +7,7 @@
 #项目地址: https://github.com/R-Josef/BBSToper
 #MCBBS下载地址: https://www.mcbbs.net/thread-789082-1-1.html
 #请定期检查这些网址以获取可用的更新
-#Copyright © 2018-2019 R_Josef 版权所有
+#Copyright © 2018-2020 R_Josef 版权所有
 
 #数据库设置
 database:
@@ -75,3 +75,37 @@ reward:
     commands:
     - 'experience add %PLAYER% 1000'
     - 'eco give %PLAYER% 20'
+    #激励奖励
+    #当玩家在无人顶贴超过一定时间之后顶贴, 这些奖励命令会被执行
+    incentivereward:
+        #是否启用
+        enable: false
+        #是否为额外奖励(是否还会给与普通的奖励)
+        extra: true
+        #间隔时间, 单位为分钟
+        #距离上一次有人顶贴多久之后会给与激励奖励
+        period: 30
+        #奖励命令
+        commands:
+        - 'effect give %PLAYER% haste 2'
+    #休息日奖励
+    #当玩家在设定好的休息日顶贴, 这些奖励命令会被执行
+    offdayreward:
+        #是否启用
+        enable: false
+        #是否为额外奖励(是否还会给与普通的奖励)
+        #注意: 当"休息日奖励"与"激励奖励"的"额外奖励"选项都为false时
+        #如果"休息日奖励"与"激励奖励"的条件同时满足, 将只有"休息日奖励"会被发放
+        extra: true
+        #哪些日期会应用于这项设置
+        #表示一个星期中的某一天: SUNDAY(周日), MONDAY(周一), TUESDAY(周二)
+        #WEDNESDAY(周三), THURSDAY(周四), FRIDAY(周五), SATURDAY(周六)
+        #普通日期格式为MM-dd, 例如10-01表示十月一日
+        offdays:
+        - 'SATURDAY'
+        - 'SUNDAY'
+        - '10-01'
+        - '05-01'
+        #奖励命令
+        commands:
+        - 'effect give %PLAYER% speed 2'

@@ -34,6 +34,7 @@ nopost: '&4您暂未有新的顶帖记录!'
 overtime: '&4很抱歉您每天只能领取 &e%REWARDTIMES% &4次奖励!'
 waitamin: '&4连续顶帖间隔必须大于一分钟!'
 reward: '&b您在 &f%TIME% &b进行的顶帖已得到回报.'
+extrareward: '&b您还获得了: %EXTRA%.'
 rewardgived: '&a奖励发放完毕!'
 broadcast: '&b玩家 &e%PLAYER% &b刚刚领取了顶贴奖励, 大家也快来顶贴吧! '
 
@@ -62,6 +63,7 @@ invalid: '&4命令错误!'
 invalidnum: '&4无效的数字!'
 playercmd: '&4该命令必须由玩家执行!'
 pagenotvisible: '&4宣传帖目前处于不可视状态, 如果您看到这条消息请通知管理员!'
+none: '&4 无'
 failedgetweb: '获取网页时错误, 可能是由于网络波动!'
 #failedresolveweb中的信息可能在您的宣传帖被移入审核区时反复出现
 #您可以通过留空该项来禁用这项提示, 留空的格式应为-failedresolveweb: ''
@@ -79,11 +81,14 @@ gui:
     bbsid: '&2绑定账号: &e%BBSID%'
     posttimes: '&2顶贴次数: &e%TIMES%'
     rewards: '&b奖励信息'
+    incentiverewards: '&b激励奖励'
+    offdayrewards: '&b休息日奖励'
     clickget: '&a点击领取奖励'
     tops: '&b顶贴排行'
     pagestate: '§b宣传帖状态'
     pageid: '&2帖子ID: &f%PAGEID%'
     lastpost: '&2上一次顶贴: &f%TIME%'
+    extrarewards: '&2现在顶贴可获得: %EXTRA%'
     pagenotvisible: '&c宣传帖目前处于不可视状态'
     clickopen: '&a点击获取链接'
     #这里是自定义GUI中的奖励信息, 留空则直接显示奖励命令 ([]表示留空)
@@ -106,6 +111,8 @@ info:
 - '&b本服MCBBS宣传帖链接:'
 - '&9%PAGE%'
 - '&b对宣传帖使用提升卡将获得丰厚奖励.'
+#额外奖励提醒
+extrainfo: '&b现在顶贴还可以获得 %EXTRA% 哦.'
 
 #帮助
 help:

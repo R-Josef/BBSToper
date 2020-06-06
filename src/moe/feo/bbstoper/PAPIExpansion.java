@@ -82,6 +82,13 @@ public class PAPIExpansion extends PlaceholderExpansion {
 				return Message.GUI_PAGENOTVISIBLE.getString();// 帖子不可视
 			}
 		}
+		if (identifier.equals("extrarewards")) {
+			String extra = Util.getExtraReward(new Crawler());
+			if (extra == null) {
+				extra = Message.NONE.getString();
+			}
+			return extra;
+		}
 		String pattern = "^top_[1-9]\\d*$";// top_正整数的正则表达式
 		if (Pattern.matches(pattern, identifier)) {// 如果匹配这种格式
 			int rank = Integer.parseInt(identifier.split("_")[1]);

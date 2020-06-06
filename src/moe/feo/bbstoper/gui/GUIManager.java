@@ -38,13 +38,13 @@ public class GUIManager implements Listener {
 						if (rglistener == null) {
 							new IDListener(player.getUniqueId()).register();// 为此玩家创建一个监听器
 							String keywords = Arrays.toString(Option.GUI_CANCELKEYWORDS.getStringList().toArray());
-							player.sendMessage(Message.ENTER.getString().replaceAll("%KEYWORD%", keywords));
+							player.sendMessage(Message.PREFIX.getString() + Message.ENTER.getString().replaceAll("%KEYWORD%", keywords));
 						}
 					}
 				}
 				if (Option.GUI_USECHATGETID.getBoolean() == false) {
 					player.closeInventory();
-					player.sendMessage(Message.HELP_BINDING.getString());
+					player.sendMessage(Message.PREFIX.getString() + Message.HELP_BINDING.getString());
 				}
 			}
 			if (event.getRawSlot() == 13) {

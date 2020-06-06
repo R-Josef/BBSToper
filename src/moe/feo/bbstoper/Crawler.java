@@ -26,6 +26,7 @@ public class Crawler {
 
 	public Crawler() {
 		resolveWebData();
+		kickExpiredData();
 	}
 
 	public void resolveWebData() {
@@ -122,20 +123,8 @@ public class Crawler {
 					if (poster.getRewardtime() >= Option.REWARD_TIMES.getInt()) {
 						continue;// 如果领奖次数已经大于设定值了，那么跳出循环
 					}
-					// 这时候就可以给玩家发奖励了，这里让主线程执行
-					Bukkit.getScheduler().runTask(BBSToper.getInstance(), new Runnable() {
-						@Override
-						public void run() {
-							for (int x = 0; x < Option.REWARD_COMMANDS.getStringList().size(); x++) {
-								String cmd = Option.REWARD_COMMANDS.getStringList().get(x)
-										.replaceAll("%PLAYER%", player.getName());
-								Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
-							}
-						}
-					});
-					// 给玩家发个消息表示祝贺
-					player.getPlayer().sendMessage(
-							Message.PREFIX.getString() + Message.REWARD.getString().replaceAll("%TIME%", time));
+					// 这时候就可以给玩家发奖励了
+					new Reward(olplayer, this, i).award();
 					sql.addTopState(bbsname, time);
 					poster.setRewardtime(poster.getRewardtime() + 1);
 					sql.updatePoster(poster);// 把poster储存起来

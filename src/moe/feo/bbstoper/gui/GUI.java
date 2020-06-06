@@ -19,6 +19,7 @@ import moe.feo.bbstoper.Crawler;
 import moe.feo.bbstoper.Message;
 import moe.feo.bbstoper.Option;
 import moe.feo.bbstoper.Poster;
+import moe.feo.bbstoper.Util;
 import moe.feo.bbstoper.sql.SQLer;
 
 public class GUI {
@@ -80,7 +81,15 @@ public class GUI {
 		sunflowermeta.setDisplayName(Message.GUI_REWARDS.getString());
 		List<String> sunflowerlores = new ArrayList<String>(Message.GUI_REWARDSINFO.getStringList());// 自定义奖励信息
 		if (sunflowerlores.isEmpty()) {// 如果没有自定义奖励信息
-			sunflowerlores = Option.REWARD_COMMANDS.getStringList();// 直接显示命令
+			sunflowerlores.addAll(Option.REWARD_COMMANDS.getStringList());// 直接显示命令
+			if (Option.REWARD_INCENTIVEREWARD_ENABLE.getBoolean()) {
+				sunflowerlores.add(Message.GUI_INCENTIVEREWARDS.getString());// 激励奖励
+				sunflowerlores.addAll(Option.REWARD_INCENTIVEREWARD_COMMANDS.getStringList());// 激励奖励命令
+			}
+			if (Option.REWARD_OFFDAYREWARD_ENABLE.getBoolean()) {
+				sunflowerlores.add(Message.GUI_OFFDAYREWARDS.getString());// 休息日奖励
+				sunflowerlores.addAll(Option.REWARD_OFFDAYREWARD_COMMANDS.getStringList()); // 休息日奖励命令
+			}
 		}
 		sunflowerlores.add(Message.GUI_CLICKGET.getString());
 		sunflowermeta.setLore(sunflowerlores);
@@ -116,6 +125,11 @@ public class GUI {
 		} else {
 			compasslores.add(Message.GUI_PAGENOTVISIBLE.getString());
 		}
+		String extra = Util.getExtraReward(crawler);
+		if (extra != null) {
+			String extrarewards = Message.GUI_EXTRAREWARDS.getString().replaceAll("%EXTRA%", extra);
+			compasslores.add(extrarewards);
+		}
 		compasslores.add(Message.GUI_CLICKOPEN.getString());
 		compassmeta.setLore(compasslores);
 		compass.setItemMeta(compassmeta);
@@ -124,6 +138,9 @@ public class GUI {
 	
 	public ItemStack getRandomPane() {// 获取随机一种颜色的玻璃板
 		short data = (short)(Math.random()* 16);// 这会随机取出0-15的数据值
+		while (data == 8) {// 8号亮灰色染色玻璃板根本没有颜色
+			data = (short)(Math.random()* 16);
+		}
 		ItemStack frame = new ItemStack(Material.STAINED_GLASS_PANE, 1, data);
 		ItemMeta framemeta = frame.getItemMeta();
 		framemeta.setDisplayName(Message.GUI_FRAME.getString());

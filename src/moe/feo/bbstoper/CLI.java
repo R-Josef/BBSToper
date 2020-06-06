@@ -221,7 +221,6 @@ public class CLI implements TabExecutor {
 						sender.sendMessage(Message.PREFIX.getString() + Message.PAGENOTVISIBLE.getString());
 						return;
 					}
-					crawler.kickExpiredData();// 剔除过期数据
 					String bbsname = poster.getBbsname();
 					List<String> cache = new ArrayList<>();// 这个缓存是用来判断玩家的顶贴粒度是否小于一分钟
 					boolean issucceed = false;
@@ -249,18 +248,7 @@ public class CLI implements TabExecutor {
 									poster.setRewardtime(0);
 								}
 								if (poster.getRewardtime() < Option.REWARD_TIMES.getInt()) {// 奖励次数小于设定值
-									Bukkit.getScheduler().runTask(BBSToper.getInstance(), new Runnable() {
-										@Override
-										public void run() {
-											for (int x = 0; x < Option.REWARD_COMMANDS.getStringList().size(); x++) {
-												String cmd = Option.REWARD_COMMANDS.getStringList().get(x)
-														.replaceAll("%PLAYER%", sender.getName());
-												Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
-											}
-										}
-									});
-									sender.sendMessage(Message.PREFIX.getString()
-											+ Message.REWARD.getString().replaceAll("%TIME%", crawler.Time.get(i)));
+									new Reward((Player) sender, crawler, i).award();
 									sql.addTopState(poster.getBbsname(), crawler.Time.get(i));
 									poster.setRewardtime(poster.getRewardtime() + 1);// rewardtime次数加一
 									issucceed = true;

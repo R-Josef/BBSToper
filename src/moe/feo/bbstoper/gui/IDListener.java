@@ -115,7 +115,7 @@ public class IDListener extends RegisteredListener implements Listener, EventExe
 		if (cancelkeywords.contains(msg)) {// 如果关键词中包含这次输入的消息
 			unregister();// 取消监听事件
 			CLI.getInstance().getCache().put(player.getUniqueId().toString(), null);// 清理这个键
-			player.sendMessage(Message.CANCELED.getString());
+			player.sendMessage(Message.PREFIX.getString() + Message.CANCELED.getString());
 			return;
 		}
 		List<String> list = new ArrayList<>(Arrays.asList(msg.split("\\s+")));

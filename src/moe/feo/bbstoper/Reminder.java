@@ -1,6 +1,7 @@
 package moe.feo.bbstoper;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import moe.feo.bbstoper.sql.SQLer;
 
 public class Reminder implements Listener {
-	
+
 	private static SQLer sql;
 
 	public Reminder(Plugin plugin) {
@@ -34,9 +35,10 @@ public class Reminder implements Listener {
 				task();
 				Util.removeRunningTaskID(this.getTaskId());
 			}
+
 			public void task() {
-				boolean isbinded = true;
-				boolean isposted = true;
+				boolean isbinded = true;// 是否绑定
+				boolean isposted = true;// 是否有顶贴者
 				UUID uuid = event.getPlayer().getUniqueId();
 				Poster poster = sql.getPoster(uuid.toString());
 				String datenow = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -47,7 +49,13 @@ public class Reminder implements Listener {
 					isposted = false;
 				}
 				if (!isposted) {// 没有顶贴
-					List<String> list = Message.INFO.getStringList();
+					List<String> list = new ArrayList<String>();// 提示的信息
+					list.addAll(Message.INFO.getStringList());
+					Crawler crawler = new Crawler();
+					String extra = Util.getExtraReward(crawler);
+					if (extra != null) {// 说明有额外奖励信息
+						list.add(Message.EXTRAINFO.getString().replaceAll("%EXTRA%", extra));
+					}
 					String url = "https://www.mcbbs.net/thread-" + Option.MCBBS_URL.getString() + "-1-1.html";
 					for (String msg : list) {
 						event.getPlayer().sendMessage(Message.PREFIX.getString() + msg.replaceAll("%PAGE%", url));
@@ -59,7 +67,7 @@ public class Reminder implements Listener {
 			}
 		}.runTaskAsynchronously(BBSToper.getInstance());
 	}
-	
+
 	public static void setSQLer(SQLer sql) {
 		Reminder.sql = sql;
 	}
