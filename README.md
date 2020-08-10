@@ -77,6 +77,5 @@
 | %bbstoper_pageurl%   | 宣传贴的链接                               |
 | %bbstoper_lastpost%  | 上一次被顶贴的时间                            |
 | %bbstoper_top_<序号>%  | 顶贴排行第"序号"个的顶贴信息, 例: %bbstoper_top_1% |
-| %bbstoper_extrarewards%  | 当前顶贴可以获得的额外奖励种类 |
 
 
