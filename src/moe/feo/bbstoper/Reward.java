@@ -83,6 +83,10 @@ public class Reward {
 		int x = index + 1;// 从下一个顶贴记录开始遍历
 		while (true) {
 			Date lastdate = null;
+			// 当记录已经全部遍历完，就不用再继续了
+			if (x >= crawler.Time.size()) {
+				break;
+			}
 			try {
 				lastdate = bbsformat.parse(crawler.Time.get(x));
 			} catch (ParseException e) {
