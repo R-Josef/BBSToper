@@ -1,31 +1,21 @@
 # BBSToper
-
-这是一个检测mcbbs服务器宣传贴顶帖后，玩家输入指令领取奖励的bukkit插件
-
-此插件的mcbbs页面：[https://www.mcbbs.net/thread-789082-1-1.html](https://www.mcbbs.net/thread-789082-1-1.html)
-
+这是一个检测mcbbs服务器宣传贴顶帖后，玩家输入指令领取奖励的bukkit插件  
+此插件的mcbbs页面：[https://www.mcbbs.net/thread-789082-1-1.html](https://www.mcbbs.net/thread-789082-1-1.html)  
 可用发行版: [https://github.com/R-Josef/BBSToper/releases](https://github.com/R-Josef/BBSToper/releases)
 
 ## 许可
-
 本软件的许可请查看[LICENCE](https://github.com/R-Josef/BBSToper/blob/master/LICENSE)文件.
 
-## 用到的类库
-
-1.Bukkit
-
-2.Jsoup
-
-3.bStats
-
-4.PlaceHolderAPI
+## 用到的库
+1. [Bukkit](https://dev.bukkit.org/)
+2. [Jsoup](https://jsoup.org/)
+3. [bStats](https://bstats.org/)
+4. [PlaceHolderAPI](https://github.com/PlaceholderAPI/PlaceholderAPI)
 
 ## 构建
-
 此项目采用maven构建, 提供了pom文件, clone此git库后可以使用maven进行构建
 
 ## 使用方法
-
 1. 获得一份构建好的jar文件, 请查看[https://github.com/R-Josef/BBSToper/releases](https://github.com/R-Josef/BBSToper/releases)
 2. 将构建好的文件放入plugins文件夹
 3. 前往mcbbs复制您的帖子id并替换掉配置文件中默认链接中的id
@@ -34,14 +24,12 @@
 ## 命令&权限
 
 **玩家默认拥有`bbstoper.user`权限**
-
 | bbstoper.user的子权限  |
 | ------------------ |
 | `bbstoper.binding` |
 | `bbstoper.reward`  |
 
 **op默认拥有`bbstoper.admin`权限**
-
 | bbstoper.admin的子权限 |
 | ------------------ |
 | `bbstoper.list`    |
@@ -51,7 +39,6 @@
 | `bbstoper.reload`  |
 
 **/bbstoper /poster /bt 都是可用命令别名**
-
 | 命令                               | 权限                 | 描述                  |
 | -------------------------------- | ------------------ | ------------------- |
 | `/bbstoper`                      | 无需权限               | 显示箱子GUI             |
@@ -66,7 +53,6 @@
 | `/bbstoper reload`               | `bbstoper.reload`  | 重载插件                |
 
 ## PlaceholderAPI 占位符
-
 本插件提供了一些基于PlaceHolderAPI的占位符(Placeholders), 要想使用这些占位符就必须在服务端上同时运行了[PlaceholderAPI](https://github.com/PlaceholderAPI/PlaceholderAPI)插件.
 
 | 占位符                  | 描述                                   |
