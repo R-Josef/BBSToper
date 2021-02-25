@@ -36,7 +36,9 @@ public class Crawler {
 		try {
 			doc = Jsoup.connect(url).get();
 		} catch (IOException e) {
-			//e.printStackTrace(); // 这里经常会因为网络连接不顺畅而报错
+			if (Option.DEBUG.getBoolean()) {
+				e.printStackTrace(); // 这里经常会因为网络连接不顺畅而报错
+			}
 			BBSToper.getInstance().getLogger().warning(Message.FAILEDGETWEB.getString());
 			return;// 没抓到网页就不要继续了，会空指针
 		}

@@ -9,6 +9,9 @@
 #请定期检查这些网址以获取可用的更新
 #Copyright © 2018-2020 R_Josef 版权所有
 
+#DEBUG模式
+debug: false
+
 #数据库设置
 database:
     #表名前缀, 在sqlite和mysql都有效
