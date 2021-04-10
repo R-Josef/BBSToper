@@ -4,6 +4,7 @@ version: 3.6.4
 author: Fengshuai(R_Josef)
 website: https://www.mcbbs.net/thread-789082-1-1.html
 softdepend: [PlaceholderAPI]
+api-version: 1.13
 commands:
     bbstoper:
         description: 'BBSToper的主要指令.'
