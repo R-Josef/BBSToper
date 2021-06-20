@@ -1,9 +1,10 @@
 name: BBSToper
 main: moe.feo.bbstoper.BBSToper
 version: 3.6.4
-author: Fengshuai(R_Josef)
-website: https://www.mcbbs.net/thread-789082-1-1.html
+authors: [Fengshuai(R_Josef), MineBlock Team.]
+website: www.mineblock.cc
 softdepend: [PlaceholderAPI]
+api-version: 1.17
 commands:
     bbstoper:
         description: 'BBSToper的主要指令.'
