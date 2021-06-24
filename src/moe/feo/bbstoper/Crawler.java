@@ -58,7 +58,7 @@ public class Crawler {
 		for (Element rows : listbody.getElementsByTag("tr")) {// tr是表的一行
 			Elements cells = rows.getElementsByTag("td");// td表示一行的单元格，cells为单元格的合集
 			String action = cells.get(2).text();
-			if (!(action.equals("提升(提升卡)")||action.equals("提升(服务器提升卡)"))) {// 这里过滤掉不是提升卡的操作
+			if (!(action.equals("提升(提升卡)")||action.equals("提升(服务器/交易代理提升卡)"))) {// 这里过滤掉不是提升卡的操作
 				continue;
 			}
 			Element idcell = cells.get(0);// 第一个单元格中包含有id
