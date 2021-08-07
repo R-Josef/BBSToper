@@ -124,6 +124,7 @@ help:
     help: '&3显示帮助信息: &b/bt help'
     binding: '&3绑定论坛账号: &b/bt binding <MCBBS论坛ID>'
     reward: '&3获取奖励: &b/bt reward'
+    testreward: '&3测试奖励: &b/bt testreward [ normal | incentive | offday ]'
     list: "&3查看顶帖列表: &b/bt list [页码]"
     top: "&3查看所有顶贴玩家排名: &b/bt top [页码]"
     check: '&3检查: &b/bt check < bbsid | player > <值>'

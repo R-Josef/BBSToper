@@ -1,6 +1,6 @@
 name: BBSToper
 main: moe.feo.bbstoper.BBSToper
-version: 3.6.6
+version: 3.6.7
 author: Fengshuai(R_Josef)
 website: https://www.mcbbs.net/thread-789082-1-1.html
 softdepend: [PlaceholderAPI]
@@ -13,6 +13,7 @@ commands:
             /bbstoper help - 显示帮助页面
             /bbstoper binding <MCBBS论坛ID> - 绑定论坛账号，注意这里是ID不是uid
             /bbstoper reward - 领取奖励
+            /bbstoper testreward <奖励种类> - 测试奖励
             /bbstoper list <页数> - 列出6天以内所有顶帖者
             /bbstoper top - 按顶贴次数顺序列出所有顶贴者
             /bbstoper check bbsid <论坛ID> - 查看一个论坛id的绑定者
@@ -24,6 +25,7 @@ permissions:
         description: '管理员权限.'
         default: 'op'
         children:
+            bbstoper.testreward: true
             bbstoper.list: true
             bbstoper.top: true
             bbstoper.reload: true
@@ -42,6 +44,9 @@ permissions:
     bbstoper.reward:
         description: '获取顶贴奖励.'
         default: true
+    bbstoper.testreward:
+        description: '测试顶贴奖励.'
+        default: 'op'
     bbstoper.list:
         description: '列出顶贴列表.'
         default: 'op'

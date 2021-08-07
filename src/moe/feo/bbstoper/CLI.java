@@ -46,6 +46,9 @@ public class CLI implements TabExecutor {
 			if ("reward".startsWith(arg) && sender.hasPermission("bbstoper.reward")) {
 				list.add("reward");
 			}
+			if ("testreward".startsWith(arg) && sender.hasPermission("bbstoper.testreward")) {
+				list.add("testreward");
+			}
 			if ("binding".startsWith(arg) && sender.hasPermission("bbstoper.binding")) {
 				list.add("binding");
 			}
@@ -107,6 +110,9 @@ public class CLI implements TabExecutor {
 					sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TITLE.getString());
 					if (sender.hasPermission("bbstoper.reward")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_REWARD.getString());
+					}
+					if (sender.hasPermission("bbstoper.testreward")) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TESTREWARD.getString());
 					}
 					if (sender.hasPermission("bbstoper.binding")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_BINDING.getString());
@@ -290,6 +296,37 @@ public class CLI implements TabExecutor {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPOST.getString());
 					}
 
+					break;
+				}
+
+				case "testreward": {
+					if (!(sender instanceof Player)) {
+						sender.sendMessage(Message.PLAYERCMD.getString());
+						sender.sendMessage(Message.HELP_HELP.getString());
+						return;
+					}
+					if (!sender.hasPermission("bbstoper.testreward")) {
+						sender.sendMessage(Message.PREFIX.getString() + Message.NOPERMISSION.getString());
+						return;
+					}
+					String type;
+					if (args.length == 1) {
+						type = "NORMAL";
+					} else if (args.length == 2) {
+						type = args[1].toUpperCase();
+						if (!(type.equals("NORMAL") || type.equals("INCENTIVE") || type.equals("OFFDAY"))) {
+							sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
+							sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TESTREWARD.getString());
+							return;
+						}
+					} else {
+						sender.sendMessage(Message.PREFIX.getString() + Message.INVALID.getString());
+						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_TESTREWARD.getString());
+						return;
+					}
+					Player player = Bukkit.getPlayer(sender.getName());
+					new Reward(player, null, 0).testAward(type);
+					sender.sendMessage(Message.PREFIX.getString() + Message.REWARDGIVED.getString());
 					break;
 				}
 

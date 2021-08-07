@@ -85,6 +85,7 @@ public enum Message {
 	HELP_HELP("help.help"),
 	HELP_BINDING("help.binding"),
 	HELP_REWARD("help.reward"),
+	HELP_TESTREWARD("help.testreward"),
 	HELP_LIST("help.list"),
 	HELP_TOP("help.top"),
 	HELP_CHECK("help.check"),

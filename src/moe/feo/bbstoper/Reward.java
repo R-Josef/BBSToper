@@ -193,4 +193,32 @@ public class Reward {
 					Message.PREFIX.getString() + Message.EXTRAREWARD.getString().replaceAll("%EXTRA%", extra));
 		}
 	}
+
+	public void testAward(String type) {
+		List<String> cmds = new ArrayList<>();
+		switch (type) {
+			case "NORMAL": {
+				cmds.addAll(Option.REWARD_COMMANDS.getStringList());
+				break;
+			}
+			case "INCENTIVE": {
+				cmds.addAll(Option.REWARD_INCENTIVEREWARD_COMMANDS.getStringList());
+				break;
+			}
+			case "OFFDAY": {
+				cmds.addAll(Option.REWARD_OFFDAYREWARD_COMMANDS.getStringList());
+				break;
+			}
+		}
+		// 让主线程执行
+		Bukkit.getScheduler().runTask(BBSToper.getInstance(), new Runnable() {
+			@Override
+			public void run() {
+				for (String cmd : cmds) {
+					cmd = cmd.replaceAll("%PLAYER%", player.getName());
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
+				}
+			}
+		});
+	}
 }
