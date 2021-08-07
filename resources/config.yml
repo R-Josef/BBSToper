@@ -35,7 +35,7 @@ database:
     sqlite:
         folder: '%PLUGIN_FOLDER%'
         database: 'bbstoper.db'
-    
+
 mcbbs:
     #服务器宣传贴的帖子id
     url: '1034574'
@@ -43,9 +43,11 @@ mcbbs:
     pagesize: 10
     #玩家多久能更换一次绑定的id, 单位天
     changeidcooldown: 30
+    #玩家多久能使用一次奖励指令以及查询指令, 单位秒
+    querycooldown: 30
     #如果一个玩家没有顶贴是否在加入时发送提示消息
     joinmessage: true
-    
+
 gui:
     #玩家排名的显示数量
     topplayers: 5

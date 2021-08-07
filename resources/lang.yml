@@ -14,6 +14,9 @@ reload: '&a配置已重载!'
 #数据库
 failedconnectsql: '连接数据库时出错！'
 
+#查询冷却
+querycooldown: '&4查询操作正在冷却, 请在 %COOLDOWN% 秒后重试.'
+
 #列表通用
 posternum: '&2顶帖数量&f'
 overpage: '&4您输入的页码超出了总页数!'

@@ -29,6 +29,7 @@ permissions:
             bbstoper.reload: true
             bbstoper.check: true
             bbstoper.delete: true
+            bbstoper.bypassquerycooldown: true
     bbstoper.user:
         description: '用户权限.'
         default: true
@@ -46,6 +47,9 @@ permissions:
         default: 'op'
     bbstoper.top:
         description: '将所有玩家按照顶贴次数排序.'
+        default: 'op'
+    bbstoper.bypassquerycooldown:
+        description: '绕过查询冷却.'
         default: 'op'
     bbstoper.check:
         description: '检查玩家ID和论坛ID.'

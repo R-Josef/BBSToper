@@ -25,6 +25,7 @@ public class CLI implements TabExecutor {
 
 	private static SQLer sql;
 	private Map<String, String> cache = new HashMap<>();// 这个map是为了暂存玩家的绑定信息的
+	private Map<UUID, Long> queryrecord = new HashMap<>();// 这个map是用于储存玩家上次查询顶贴记录的时间
 
 	private static CLI cli = new CLI();
 
@@ -216,6 +217,16 @@ public class CLI implements TabExecutor {
 						sender.sendMessage(Message.PREFIX.getString() + Message.HELP_BINDING.getString());
 						return;
 					}
+					if (!sender.hasPermission("bbstoper.bypassquerycooldown")) {
+						double cooldown = getQueryCooldown(((Player) sender).getUniqueId());
+						if (cooldown > 0) {
+							sender.sendMessage(Message.PREFIX.getString() + Message.QUERYCOOLDOWN.getString()
+									.replaceAll("%COOLDOWN%", String.valueOf((int) cooldown)));
+							return;
+						} else {
+							queryrecord.put(((Player) sender).getUniqueId(), System.currentTimeMillis());
+						}
+					}
 					crawler = new Crawler();
 					if (!crawler.visible) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.PAGENOTVISIBLE.getString());
@@ -283,9 +294,19 @@ public class CLI implements TabExecutor {
 				}
 
 				case "list": {
-					if (!(sender.hasPermission("bbstoper.list"))) {
+					if (!sender.hasPermission("bbstoper.list")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPERMISSION.getString());
 						return;
+					}
+					if (sender instanceof Player && !sender.hasPermission("bbstoper.bypassquerycooldown")) {
+						double cooldown = getQueryCooldown(((Player) sender).getUniqueId());
+						if (cooldown > 0) {
+							sender.sendMessage(Message.PREFIX.getString() + Message.QUERYCOOLDOWN.getString()
+									.replaceAll("%COOLDOWN%", String.valueOf((int) cooldown)));
+							return;
+						} else {
+							queryrecord.put(((Player) sender).getUniqueId(), System.currentTimeMillis());
+						}
 					}
 					int page = 1;
 					if (args.length == 2) {
@@ -346,6 +367,16 @@ public class CLI implements TabExecutor {
 					if (!sender.hasPermission("bbstoper.top")) {
 						sender.sendMessage(Message.PREFIX.getString() + Message.NOPERMISSION.getString());
 						return;
+					}
+					if (sender instanceof Player && !sender.hasPermission("bbstoper.bypassquerycooldown")) {
+						double cooldown = getQueryCooldown(((Player) sender).getUniqueId());
+						if (cooldown > 0) {
+							sender.sendMessage(Message.PREFIX.getString() + Message.QUERYCOOLDOWN.getString()
+									.replaceAll("%COOLDOWN%", String.valueOf((int) cooldown)));
+							return;
+						} else {
+							queryrecord.put(((Player) sender).getUniqueId(), System.currentTimeMillis());
+						}
 					}
 					int page = 1;
 					if (args.length == 2) {
@@ -484,9 +515,22 @@ public class CLI implements TabExecutor {
 	public static void setSQLer(SQLer sql) {
 		CLI.sql = sql;
 	}
-	
+
 	public Map<String, String> getCache() {
 		return this.cache;
 	}
 
+	public void recordQuery(UUID uuid, Long time) {
+		queryrecord.put(uuid, time);
+	}
+
+	public double getQueryCooldown(UUID uuid) {
+		int cooldown = Option.MCBBS_QUERYCOOLDOWN.getInt() * 1000;
+		long now = System.currentTimeMillis();
+		Long before = queryrecord.get(uuid);
+		if (before == null) {
+			before = 0l;
+		}
+		return (cooldown - (now - before)) / (double) 1000;
+	}
 }
