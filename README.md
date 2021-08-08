@@ -40,6 +40,7 @@
 
 | bbstoper.admin的子权限         |
 | ------------------------------ |
+| `bbstoper.testreward`          |
 | `bbstoper.list`                |
 | `bbstoper.top`                 |
 | `bbstoper.check`               |
@@ -49,19 +50,20 @@
 
 **/bbstoper /poster /bt 都是可用命令别名**
 
-| 命令                               | 权限                           | 描述                               |
-| ---------------------------------- | ------------------------------ | ---------------------------------- |
-| `/bbstoper`                        | 无需权限                       | 显示箱子GUI                        |
-| `/bbstoper help`                   | 无需权限                       | 显示帮助信息                       |
-| `/bbstoper binding <MCBBS论坛ID>`  | `bbstoper.binding`             | 绑定论坛账号，注意这里是ID不是uid  |
-| `/bbstoper reward`                 | `bbstoper.reward`              | 领取奖励                           |
-| `/bbstoper list <页数>`            | `bbstoper.list`                | 列出所有顶帖者                     |
-| `/bbstoper top <页数>`             | `bbstoper.top`                 | 按照顶贴次数列排名出所有已绑定玩家 |
-| 无                                 | `bbstoper.bypassquerycooldown` | 绕过查询冷却                       |
-| `/bbstoper check bbsid <论坛ID>`   | `bbstoper.check`               | 查看一个论坛id的绑定者             |
-| `/bbstoper check player <玩家ID>`  | `bbstoper.check`               | 查看一个玩家绑定的论坛id           |
-| `/bbstoper delete player <玩家ID>` | `bbstoper.delete`              | 删除一个玩家的数据                 |
-| `/bbstoper reload`                 | `bbstoper.reload`              | 重载插件                           |
+| 命令                               | 权限                           | 描述                                          |
+| ---------------------------------- | ------------------------------ | --------------------------------------------- |
+| `/bbstoper`                        | 无需权限                       | 显示箱子GUI                                   |
+| `/bbstoper help`                   | 无需权限                       | 显示帮助信息                                  |
+| `/bbstoper binding <MCBBS论坛ID>`  | `bbstoper.binding`             | 绑定论坛账号, 注意这里是ID不是uid             |
+| `/bbstoper reward`                 | `bbstoper.reward`              | 领取奖励                                      |
+| `/bbstoper testreward [模式]`      | `bbstoper.testreward`          | 测试奖励, 模式: `normal` `incentive` `offday` |
+| `/bbstoper list <页数>`            | `bbstoper.list`                | 列出所有顶帖者                                |
+| `/bbstoper top <页数>`             | `bbstoper.top`                 | 按照顶贴次数列排名出所有已绑定玩家            |
+| 无                                 | `bbstoper.bypassquerycooldown` | 绕过查询冷却                                  |
+| `/bbstoper check bbsid <论坛ID>`   | `bbstoper.check`               | 查看一个论坛id的绑定者                        |
+| `/bbstoper check player <玩家ID>`  | `bbstoper.check`               | 查看一个玩家绑定的论坛id                      |
+| `/bbstoper delete player <玩家ID>` | `bbstoper.delete`              | 删除一个玩家的数据                            |
+| `/bbstoper reload`                 | `bbstoper.reload`              | 重载插件                                      |
 
 ## PlaceholderAPI 占位符
 
