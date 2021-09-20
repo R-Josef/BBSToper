@@ -1,15 +1,15 @@
 package moe.feo.bbstoper.sql;
 
+import moe.feo.bbstoper.BBSToper;
+import moe.feo.bbstoper.Message;
+import moe.feo.bbstoper.Option;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
-
-import moe.feo.bbstoper.BBSToper;
-import moe.feo.bbstoper.Message;
-import moe.feo.bbstoper.Option;
 
 public class SQLiter extends SQLer {
 
@@ -69,8 +69,7 @@ public class SQLiter extends SQLer {
 		String sql = String.format(
 				"CREATE TABLE IF NOT EXISTS `%s` ( `uuid` char(36) NOT NULL, `name` varchar(255) NOT NULL, `bbsname` varchar(255) NOT NULL COLLATE NOCASE, `binddate` bigint(0) NOT NULL, `rewardbefore` char(10) NOT NULL, `rewardtimes` int(0) NOT NULL, PRIMARY KEY (`uuid`) );",
 				getTableName("posters"));
-		try {
-			Statement stmt = conn.createStatement();
+		try (Statement stmt = conn.createStatement();) {
 			stmt.execute(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -81,8 +80,7 @@ public class SQLiter extends SQLer {
 		String sql = String.format(
 				"CREATE TABLE IF NOT EXISTS `%s` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `bbsname` varchar(255) NOT NULL COLLATE NOCASE, `time` varchar(16) NOT NULL);",
 				getTableName("topstates"));
-		try {
-			Statement stmt = conn.createStatement();
+		try (Statement stmt = conn.createStatement();) {
 			stmt.execute(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
