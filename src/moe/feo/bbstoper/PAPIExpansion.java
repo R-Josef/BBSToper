@@ -12,6 +12,16 @@ public class PAPIExpansion extends PlaceholderExpansion {
 
 	private static SQLer sql;
 
+	private String author;
+	private String identifier;
+	private String version;
+
+	PAPIExpansion() {
+		this.author = BBSToper.getInstance().getDescription().getAuthors().toString();
+		this.identifier = BBSToper.getInstance().getDescription().getName().toLowerCase();
+		this.version = BBSToper.getInstance().getDescription().getVersion();
+	}
+
 	public static void setSQLer(SQLer sql) {
 		PAPIExpansion.sql = sql;
 	}
@@ -31,17 +41,17 @@ public class PAPIExpansion extends PlaceholderExpansion {
 
 	@Override
 	public String getAuthor() {
-		return BBSToper.getInstance().getDescription().getAuthors().toString();
+		return author;
 	}
 
 	@Override
 	public String getIdentifier() {
-		return BBSToper.getInstance().getDescription().getName().toLowerCase();
+		return identifier;
 	}
 
 	@Override
 	public String getVersion() {
-		return BBSToper.getInstance().getDescription().getVersion();
+		return version;
 	}
 
 	@Override
