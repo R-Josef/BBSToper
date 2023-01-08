@@ -34,7 +34,11 @@ public class Crawler {
 				+ "&mobile=no";
 		Document doc = null;
 		try {
-			doc = Jsoup.connect(url).get();
+			if (Option.PROXY_ENABLE.getBoolean() == true) {
+				doc = Jsoup.connect(url).proxy(Option.PROXY_IP.getString(), Option.PROXY_PORT.getInt()).get();
+			} else {
+				doc = Jsoup.connect(url).get();
+			}
 		} catch (IOException e) {
 			if (Option.DEBUG.getBoolean()) {
 				e.printStackTrace(); // 这里经常会因为网络连接不顺畅而报错

@@ -48,6 +48,15 @@ mcbbs:
     #如果一个玩家没有顶贴是否在加入时发送提示消息
     joinmessage: true
 
+# 代理设置
+proxy:
+    # 启用代理
+    enable: false
+    # 代理ip
+    ip: '127.0.0.1'
+    # 代理端口
+    port: 10809
+
 gui:
     #玩家排名的显示数量
     topplayers: 5
