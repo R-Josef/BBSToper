@@ -30,7 +30,7 @@ public class Crawler {
 	}
 
 	public void resolveWebData() {
-		String url = "https://www.mcbbs.net/forum.php?mod=misc&action=viewthreadmod&tid=" + Option.MCBBS_URL.getString()
+		String url = Option.MCBBS_LINK.getString() + "forum.php?mod=misc&action=viewthreadmod&tid=" + Option.MCBBS_URL.getString()
 				+ "&mobile=no";
 		Document doc = null;
 		try {

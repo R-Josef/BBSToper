@@ -37,6 +37,8 @@ database:
         database: 'bbstoper.db'
 
 mcbbs:
+    #MCBBS链接（用于特殊情况，末尾一定要有斜杠“/”）
+    link: "https://www.mcbbs.net/"
     #服务器宣传贴的帖子id
     url: '1034574'
     #顶帖列表/玩家排名每页的大小

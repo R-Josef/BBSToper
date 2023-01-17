@@ -24,6 +24,7 @@ public enum Option {
 	DATABASE_MYSQL_SSL("database.mysql.ssl"),
 	DATABASE_SQLITE_FOLDER("database.sqlite.folder"),
 	DATABASE_SQLITE_DATABASE("database.sqlite.database"),
+	MCBBS_LINK("mcbbs.link"),
 	MCBBS_URL("mcbbs.url"), MCBBS_PAGESIZE("mcbbs.pagesize"),
 	MCBBS_CHANGEIDCOOLDOWN("mcbbs.changeidcooldown"),
 	MCBBS_QUERYCOOLDOWN("mcbbs.querycooldown"),

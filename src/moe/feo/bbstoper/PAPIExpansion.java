@@ -78,7 +78,7 @@ public class PAPIExpansion extends PlaceholderExpansion {
 			return Option.MCBBS_URL.getString();
 		}
 		if (identifier.equals("pageurl")) {// 宣传贴url
-			return "https://www.mcbbs.net/thread-" + Option.MCBBS_URL.getString() + "-1-1.html";
+			return Option.MCBBS_LINK.getString() + "thread-" + Option.MCBBS_URL.getString() + "-1-1.html";
 		}
 		if (identifier.equals("lastpost")) {// 上一次顶贴时间
 			Crawler crawler = new Crawler();

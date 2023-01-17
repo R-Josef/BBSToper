@@ -56,7 +56,7 @@ public class Reminder implements Listener {
 					if (extra != null) {// 说明有额外奖励信息
 						list.add(Message.EXTRAINFO.getString().replaceAll("%EXTRA%", extra));
 					}
-					String url = "https://www.mcbbs.net/thread-" + Option.MCBBS_URL.getString() + "-1-1.html";
+					String url = Option.MCBBS_LINK.getString() + "thread-" + Option.MCBBS_URL.getString() + "-1-1.html";
 					for (String msg : list) {
 						event.getPlayer().sendMessage(Message.PREFIX.getString() + msg.replaceAll("%PAGE%", url));
 					}

@@ -55,7 +55,7 @@ public class GUIManager implements Listener {
 			if (event.getRawSlot() == 22) {// 获取链接
 				player.closeInventory();
 				for (String msg : Message.CLICKPOSTICON.getStringList()) {
-					String url = "https://www.mcbbs.net/thread-" + Option.MCBBS_URL.getString() + "-1-1.html";
+					String url = Option.MCBBS_LINK.getString() + "thread-" + Option.MCBBS_URL.getString() + "-1-1.html";
 					player.sendMessage(msg.replaceAll("%PAGE%", url));
 				}
 			}
