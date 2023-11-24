@@ -33,8 +33,10 @@ public class GUI {
 	}
 
 	public GUI(Player player) {
-		createGui(player);
-		Bukkit.getScheduler().runTask(BBSToper.getInstance(), () -> player.openInventory(inv));
+		Bukkit.getScheduler().runTaskAsynchronously(BBSToper.getInstance(), () -> {
+			createGui(player);
+			player.openInventory(inv);
+		});
 	}
 	
 	class BBSToperGUIHolder implements InventoryHolder {// 定义一个Holder用于识别此插件的GUI
@@ -108,16 +110,7 @@ public class GUI {
 		ItemStack star = new ItemStack(Material.NETHER_STAR);
 		ItemMeta starmeta = star.getItemMeta();
 		starmeta.setDisplayName(Message.GUI_TOPS.getString());
-		List<String> starlores = new ArrayList<String>();
-		List<Poster> listposter = sql.getTopPosters();
-		for (int i = 0; i < listposter.size(); i++) {
-			if (i >= Option.GUI_TOPPLAYERS.getInt())
-				break;
-			starlores.add(Message.POSTERPLAYER.getString() + ":" + listposter.get(i).getName() + " "
-					+ Message.POSTERID.getString() + ":" + listposter.get(i).getBbsname() + " "
-					+ Message.POSTERNUM.getString() + ":" + listposter.get(i).getCount());
-		}
-		starmeta.setLore(starlores);
+		starmeta.setLore(Message.GUI_TOPSINFO.getStringList());
 		star.setItemMeta(starmeta);
 		inv.setItem(14, star);
 		ItemStack compass = new ItemStack(Material.COMPASS);

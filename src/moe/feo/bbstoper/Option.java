@@ -33,6 +33,8 @@ public enum Option {
 	PROXY_IP("proxy.ip"),
 	PROXY_PORT("proxy.port"),
 	GUI_TOPPLAYERS("gui.topplayers"),
+	GUI_TOPPLAYERSMONTHLY("gui.topplayersmonthly"),
+	GUI_TOPPLAYERSDAILY("gui.topplayersdaily"),
 	GUI_DISPLAYHEADSKIN("gui.displayheadskin"),
 	GUI_USECHATGETID("gui.usechatgetid"),
 	GUI_CANCELKEYWORDS("gui.cancelkeywords"),

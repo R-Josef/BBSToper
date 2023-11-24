@@ -52,6 +52,9 @@ public class GUIManager implements Listener {
 				String[] args = { "reward" };
 				CLI.getInstance().onCommand(player, null, null, args);
 			}
+			if (event.getRawSlot() == 14) {// 查看排行榜gui
+				new TopGUI(player);
+			}
 			if (event.getRawSlot() == 22) {// 获取链接
 				player.closeInventory();
 				for (String msg : Message.CLICKPOSTICON.getStringList()) {
@@ -59,7 +62,11 @@ public class GUIManager implements Listener {
 					player.sendMessage(msg.replaceAll("%PAGE%", url));
 				}
 			}
+		} else if(holder instanceof TopGUI.BBSToperGUIHolder) {// 确认操作的是此插件的GUI
+			event.setCancelled(true);
+			if (event.getRawSlot() == 22) {// 从排行榜GUI返回原GUI
+				new GUI(player);
+			}
 		}
 	}
-
 }

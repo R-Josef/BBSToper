@@ -77,6 +77,7 @@ faileduninstallmo: '未能按照预期卸载监听!'
 #箱子GUI界面
 gui:
     title: '%PREFIX%'
+    toptitle: '%PREFIX%-排行榜'
     frame: '&8我是边框'
     skull: '&e%PLAYER%&b的绑定数据'
     notbound: '&4未绑定MCBBS账号'
@@ -89,6 +90,12 @@ gui:
     offdayrewards: '&b休息日奖励'
     clickget: '&a点击领取奖励'
     tops: '&b顶贴排行'
+    topsinfo:
+    - '&a点击查看顶帖排行榜'
+    topstotal: '&b顶贴总榜'
+    topsmonthly: '&b顶贴月榜'
+    topsdaily: '&b顶贴日榜'
+    clickback: '&a点击返回'
     pagestate: '§b宣传帖状态'
     pageid: '&2帖子ID: &f%PAGEID%'
     lastpost: '&2上一次顶贴: &f%TIME%'

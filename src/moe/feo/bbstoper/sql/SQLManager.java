@@ -13,6 +13,7 @@ import moe.feo.bbstoper.Poster;
 import moe.feo.bbstoper.Reminder;
 import moe.feo.bbstoper.Util;
 import moe.feo.bbstoper.gui.GUI;
+import moe.feo.bbstoper.gui.TopGUI;
 
 public class SQLManager {
 	public static SQLer sql;
@@ -32,6 +33,7 @@ public class SQLManager {
 			sql.load();
 			CLI.setSQLer(sql);
 			GUI.setSQLer(sql);
+			TopGUI.setSQLer(sql);
 			Crawler.setSQLer(sql);
 			Poster.setSQLer(sql);
 			Reminder.setSQLer(sql);
