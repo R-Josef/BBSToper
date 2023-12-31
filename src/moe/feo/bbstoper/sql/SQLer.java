@@ -6,6 +6,8 @@ import moe.feo.bbstoper.Poster;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -188,6 +190,60 @@ public abstract class SQLer {
 		readlock.lock();
 		String sql = String.format("SELECT bbsname,COUNT(*) FROM `%s` GROUP BY bbsname ORDER BY COUNT(*) DESC;",
 				getTableName("topstates"));
+		List<Poster> list = new ArrayList<Poster>();
+		try (PreparedStatement pstmt = getConnection().prepareStatement(sql);
+			 ResultSet rs = pstmt.executeQuery();) {
+
+			while (rs.next()) {
+				String uuid = bbsNameCheck(rs.getString("bbsname"));
+				Poster poster = getPoster(uuid);
+				if (poster == null) continue;
+				poster.setCount(rs.getInt("COUNT(*)"));
+				list.add(poster);
+			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			readlock.unlock();
+		}
+		return null;
+	}
+
+	public List<Poster> getTopPostersMonthly() {// 按排名返回每月poster，并给poster写上count属性，不会返回没有顶过贴的玩家
+		readlock.lock();
+		LocalDate currentDate = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-");
+		String formattedDate = currentDate.format(formatter);
+		String sql = String.format("SELECT bbsname,COUNT(*) FROM `%s` WHERE LEFT(time, %s) = '%s' GROUP BY bbsname ORDER BY COUNT(*) DESC;",
+				getTableName("topstates"), formattedDate.length(), formattedDate);
+		List<Poster> list = new ArrayList<Poster>();
+		try (PreparedStatement pstmt = getConnection().prepareStatement(sql);
+			 ResultSet rs = pstmt.executeQuery();) {
+
+			while (rs.next()) {
+				String uuid = bbsNameCheck(rs.getString("bbsname"));
+				Poster poster = getPoster(uuid);
+				if (poster == null) continue;
+				poster.setCount(rs.getInt("COUNT(*)"));
+				list.add(poster);
+			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			readlock.unlock();
+		}
+		return null;
+	}
+
+	public List<Poster> getTopPostersDaily() {// 按排名返回每日poster，并给poster写上count属性，不会返回没有顶过贴的玩家
+		readlock.lock();
+		LocalDate currentDate = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
+		String formattedDate = currentDate.format(formatter);
+		String sql = String.format("SELECT bbsname,COUNT(*) FROM `%s` WHERE LEFT(time, %s) = '%s' GROUP BY bbsname ORDER BY COUNT(*) DESC;",
+				getTableName("topstates"), formattedDate.length(), formattedDate);
 		List<Poster> list = new ArrayList<Poster>();
 		try (PreparedStatement pstmt = getConnection().prepareStatement(sql);
 			 ResultSet rs = pstmt.executeQuery();) {
