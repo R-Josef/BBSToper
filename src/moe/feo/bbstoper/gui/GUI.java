@@ -33,10 +33,16 @@ public class GUI {
 	}
 
 	public GUI(Player player) {
-		Bukkit.getScheduler().runTaskAsynchronously(BBSToper.getInstance(), () -> {
-			createGui(player);
-			player.openInventory(inv);
-		});
+		if (Option.GUI_ASYNC.getBoolean())
+			Bukkit.getScheduler().runTaskAsynchronously(BBSToper.getInstance(), () -> {
+				createGui(player);
+				player.openInventory(inv);
+			});
+		else
+			Bukkit.getScheduler().runTask(BBSToper.getInstance(), () -> {
+				createGui(player);
+				player.openInventory(inv);
+			});
 	}
 	
 	class BBSToperGUIHolder implements InventoryHolder {// 定义一个Holder用于识别此插件的GUI

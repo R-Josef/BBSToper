@@ -60,6 +60,8 @@ proxy:
     port: 10809
 
 gui:
+    #是否异步打开gui，部分服务端核心不允许异步
+    async: false
     #玩家排名总榜的显示数量
     topplayers: 5
     #玩家排名月榜的显示数量

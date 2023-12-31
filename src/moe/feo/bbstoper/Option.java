@@ -32,6 +32,7 @@ public enum Option {
 	PROXY_ENABLE("proxy.enable"),
 	PROXY_IP("proxy.ip"),
 	PROXY_PORT("proxy.port"),
+	GUI_ASYNC("gui.async"),
 	GUI_TOPPLAYERS("gui.topplayers"),
 	GUI_TOPPLAYERSMONTHLY("gui.topplayersmonthly"),
 	GUI_TOPPLAYERSDAILY("gui.topplayersdaily"),
